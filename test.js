@@ -20,5 +20,5 @@ function displayResult() {
   arr=tt[b];
   bb=Math.random() * arr.length >> 0;
   text_struct=name[b]+"\n\n"+arr[bb];
-  document.getElementById("myHeader").innerText = t[b];
+  document.getElementById("myHeader").innerText = text_struct;
 }

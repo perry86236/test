@@ -18,7 +18,8 @@ name=["六十甲子籤","觀音一百籤","雷雨師一百籤","保生大帝六�
 function displayResult() {
   b = Math.random() * tt.length >> 0;
   arr=tt[b];
+  nn=name[b];
   bb=Math.random() * arr.length >> 0;
-  text_struct=name[b]+"\n\n"+arr[bb];
+  text_struct=nn+"\n\n"+arr[bb];
   document.getElementById("myHeader").innerText = text_struct;
 }

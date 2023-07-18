@@ -13,16 +13,10 @@
 
 
     <div id="app">
-        <!-- {{ message }} -->
+
 
         <input type="text" @blur="get_data" v-model="name">
-        <!-- <table border="1">
-            <tr v-for="d in data">
-                <td>{{d.date}}</td>
-                <td>{{d.item}}</td>
-                <td>{{d.price}} 元</td>
-            </tr>
-        </table> -->
+
         <table>
             <tr>
                 <td valign="top">
@@ -36,49 +30,43 @@
                             <td v-text="add_unit(d.price)"></td>
                         </tr>
                         <div v-if="data1.length==0">( 尚無扣款紀錄 )</div>
-                        <!-- <tr v-else>
-                        <td>尚無扣款紀錄</td>
-                    </tr> -->
                     </table>
                 </td>
                 <td></td>
+
                 <td valign="top">
                     <div>護持三寶</div>
-                    <div v-text="price_sum(data2,1)"></div>
+                    <div v-text="price_sum(data2,2)"></div>
                     <div v-text="msg_2"></div>
                     <table border="1">
                         <tr v-for="d in data2" v-if="data2.length>0">
-                            <td v-text="d.date"></td>
+                            <!-- <td v-text="d.date"></td> -->
                             <td v-text="d.item"></td>
                             <td v-text="add_unit(d.price)"></td>
                         </tr>
                         <div v-if="data2.length==0">( 尚無扣款紀錄 )</div>
-                        <!-- <tr v-else>
-                        <td>尚無扣款紀錄</td>
-                    </tr> -->
                     </table>
                 </td>
                 <td></td>
+
                 <td valign="top">
                     <div>護持精舍</div>
-                    <div v-text="price_sum(data3,1)"></div>
+                    <div v-text="price_sum(data3,2)"></div>
                     <div v-text="msg_3"></div>
                     <table border="1">
                         <tr v-for="d in data3" v-if="data3.length>0">
-                            <td v-text="d.date"></td>
+                            <!-- <td v-text="d.date"></td> -->
                             <td v-text="d.item"></td>
                             <td v-text="add_unit(d.price)"></td>
                         </tr>
                         <div v-if="data3.length==0">( 尚無扣款紀錄 )</div>
-                        <!-- <tr v-else>
-                        <td>尚無扣款紀錄</td>
-                    </tr> -->
                     </table>
                 </td>
                 <td></td>
+
                 <td valign="top">
                     <div>共修</div>
-                    <div v-text="price_sum(data4,1)"></div>
+                    <div v-text="price_sum(data4,2)"></div>
                     <div v-text="msg_4"></div>
                     <table border="1">
                         <tr v-for="d in data4" v-if="data4.length>0">
@@ -87,15 +75,13 @@
                             <td v-text="add_unit(d.price)"></td>
                         </tr>
                         <div v-if="data4.length==0">( 尚無扣款紀錄 )</div>
-                        <!-- <tr v-else>
-                        <td>尚無扣款紀錄</td>
-                    </tr> -->
                     </table>
                 </td>
                 <td></td>
+
                 <td valign="top">
                     <div>聖賢祝壽</div>
-                    <div v-text="price_sum(data5,1)"></div>
+                    <div v-text="price_sum(data5,2)"></div>
                     <div v-text="msg_5"></div>
                     <table border="1">
                         <tr v-for="d in data5" v-if="data5.length>0">
@@ -104,43 +90,36 @@
                             <td v-text="add_unit(d.price)"></td>
                         </tr>
                         <div v-if="data5.length==0">( 尚無扣款紀錄 )</div>
-                        <!-- <tr v-else>
-                        <td>尚無扣款紀錄</td>
-                    </tr> -->
                     </table>
                 </td>
                 <td></td>
+
                 <td valign="top">
                     <div>煙供粉</div>
-                    <div v-text="price_sum(data6,1)"></div>
+                    <div v-text="price_sum(data6,2)"></div>
                     <div v-text="msg_6"></div>
                     <table border="1">
                         <tr v-for="d in data6" v-if="data6.length>0">
-                            <td v-text="d.date"></td>
+                            <!-- <td v-text="d.date"></td> -->
                             <td v-text="d.item"></td>
                             <td v-text="add_unit(d.price)"></td>
                         </tr>
                         <div v-if="data6.length==0">( 尚無扣款紀錄 )</div>
-                        <!-- <tr v-else>
-                        <td>尚無扣款紀錄</td>
-                    </tr> -->
                     </table>
                 </td>
                 <td></td>
+
                 <td valign="top">
                     <div>神明衣</div>
-                    <div v-text="price_sum(data6,1)"></div>
-                    <div v-text="msg_6"></div>
+                    <div v-text="price_sum(data7,2)"></div>
+                    <div v-text="msg_7"></div>
                     <table border="1">
-                        <tr v-for="d in data6" v-if="data6.length>0">
-                            <td v-text="d.date"></td>
+                        <tr v-for="d in data7" v-if="data7.length>0">
+                            <!-- <td v-text="d.date"></td> -->
                             <td v-text="d.item"></td>
                             <td v-text="add_unit(d.price)"></td>
                         </tr>
-                        <div v-if="data6.length==0">( 尚無扣款紀錄 )</div>
-                        <!-- <tr v-else>
-                        <td>尚無扣款紀錄</td>
-                    </tr> -->
+                        <div v-if="data7.length==0">( 尚無扣款紀錄 )</div>
                     </table>
                 </td>
             </tr>
@@ -160,7 +139,7 @@
         data() {
             return {
                 name: "",
-                message: 'Hello Vue!',
+                // message: 'Hello Vue!',
                 // msg: "",
                 loading_text: "請稍等，正在查詢中...",
                 err_text: "搜尋異常...",
@@ -348,6 +327,16 @@
             }
         },
         mounted() {
+            if (!!this.name) {
+                this.d_1()
+                this.d_2()
+                this.d_3()
+                this.d_4()
+                this.d_5()
+                this.d_6()
+                this.d_7()
+            }
+
             // this.get_data()
         }
     }).mount('#app')

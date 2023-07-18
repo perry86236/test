@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -47,7 +47,7 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab1">
                         <div v-text="price_sum(data1,1)"></div>
-                        <div v-text="msg_1"></div>
+                        <div v-text="msg_1" :class="red_bold"></div>
                         <div v-if="data1.length==0">( 尚無扣款紀錄 )</div>
                         <table class="table table-sm table-bordered" v-if="data1.length!=0">
                             <thead>
@@ -68,7 +68,7 @@
                     </div>
                     <div class="tab-pane" id="tab2">
                         <div v-text="price_sum(data2,2)"></div>
-                        <div v-text="msg_2"></div>
+                        <div v-text="msg_2" :class="red_bold"></div>
                         <div v-if="data2.length==0">( 尚無扣款紀錄 )</div>
                         <table class="table table-sm table-bordered" v-if="data2.length!=0">
                             <thead>
@@ -87,7 +87,7 @@
                     </div>
                     <div class="tab-pane" id="tab3">
                         <div v-text="price_sum(data3,2)"></div>
-                        <div v-text="msg_3"></div>
+                        <div v-text="msg_3" :class="red_bold"></div>
                         <div v-if="data3.length==0">( 尚無扣款紀錄 )</div>
                         <table class="table table-sm table-bordered" v-if="data3.length!=0">
                             <thead>
@@ -106,7 +106,7 @@
                     </div>
                     <div class="tab-pane" id="tab4">
                         <div v-text="price_sum(data4,2)"></div>
-                        <div v-text="msg_4"></div>
+                        <div v-text="msg_4" :class="red_bold"></div>
                         <div v-if="data4.length==0">( 尚無扣款紀錄 )</div>
                         <table class="table table-sm table-bordered" v-if="data4.length!=0">
                             <thead>
@@ -127,7 +127,7 @@
                     </div>
                     <div class="tab-pane" id="tab5">
                         <div v-text="price_sum(data5,2)"></div>
-                        <div v-text="msg_5"></div>
+                        <div v-text="msg_5" :class="red_bold"></div>
                         <div v-if="data5.length==0">( 尚無扣款紀錄 )</div>
                         <table class="table table-sm table-bordered" v-if="data5.length!=0">
                             <thead>
@@ -148,7 +148,7 @@
                     </div>
                     <div class="tab-pane" id="tab6">
                         <div v-text="price_sum(data6,2)"></div>
-                        <div v-text="msg_6"></div>
+                        <div v-text="msg_6" :class="red_bold"></div>
                         <div v-if="data6.length==0">( 尚無扣款紀錄 )</div>
                         <table class="table table-sm table-bordered" v-if="data6.length!=0">
                             <thead>
@@ -167,7 +167,7 @@
                     </div>
                     <div class="tab-pane" id="tab7">
                         <div v-text="price_sum(data7,2)"></div>
-                        <div v-text="msg_7"></div>
+                        <div v-text="msg_7" :class="red_bold"></div>
                         <div v-if="data7.length==0">( 尚無扣款紀錄 )</div>
                         <table class="table table-sm table-bordered" v-if="data7.length!=0">
                             <thead>
@@ -205,6 +205,7 @@
     createApp({
         data() {
             return {
+                red_bold:"font-weight-bold text-danger",
                 tab_arr: ["", "儲值", "護持三寶", "護持精舍", "共修", "聖賢祝壽", "煙供粉", "神明衣"],
                 class_arr: ["table-success", "table-danger", "table-info", "table-warning", "table-active", ""],
                 name: "",

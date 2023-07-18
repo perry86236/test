@@ -5,8 +5,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>歷史餘額紀錄查詢</title>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -16,119 +18,184 @@
 
 
         <input type="text" @blur="get_data" v-model="name">
+        <div class="row">
+            <div class="col-md-12">
 
-        <table>
-            <tr>
-                <td valign="top">
-                    <div>儲值</div>
-                    <div v-text="price_sum(data1,1)"></div>
-                    <div v-text="msg_1"></div>
-                    <table border="1">
-                        <tr v-for="d in data1" v-if="data1.length>0">
-                            <td v-text="d.date"></td>
-                            <td v-text="d.item"></td>
-                            <td v-text="add_unit(d.price)"></td>
-                        </tr>
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#tab1" data-toggle="tab" v-text="tab_arr[1]"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tab2" data-toggle="tab" v-text="tab_arr[2]"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tab3" data-toggle="tab" v-text="tab_arr[3]"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tab4" data-toggle="tab" v-text="tab_arr[4]"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tab5" data-toggle="tab" v-text="tab_arr[5]"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tab6" data-toggle="tab" v-text="tab_arr[6]"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tab7" data-toggle="tab" v-text="tab_arr[7]"></a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab1">
+                        <div v-text="price_sum(data1,1)"></div>
+                        <div v-text="msg_1"></div>
                         <div v-if="data1.length==0">( 尚無扣款紀錄 )</div>
-                    </table>
-                </td>
-                <td></td>
-
-                <td valign="top">
-                    <div>護持三寶</div>
-                    <div v-text="price_sum(data2,2)"></div>
-                    <div v-text="msg_2"></div>
-                    <table border="1">
-                        <tr v-for="d in data2" v-if="data2.length>0">
-                            <!-- <td v-text="d.date"></td> -->
-                            <td v-text="d.item"></td>
-                            <td v-text="add_unit(d.price)"></td>
-                        </tr>
+                        <table class="table table-sm table-bordered" v-if="data1.length!=0">
+                            <thead>
+                                <tr>
+                                    <th>日期</th>
+                                    <th>項目</th>
+                                    <th>金額</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(d,i) in data1" :class="class_arr[i%class_arr.length]">
+                                    <td v-text="d.date"></td>
+                                    <td v-text="d.item"></td>
+                                    <td v-text="add_unit(d.price)"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="tab2">
+                        <div v-text="price_sum(data2,2)"></div>
+                        <div v-text="msg_2"></div>
                         <div v-if="data2.length==0">( 尚無扣款紀錄 )</div>
-                    </table>
-                </td>
-                <td></td>
-
-                <td valign="top">
-                    <div>護持精舍</div>
-                    <div v-text="price_sum(data3,2)"></div>
-                    <div v-text="msg_3"></div>
-                    <table border="1">
-                        <tr v-for="d in data3" v-if="data3.length>0">
-                            <!-- <td v-text="d.date"></td> -->
-                            <td v-text="d.item"></td>
-                            <td v-text="add_unit(d.price)"></td>
-                        </tr>
+                        <table class="table table-sm table-bordered" v-if="data2.length!=0">
+                            <thead>
+                                <tr>
+                                    <th>日期</th>
+                                    <th>金額</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(d,i) in data2" :class="class_arr[i%class_arr.length]">
+                                    <td v-text="d.item"></td>
+                                    <td v-text="add_unit(d.price)"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="tab3">
+                        <div v-text="price_sum(data3,2)"></div>
+                        <div v-text="msg_3"></div>
                         <div v-if="data3.length==0">( 尚無扣款紀錄 )</div>
-                    </table>
-                </td>
-                <td></td>
-
-                <td valign="top">
-                    <div>共修</div>
-                    <div v-text="price_sum(data4,2)"></div>
-                    <div v-text="msg_4"></div>
-                    <table border="1">
-                        <tr v-for="d in data4" v-if="data4.length>0">
-                            <td v-text="d.date"></td>
-                            <td v-text="d.item"></td>
-                            <td v-text="add_unit(d.price)"></td>
-                        </tr>
+                        <table class="table table-sm table-bordered" v-if="data3.length!=0">
+                            <thead>
+                                <tr>
+                                    <th>日期</th>
+                                    <th>金額</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(d,i) in data3" :class="class_arr[i%class_arr.length]">
+                                    <td v-text="d.item"></td>
+                                    <td v-text="add_unit(d.price)"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="tab4">
+                        <div v-text="price_sum(data4,2)"></div>
+                        <div v-text="msg_4"></div>
                         <div v-if="data4.length==0">( 尚無扣款紀錄 )</div>
-                    </table>
-                </td>
-                <td></td>
-
-                <td valign="top">
-                    <div>聖賢祝壽</div>
-                    <div v-text="price_sum(data5,2)"></div>
-                    <div v-text="msg_5"></div>
-                    <table border="1">
-                        <tr v-for="d in data5" v-if="data5.length>0">
-                            <td v-text="d.date"></td>
-                            <td v-html="d.item.replace(/、/g,'<br>')"></td>
-                            <td v-text="add_unit(d.price)"></td>
-                        </tr>
+                        <table class="table table-sm table-bordered" v-if="data4.length!=0">
+                            <thead>
+                                <tr>
+                                    <th>日期</th>
+                                    <th>項目</th>
+                                    <th>金額</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(d,i) in data4" :class="class_arr[i%class_arr.length]">
+                                    <td v-text="d.date"></td>
+                                    <td v-text="d.item"></td>
+                                    <td v-text="add_unit(d.price)"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="tab5">
+                        <div v-text="price_sum(data5,2)"></div>
+                        <div v-text="msg_5"></div>
                         <div v-if="data5.length==0">( 尚無扣款紀錄 )</div>
-                    </table>
-                </td>
-                <td></td>
-
-                <td valign="top">
-                    <div>煙供粉</div>
-                    <div v-text="price_sum(data6,2)"></div>
-                    <div v-text="msg_6"></div>
-                    <table border="1">
-                        <tr v-for="d in data6" v-if="data6.length>0">
-                            <!-- <td v-text="d.date"></td> -->
-                            <td v-text="d.item"></td>
-                            <td v-text="add_unit(d.price)"></td>
-                        </tr>
+                        <table class="table table-sm table-bordered" v-if="data5.length!=0">
+                            <thead>
+                                <tr>
+                                    <th>日期</th>
+                                    <th>項目</th>
+                                    <th>金額</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(d,i) in data5" :class="class_arr[i%class_arr.length]">
+                                    <td v-text="d.date"></td>
+                                    <td v-html="d.item.replace(/、/g,'<br>')"></td>
+                                    <td v-text="add_unit(d.price)"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="tab6">
+                        <div v-text="price_sum(data6,2)"></div>
+                        <div v-text="msg_6"></div>
                         <div v-if="data6.length==0">( 尚無扣款紀錄 )</div>
-                    </table>
-                </td>
-                <td></td>
-
-                <td valign="top">
-                    <div>神明衣</div>
-                    <div v-text="price_sum(data7,2)"></div>
-                    <div v-text="msg_7"></div>
-                    <table border="1">
-                        <tr v-for="d in data7" v-if="data7.length>0">
-                            <!-- <td v-text="d.date"></td> -->
-                            <td v-text="d.item"></td>
-                            <td v-text="add_unit(d.price)"></td>
-                        </tr>
+                        <table class="table table-sm table-bordered" v-if="data6.length!=0">
+                            <thead>
+                                <tr>
+                                    <th>日期</th>
+                                    <th>金額</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(d,i) in data6" :class="class_arr[i%class_arr.length]">
+                                    <td v-text="d.item"></td>
+                                    <td v-text="add_unit(d.price)"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="tab7">
+                        <div v-text="price_sum(data7,2)"></div>
+                        <div v-text="msg_7"></div>
                         <div v-if="data7.length==0">( 尚無扣款紀錄 )</div>
-                    </table>
-                </td>
-            </tr>
-        </table>
+                        <table class="table table-sm table-bordered" v-if="data7.length!=0">
+                            <thead>
+                                <tr>
+                                    <th>日期</th>
+                                    <th>金額</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(d,i) in data7" :class="class_arr[i%class_arr.length]">
+                                    <td v-text="d.item"></td>
+                                    <td v-text="add_unit(d.price)"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
 
 
 
         <!-- <div>{{msg}}</div> -->
     </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/scripts.js"></script>
 </body>
 
 
@@ -138,9 +205,12 @@
     createApp({
         data() {
             return {
+                tab_arr: ["", "儲值", "護持三寶", "護持精舍", "共修", "聖賢祝壽", "煙供粉", "神明衣"],
+                class_arr: ["table-success", "table-danger", "table-info", "table-warning", "table-active", ""],
                 name: "",
                 // message: 'Hello Vue!',
                 // msg: "",
+
                 loading_text: "請稍等，正在查詢中...",
                 err_text: "搜尋異常...",
                 msg_1: "", msg_2: "", msg_3: "", msg_4: "",

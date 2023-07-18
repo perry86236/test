@@ -263,9 +263,10 @@
                 //儲值1
                 let url = "https://script.google.com/macros/s/AKfycbykwUXNwScBQU6ZBL-WWPipBGa-qQykIa__gbMey-DlwEoFR-9KjKAEIVcpMeiWzvEe/exec"
                 url += "?name=" + this.name
-                this.msg_1 = this.loading_text
+                
                 this.data1 = []
-                if (!!this.name)
+                if (!!this.name){
+                    this.msg_1 = this.loading_text
                     axios.get(url)
                         .then((response) => {
                             // console.log(response.data)
@@ -276,14 +277,16 @@
                             console.log(error)
                             this.msg_1 = this.err_text
                         })
+                }
             },
             async d_2() {
                 //護持三寶2
                 let url = "https://script.google.com/macros/s/AKfycbyrpk4vqjgnZXbrqdpAXaC2pzv7RKnWRxa6ceNCSJgIuAUMBcBXcU1Ea5KWWnOMYQb-/exec"
                 url += "?name=" + this.name
-                this.msg_2 = this.loading_text
+                
                 this.data2 = []
-                if (!!this.name)
+                if (!!this.name){
+                    this.msg_2 = this.loading_text
                     axios.get(url)
                         .then((response) => {
                             // console.log(response.data)
@@ -294,14 +297,16 @@
                             console.log(error)
                             this.msg_2 = this.err_text
                         })
+                }
             },
             async d_3() {
                 //護持精舍3
                 let url = "https://script.google.com/macros/s/AKfycbxNrS3UWWVitdOYEbM52KwuOdVz0yUvLbZ9kmo5QywuqxwHl9eF8E7DvNs2TxIIevSr/exec"
                 url += "?name=" + this.name
-                this.msg_3 = this.loading_text
+                
                 this.data3 = []
-                if (!!this.name)
+                if (!!this.name){
+                    this.msg_3 = this.loading_text
                     axios.get(url)
                         .then((response) => {
                             // console.log(response.data)
@@ -312,14 +317,16 @@
                             console.log(error)
                             this.msg_3 = this.err_text
                         })
+                }
             },
             async d_4() {
                 //共修4
                 let url = "https://script.google.com/macros/s/AKfycbxvbzsxj3SAuWBHVEiTLb5xu4d7xAytGFrpf38JJV-1p3KG-wVUbrqMDPA_lePKSG-f4g/exec"
                 url += "?name=" + this.name
-                this.msg_4 = this.loading_text
+                
                 this.data4 = []
-                if (!!this.name)
+                if (!!this.name){
+                    this.msg_4 = this.loading_text
                     await axios.get(url)
                         .then((response) => {
                             //console.log(response.data)
@@ -336,14 +343,16 @@
                             console.log(error)
                             this.msg_4 = this.err_text
                         })
+                }
             },
             async d_5() {
                 //聖賢5
                 let url = "https://script.google.com/macros/s/AKfycbxFej9S4xSQoLS10SujPgpN8Z9iL7kPhm_ApTbXeLN5nHkP2FsSsG5U4VvII3n6q39cyw/exec"
                 url += "?name=" + this.name
-                this.msg_5 = this.loading_text
+                
                 this.data5 = []
-                if (!!this.name)
+                if (!!this.name){
+                    this.msg_5 = this.loading_text
                     axios.get(url)
                         .then((response) => {
                             // console.log(response.data)
@@ -354,14 +363,16 @@
                             console.log(error)
                             this.msg_5 = this.err_text
                         })
+                }
             },
             async d_6() {
                 // 煙供粉6
                 let url = "https://script.google.com/macros/s/AKfycbzVhm8TyYuvVfE4BBu71XoslNPse1lWQLfvVTCOCniqugkUmJy4K_b5rN11-WunnQSZ3Q/exec"
                 url += "?name=" + this.name
-                this.msg_6 = this.loading_text
+                
                 this.data6 = []
-                if (!!this.name)
+                if (!!this.name){
+                    this.msg_6 = this.loading_text
                     axios.get(url)
                         .then((response) => {
                             // console.log(response.data)
@@ -372,14 +383,16 @@
                             console.log(error)
                             this.msg_6 = this.err_text
                         })
+                }
             },
             async d_7() {
                 //神明衣7
                 let url = "https://script.google.com/macros/s/AKfycbwcJ4vys-EZWvRpd6Cu0yO9OrAhuB37eIftOERtYe6QMGmMmTuAyR1xxXSBX6GrIWUp/exec"
                 url += "?name=" + this.name
-                this.msg_7 = this.loading_text
+                
                 this.data7 = []
-                if (!!this.name)
+                if (!!this.name){
+                    this.msg_7 = this.loading_text
                     axios.get(url)
                         .then((response) => {
                             // console.log(response.data)
@@ -390,6 +403,7 @@
                             console.log(error)
                             this.msg_7 = this.err_text
                         })
+                }
             },
             async get_data() {
                 // if (!!this.name) {

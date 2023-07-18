@@ -265,16 +265,17 @@
                 url += "?name=" + this.name
                 this.msg_1 = this.loading_text
                 this.data1 = []
-                axios.get(url)
-                    .then((response) => {
-                        // console.log(response.data)
-                        this.data1 = this.sort_date(response.data)
-                        this.msg_1 = ""
-                    })
-                    .catch((error) => {
-                        console.log(error)
-                        this.msg_1 = this.err_text
-                    })
+                if (!!this.name)
+                    axios.get(url)
+                        .then((response) => {
+                            // console.log(response.data)
+                            this.data1 = this.sort_date(response.data)
+                            this.msg_1 = ""
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                            this.msg_1 = this.err_text
+                        })
             },
             async d_2() {
                 //護持三寶2
@@ -282,16 +283,17 @@
                 url += "?name=" + this.name
                 this.msg_2 = this.loading_text
                 this.data2 = []
-                axios.get(url)
-                    .then((response) => {
-                        // console.log(response.data)
-                        this.data2 = this.sort_date(response.data)
-                        this.msg_2 = ""
-                    })
-                    .catch((error) => {
-                        console.log(error)
-                        this.msg_2 = this.err_text
-                    })
+                if (!!this.name)
+                    axios.get(url)
+                        .then((response) => {
+                            // console.log(response.data)
+                            this.data2 = this.sort_date(response.data)
+                            this.msg_2 = ""
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                            this.msg_2 = this.err_text
+                        })
             },
             async d_3() {
                 //護持精舍3
@@ -299,16 +301,17 @@
                 url += "?name=" + this.name
                 this.msg_3 = this.loading_text
                 this.data3 = []
-                axios.get(url)
-                    .then((response) => {
-                        // console.log(response.data)
-                        this.data3 = this.sort_date(response.data)
-                        this.msg_3 = ""
-                    })
-                    .catch((error) => {
-                        console.log(error)
-                        this.msg_3 = this.err_text
-                    })
+                if (!!this.name)
+                    axios.get(url)
+                        .then((response) => {
+                            // console.log(response.data)
+                            this.data3 = this.sort_date(response.data)
+                            this.msg_3 = ""
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                            this.msg_3 = this.err_text
+                        })
             },
             async d_4() {
                 //共修4
@@ -316,22 +319,23 @@
                 url += "?name=" + this.name
                 this.msg_4 = this.loading_text
                 this.data4 = []
-                await axios.get(url)
-                    .then((response) => {
-                        //console.log(response.data)
-                        this.data4 = this.sort_date(response.data)
-                        // let data=this.sort_date(response.data)
-                        // this.data4=data.map(e=>{
-                        //     e.item=e.item.replace(/、/g,"\n")
-                        //     return e
-                        // })
-
-                        this.msg_4 = ""
-                    })
-                    .catch((error) => {
-                        console.log(error)
-                        this.msg_4 = this.err_text
-                    })
+                if (!!this.name)
+                    await axios.get(url)
+                        .then((response) => {
+                            //console.log(response.data)
+                            this.data4 = this.sort_date(response.data)
+                            // let data=this.sort_date(response.data)
+                            // this.data4=data.map(e=>{
+                            //     e.item=e.item.replace(/、/g,"\n")
+                            //     return e
+                            // })
+    
+                            this.msg_4 = ""
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                            this.msg_4 = this.err_text
+                        })
             },
             async d_5() {
                 //聖賢5
@@ -339,16 +343,17 @@
                 url += "?name=" + this.name
                 this.msg_5 = this.loading_text
                 this.data5 = []
-                axios.get(url)
-                    .then((response) => {
-                        // console.log(response.data)
-                        this.data5 = this.sort_date(response.data)
-                        this.msg_5 = ""
-                    })
-                    .catch((error) => {
-                        console.log(error)
-                        this.msg_5 = this.err_text
-                    })
+                if (!!this.name)
+                    axios.get(url)
+                        .then((response) => {
+                            // console.log(response.data)
+                            this.data5 = this.sort_date(response.data)
+                            this.msg_5 = ""
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                            this.msg_5 = this.err_text
+                        })
             },
             async d_6() {
                 // 煙供粉6
@@ -356,16 +361,17 @@
                 url += "?name=" + this.name
                 this.msg_6 = this.loading_text
                 this.data6 = []
-                axios.get(url)
-                    .then((response) => {
-                        // console.log(response.data)
-                        this.data6 = this.sort_date(response.data)
-                        this.msg_6 = ""
-                    })
-                    .catch((error) => {
-                        console.log(error)
-                        this.msg_6 = this.err_text
-                    })
+                if (!!this.name)
+                    axios.get(url)
+                        .then((response) => {
+                            // console.log(response.data)
+                            this.data6 = this.sort_date(response.data)
+                            this.msg_6 = ""
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                            this.msg_6 = this.err_text
+                        })
             },
             async d_7() {
                 //神明衣7
@@ -373,19 +379,20 @@
                 url += "?name=" + this.name
                 this.msg_7 = this.loading_text
                 this.data7 = []
-                axios.get(url)
-                    .then((response) => {
-                        // console.log(response.data)
-                        this.data7 = this.sort_date(response.data)
-                        this.msg_7 = ""
-                    })
-                    .catch((error) => {
-                        console.log(error)
-                        this.msg_7 = this.err_text
-                    })
+                if (!!this.name)
+                    axios.get(url)
+                        .then((response) => {
+                            // console.log(response.data)
+                            this.data7 = this.sort_date(response.data)
+                            this.msg_7 = ""
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                            this.msg_7 = this.err_text
+                        })
             },
             async get_data() {
-                if (!!this.name) {
+                // if (!!this.name) {
                     this.d_1()
                     this.d_2()
                     this.d_3()
@@ -393,7 +400,7 @@
                     this.d_5()
                     this.d_6()
                     this.d_7()
-                }
+                // }
                 //this.d_8()
 
             }

@@ -17,9 +17,10 @@
     <div id="app">
 
 
-        <input type="text" @blur="get_data" v-model="name">
-        <div class="row">
-            <div class="col-md-12">
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-6 col-lg-3">
+                <input type="text" @blur="get_data" v-model="name">
 
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
@@ -205,8 +206,8 @@
     createApp({
         data() {
             return {
-                text_point:"",
-                red_bold:"font-weight-bold text-danger",
+                text_point: "",
+                red_bold: "font-weight-bold text-danger",
                 tab_arr: ["", "儲值", "護持三寶", "護持精舍", "共修", "聖賢祝壽", "煙供粉", "神明衣"],
                 class_arr: ["table-success", "table-danger", "table-info", "table-warning", "table-active", ""],
                 name: "",
@@ -265,9 +266,9 @@
                 //儲值1
                 let url = "https://script.google.com/macros/s/AKfycbykwUXNwScBQU6ZBL-WWPipBGa-qQykIa__gbMey-DlwEoFR-9KjKAEIVcpMeiWzvEe/exec"
                 url += "?name=" + this.name
-                
+
                 this.data1 = []
-                if (!!this.name){
+                if (!!this.name) {
                     this.msg_1 = this.loading_text
                     axios.get(url)
                         .then((response) => {
@@ -285,9 +286,9 @@
                 //護持三寶2
                 let url = "https://script.google.com/macros/s/AKfycbyrpk4vqjgnZXbrqdpAXaC2pzv7RKnWRxa6ceNCSJgIuAUMBcBXcU1Ea5KWWnOMYQb-/exec"
                 url += "?name=" + this.name
-                
+
                 this.data2 = []
-                if (!!this.name){
+                if (!!this.name) {
                     this.msg_2 = this.loading_text
                     axios.get(url)
                         .then((response) => {
@@ -305,9 +306,9 @@
                 //護持精舍3
                 let url = "https://script.google.com/macros/s/AKfycbxNrS3UWWVitdOYEbM52KwuOdVz0yUvLbZ9kmo5QywuqxwHl9eF8E7DvNs2TxIIevSr/exec"
                 url += "?name=" + this.name
-                
+
                 this.data3 = []
-                if (!!this.name){
+                if (!!this.name) {
                     this.msg_3 = this.loading_text
                     axios.get(url)
                         .then((response) => {
@@ -325,9 +326,9 @@
                 //共修4
                 let url = "https://script.google.com/macros/s/AKfycbxvbzsxj3SAuWBHVEiTLb5xu4d7xAytGFrpf38JJV-1p3KG-wVUbrqMDPA_lePKSG-f4g/exec"
                 url += "?name=" + this.name
-                
+
                 this.data4 = []
-                if (!!this.name){
+                if (!!this.name) {
                     this.msg_4 = this.loading_text
                     await axios.get(url)
                         .then((response) => {
@@ -338,7 +339,7 @@
                             //     e.item=e.item.replace(/、/g,"\n")
                             //     return e
                             // })
-    
+
                             this.msg_4 = ""
                         })
                         .catch((error) => {
@@ -351,9 +352,9 @@
                 //聖賢5
                 let url = "https://script.google.com/macros/s/AKfycbxFej9S4xSQoLS10SujPgpN8Z9iL7kPhm_ApTbXeLN5nHkP2FsSsG5U4VvII3n6q39cyw/exec"
                 url += "?name=" + this.name
-                
+
                 this.data5 = []
-                if (!!this.name){
+                if (!!this.name) {
                     this.msg_5 = this.loading_text
                     axios.get(url)
                         .then((response) => {
@@ -371,9 +372,9 @@
                 // 煙供粉6
                 let url = "https://script.google.com/macros/s/AKfycbzVhm8TyYuvVfE4BBu71XoslNPse1lWQLfvVTCOCniqugkUmJy4K_b5rN11-WunnQSZ3Q/exec"
                 url += "?name=" + this.name
-                
+
                 this.data6 = []
-                if (!!this.name){
+                if (!!this.name) {
                     this.msg_6 = this.loading_text
                     axios.get(url)
                         .then((response) => {
@@ -391,9 +392,9 @@
                 //神明衣7
                 let url = "https://script.google.com/macros/s/AKfycbwcJ4vys-EZWvRpd6Cu0yO9OrAhuB37eIftOERtYe6QMGmMmTuAyR1xxXSBX6GrIWUp/exec"
                 url += "?name=" + this.name
-                
+
                 this.data7 = []
-                if (!!this.name){
+                if (!!this.name) {
                     this.msg_7 = this.loading_text
                     axios.get(url)
                         .then((response) => {
@@ -409,13 +410,13 @@
             },
             async get_data() {
                 // if (!!this.name) {
-                    this.d_1()
-                    this.d_2()
-                    this.d_3()
-                    this.d_4()
-                    this.d_5()
-                    this.d_6()
-                    this.d_7()
+                this.d_1()
+                this.d_2()
+                this.d_3()
+                this.d_4()
+                this.d_5()
+                this.d_6()
+                this.d_7()
                 // }
                 //this.d_8()
 
@@ -434,13 +435,13 @@
 
             // this.get_data()
         },
-        created(){
+        created() {
             setInterval(() => {
-                let date=new Date()
-                let sec=date.getSeconds()%4+1
-                this.text_point= "...".repeat(sec)
-            },1000)
-            
+                let date = new Date()
+                let sec = date.getSeconds() % 4 + 1
+                this.text_point = "...".repeat(sec)
+            }, 1000)
+
         }
     }).mount('#app')
 </script>

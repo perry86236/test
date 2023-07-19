@@ -47,9 +47,14 @@
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab1">
-                        <div v-text="price_sum(data1,1)" :class="center_class"></div>
-                        <div v-text="msg_1+text_point" :class="red_bold" v-if="msg_1.length"></div>
-                        <div v-if="data1.length==0">( 尚無扣款紀錄 )</div>
+                        <div v-text="price_sum(data1,1)" class="text-center"></div>
+                        <div v-text="msg_1+text_point" :class="red_bold" class="text-center" v-if="msg_1.length"></div>
+
+                        <div v-text="predict_suggest('predict',predict_value)" class="text-center"></div>
+                        <div v-text="predict_suggest('suggest',suggest_value)" class="text-center"></div>
+                        <div v-text="msg_8+text_point" :class="red_bold" class="text-center" v-if="msg_8.length"></div>
+
+                        <div v-if="data1.length==0" class="text-center">( 尚無扣款紀錄 )</div>
                         <table class="table table-sm table-bordered" v-if="data1.length!=0">
                             <thead>
                                 <tr>
@@ -68,9 +73,9 @@
                         </table>
                     </div>
                     <div class="tab-pane" id="tab2">
-                        <div v-text="price_sum(data2,2)" :class="center_class"></div>
-                        <div v-text="msg_2+text_point" :class="red_bold" v-if="msg_2.length"></div>
-                        <div v-if="data2.length==0">( 尚無扣款紀錄 )</div>
+                        <div v-text="price_sum(data2,2)" class="text-center"></div>
+                        <div v-text="msg_2+text_point" :class="red_bold" class="text-center" v-if="msg_2.length"></div>
+                        <div v-if="data2.length==0" class="text-center">( 尚無扣款紀錄 )</div>
                         <table class="table table-sm table-bordered" v-if="data2.length!=0">
                             <thead>
                                 <tr>
@@ -87,9 +92,9 @@
                         </table>
                     </div>
                     <div class="tab-pane" id="tab3">
-                        <div v-text="price_sum(data3,2)" :class="center_class"></div>
-                        <div v-text="msg_3+text_point" :class="red_bold" v-if="msg_3.length"></div>
-                        <div v-if="data3.length==0">( 尚無扣款紀錄 )</div>
+                        <div v-text="price_sum(data3,2)" class="text-center"></div>
+                        <div v-text="msg_3+text_point" :class="red_bold" class="text-center" v-if="msg_3.length"></div>
+                        <div v-if="data3.length==0" class="text-center">( 尚無扣款紀錄 )</div>
                         <table class="table table-sm table-bordered" v-if="data3.length!=0">
                             <thead>
                                 <tr>
@@ -106,9 +111,9 @@
                         </table>
                     </div>
                     <div class="tab-pane" id="tab4">
-                        <div v-text="price_sum(data4,2)" :class="center_class"></div>
-                        <div v-text="msg_4+text_point" :class="red_bold" v-if="msg_4.length"></div>
-                        <div v-if="data4.length==0">( 尚無扣款紀錄 )</div>
+                        <div v-text="price_sum(data4,2)" class="text-center"></div>
+                        <div v-text="msg_4+text_point" :class="red_bold" class="text-center" v-if="msg_4.length"></div>
+                        <div v-if="data4.length==0" class="text-center">( 尚無扣款紀錄 )</div>
                         <table class="table table-sm table-bordered" v-if="data4.length!=0">
                             <thead>
                                 <tr>
@@ -127,9 +132,9 @@
                         </table>
                     </div>
                     <div class="tab-pane" id="tab5">
-                        <div v-text="price_sum(data5,2)" :class="center_class"></div>
-                        <div v-text="msg_5+text_point" :class="red_bold" v-if="msg_5.length"></div>
-                        <div v-if="data5.length==0">( 尚無扣款紀錄 )</div>
+                        <div v-text="price_sum(data5,2)" class="text-center"></div>
+                        <div v-text="msg_5+text_point" :class="red_bold" class="text-center" v-if="msg_5.length"></div>
+                        <div v-if="data5.length==0" class="text-center">( 尚無扣款紀錄 )</div>
                         <table class="table table-sm table-bordered" v-if="data5.length!=0">
                             <thead>
                                 <tr>
@@ -148,9 +153,9 @@
                         </table>
                     </div>
                     <div class="tab-pane" id="tab6">
-                        <div v-text="price_sum(data6,2)" :class="center_class"></div>
-                        <div v-text="msg_6+text_point" :class="red_bold" v-if="msg_6.length"></div>
-                        <div v-if="data6.length==0">( 尚無扣款紀錄 )</div>
+                        <div v-text="price_sum(data6,2)" class="text-center"></div>
+                        <div v-text="msg_6+text_point" :class="red_bold" class="text-center" v-if="msg_6.length"></div>
+                        <div v-if="data6.length==0" class="text-center">( 尚無扣款紀錄 )</div>
                         <table class="table table-sm table-bordered" v-if="data6.length!=0">
                             <thead>
                                 <tr>
@@ -167,9 +172,9 @@
                         </table>
                     </div>
                     <div class="tab-pane" id="tab7">
-                        <div v-text="price_sum(data7,2)" :class="center_class"></div>
-                        <div v-text="msg_7+text_point" :class="red_bold" v-if="msg_7.length"></div>
-                        <div v-if="data7.length==0">( 尚無扣款紀錄 )</div>
+                        <div v-text="price_sum(data7,2)" class="text-center"></div>
+                        <div v-text="msg_7+text_point" :class="red_bold" class="text-center" v-if="msg_7.length"></div>
+                        <div v-if="data7.length==0" class="text-center">( 尚無扣款紀錄 )</div>
                         <table class="table table-sm table-bordered" v-if="data7.length!=0">
                             <thead>
                                 <tr>
@@ -206,6 +211,8 @@
     createApp({
         data() {
             return {
+                predict_value: "",
+                suggest_value: "",
                 center_class: "text-center",
                 text_point: "",
                 red_bold: "font-weight-bold text-danger",
@@ -216,9 +223,10 @@
                 // msg: "",
 
                 loading_text: "資料系統查詢中，請耐心等候10-15秒",
+                loading_text2: "資料系統查詢中，請再等候2-3秒",
                 err_text: "搜尋異常...",
                 msg_1: "", msg_2: "", msg_3: "", msg_4: "",
-                msg_5: "", msg_6: "", msg_7: "",
+                msg_5: "", msg_6: "", msg_7: "", msg_8: "",
                 data1: [],
                 data2: [],
                 data3: [],
@@ -230,6 +238,21 @@
             }
         },
         computed: {
+            predict_suggest() {
+                return (tag, price) => {
+                    if (tag == "predict")
+                        return this.predict_value != "" ? `截至本月月底餘額(預估) ${price}元` : ""
+                    else if (tag == "suggest") {
+                        let date1 = new Date()
+                        let month1 = date1.getMonth() + 1
+                        let days1 = date1.getDate()
+                        // console.log(days1)
+                        let next_month1 = (month1 + 1) > 12 ? 1 : (month1 + 1)
+                        let full_date1 = days1 > 25 ? `${next_month1}月1日` : `${month1}月25日`
+                        return this.suggest_value != "" ? `建議 ${full_date1}前 儲值金額 ${price}元` : ""
+                    }
+                }
+            },
             add_unit() {
                 return text => `${text} 元`
             }
@@ -276,6 +299,7 @@
                             // console.log(response.data)
                             this.data1 = this.sort_date(response.data)
                             this.msg_1 = ""
+                            this.get_predict_suggest()
                         })
                         .catch((error) => {
                             console.log(error)
@@ -409,6 +433,30 @@
                         })
                 }
             },
+            async get_predict_suggest() {
+                let url = "https://script.google.com/macros/s/AKfycbzZQu7K_gNrYkSLTX7P_R7g5rjw1hwwYfI18nh09ILYPog3ENZje1-7RhiPRppixwRK/exec"
+                url += "?name=" + this.name
+                if (!!this.name) {
+                    this.msg_8 = this.loading_text2
+                    axios.get(url)
+                        .then((response) => {
+                            //console.log(response.data)
+
+                            if (response.data.length > 0) {
+                                let data = response.data[0]
+                                this.predict_value = data.predict
+                                this.suggest_value = data.suggest
+                                this.msg_8 = ""
+                            }
+                            // this.data7 = this.sort_date(response.data)
+                            // this.msg_7 = ""
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                            // this.msg_7 = this.err_text
+                        })
+                }
+            },
             async get_data() {
                 // if (!!this.name) {
                 this.d_1()
@@ -418,6 +466,7 @@
                 this.d_5()
                 this.d_6()
                 this.d_7()
+
                 // }
                 //this.d_8()
 

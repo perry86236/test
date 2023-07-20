@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>歷史餘額紀錄查詢</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+
+    <div id="app">
+
+
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-8 col-lg-6">
+<!--                 <input type="text" @blur="get_data" v-model="name"> -->
+
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#tab1" data-toggle="tab" v-text="tab_arr[1]"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tab2" data-toggle="tab" v-text="tab_arr[2]"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tab3" data-toggle="tab" v-text="tab_arr[3]"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tab4" data-toggle="tab" v-text="tab_arr[4]"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tab5" data-toggle="tab" v-text="tab_arr[5]"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tab6" data-toggle="tab" v-text="tab_arr[6]"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tab7" data-toggle="tab" v-text="tab_arr[7]"></a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab1">
+                        <div v-text="price_sum(data1,1)" class="text-center"></div>
+                        <div v-text="msg_1+text_point" :class="red_bold" class="text-center" v-if="msg_1.length"></div>
+
+                        <div v-text="predict_suggest('predict',predict_value)" class="text-center"></div>
+                        <div v-text="predict_suggest('suggest',suggest_value)" class="text-center"></div>
+                        <div v-text="msg_8+text_point" :class="red_bold" class="text-center" v-if="msg_8.length"></div>
+
+                        <div v-if="data1.length==0" class="text-center">( 尚無扣款紀錄 )</div>
+                        <table class="table table-sm table-bordered" v-if="data1.length!=0">
+                            <thead>
+                                <tr>
+                                    <th>日期</th>
+                                    <th>項目</th>
+                                    <th>金額</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(d,i) in data1" :class="class_arr[i%class_arr.length]">
+                                    <td v-text="d.date"></td>
+                                    <td v-text="d.item"></td>
+                                    <td v-text="add_unit(d.price)"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="tab2">
+                        <div v-text="price_sum(data2,2)" class="text-center"></div>
+                        <div v-text="msg_2+text_point" :class="red_bold" class="text-center" v-if="msg_2.length"></div>
+                        <div v-if="data2.length==0" class="text-center">( 尚無扣款紀錄 )</div>
+                        <table class="table table-sm table-bordered" v-if="data2.length!=0">
+                            <thead>
+                                <tr>
+                                    <th>日期</th>
+                                    <th>金額</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(d,i) in data2" :class="class_arr[i%class_arr.length]">
+                                    <td v-text="d.item"></td>
+                                    <td v-text="add_unit(d.price)"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="tab3">
+                        <div v-text="price_sum(data3,2)" class="text-center"></div>
+                        <div v-text="msg_3+text_point" :class="red_bold" class="text-center" v-if="msg_3.length"></div>
+                        <div v-if="data3.length==0" class="text-center">( 尚無扣款紀錄 )</div>
+                        <table class="table table-sm table-bordered" v-if="data3.length!=0">
+                            <thead>
+                                <tr>
+                                    <th>日期</th>
+                                    <th>金額</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(d,i) in data3" :class="class_arr[i%class_arr.length]">
+                                    <td v-text="d.item"></td>
+                                    <td v-text="add_unit(d.price)"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="tab4">
+                        <div v-text="price_sum(data4,2)" class="text-center"></div>
+                        <div v-text="msg_4+text_point" :class="red_bold" class="text-center" v-if="msg_4.length"></div>
+                        <div v-if="data4.length==0" class="text-center">( 尚無扣款紀錄 )</div>
+                        <table class="table table-sm table-bordered" v-if="data4.length!=0">
+                            <thead>
+                                <tr>
+                                    <th>日期</th>
+                                    <th>項目</th>
+                                    <th>金額</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(d,i) in data4" :class="class_arr[i%class_arr.length]">
+                                    <td v-text="d.date"></td>
+                                    <td v-text="d.item"></td>
+                                    <td v-text="add_unit(d.price)"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="tab5">
+                        <div v-text="price_sum(data5,2)" class="text-center"></div>
+                        <div v-text="msg_5+text_point" :class="red_bold" class="text-center" v-if="msg_5.length"></div>
+                        <div v-if="data5.length==0" class="text-center">( 尚無扣款紀錄 )</div>
+                        <table class="table table-sm table-bordered" v-if="data5.length!=0">
+                            <thead>
+                                <tr>
+                                    <th>日期</th>
+                                    <th>項目</th>
+                                    <th>金額</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(d,i) in data5" :class="class_arr[i%class_arr.length]">
+                                    <td v-text="d.date"></td>
+                                    <td v-html="d.item.replace(/、/g,'<br>')"></td>
+                                    <td v-text="add_unit(d.price)"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="tab6">
+                        <div v-text="price_sum(data6,2)" class="text-center"></div>
+                        <div v-text="msg_6+text_point" :class="red_bold" class="text-center" v-if="msg_6.length"></div>
+                        <div v-if="data6.length==0" class="text-center">( 尚無扣款紀錄 )</div>
+                        <table class="table table-sm table-bordered" v-if="data6.length!=0">
+                            <thead>
+                                <tr>
+                                    <th>日期</th>
+                                    <th>金額</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(d,i) in data6" :class="class_arr[i%class_arr.length]">
+                                    <td v-text="d.item"></td>
+                                    <td v-text="add_unit(d.price)"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="tab7">
+                        <div v-text="price_sum(data7,2)" class="text-center"></div>
+                        <div v-text="msg_7+text_point" :class="red_bold" class="text-center" v-if="msg_7.length"></div>
+                        <div v-if="data7.length==0" class="text-center">( 尚無扣款紀錄 )</div>
+                        <table class="table table-sm table-bordered" v-if="data7.length!=0">
+                            <thead>
+                                <tr>
+                                    <th>日期</th>
+                                    <th>金額</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(d,i) in data7" :class="class_arr[i%class_arr.length]">
+                                    <td v-text="d.item"></td>
+                                    <td v-text="add_unit(d.price)"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <!-- <div>{{msg}}</div> -->
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/scripts.js"></script>
+</body>
+
+
+<script type="module">
+    var getUrlParameter = function getUrlParameter(sParam) {
+        var sPageURL = window.location.search.substring(1),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+            }
+        }
+        return false;
+    };
+    import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+
+    createApp({
+        data() {
+            return {
+                predict_value: "",
+                suggest_value: "",
+                center_class: "text-center",
+                text_point: "",
+                red_bold: "font-weight-bold text-danger",
+                tab_arr: ["", "儲值", "護持三寶", "護持精舍", "共修", "聖賢祝壽", "煙供粉", "神明衣"],
+                class_arr: ["table-success", "table-danger", "table-info", "table-warning", "table-active", ""],
+                name: getUrlParameter("name"),
+                // message: 'Hello Vue!',
+                // msg: "",
+
+                loading_text: "資料系統查詢中，請耐心等候10-15秒",
+                loading_text2: "資料系統查詢中，請再等候2-3秒",
+                err_text: "搜尋異常...",
+                msg_1: "", msg_2: "", msg_3: "", msg_4: "",
+                msg_5: "", msg_6: "", msg_7: "", msg_8: "",
+                data1: [],
+                data2: [],
+                data3: [],
+                data4: [],
+                data5: [],
+                data6: [],
+                data7: [],
+
+            }
+        },
+        computed: {
+            predict_suggest() {
+                return (tag, price) => {
+                    if (tag == "predict")
+                        return this.predict_value != "" ? `截至本月月底餘額(預估) ${price}元` : ""
+                    else if (tag == "suggest") {
+                        let date1 = new Date()
+                        let month1 = date1.getMonth() + 1
+                        let days1 = date1.getDate()
+                        // console.log(days1)
+                        let next_month1 = (month1 + 1) > 12 ? 1 : (month1 + 1)
+                        let full_date1 = days1 > 25 ? `${next_month1}月1日` : `${month1}月25日`
+                        return this.suggest_value != "" ? `建議 ${full_date1}前 儲值金額 ${price}元` : ""
+                    }
+                }
+            },
+            add_unit() {
+                return text => `${text} 元`
+            }
+        },
+        methods: {
+            price_sum(list, tag) {
+                list = this.sort_date(list)
+                if (list.length > 0) {
+                    let arr = list.map(e => e.price)
+                    let date = list[0].date
+                    let tagwithtext = !/^[0-9\/]+$/.test(date)
+                    let date_arr = date.split('/')
+                    let year = date_arr[0]
+                    let month = date_arr[1]
+                    // let sum=0
+                    let price = arr.reduce((acc, cur) => acc + cur, 0);
+                    if (tagwithtext == true)
+                        return `截至${date}累計 ${price} 元`
+                    else if (tag == 1)
+                        return `截至${year}年${month}月累計儲值 ${price} 元`
+                    else if (tag == 2)
+                        return `截至${year}年${month}月累計 ${price} 元`
+                }
+                else return ''
+            },
+            sort_date(data) {
+                data = data.sort((a, b) => {
+                    if (a.date > b.date) {
+                        return -1;
+                    }
+                });
+                return data
+            },
+            async d_1() {
+                //儲值1
+                let url = "https://script.google.com/macros/s/AKfycbykwUXNwScBQU6ZBL-WWPipBGa-qQykIa__gbMey-DlwEoFR-9KjKAEIVcpMeiWzvEe/exec"
+                url += "?name=" + this.name
+
+                this.data1 = []
+                if (!!this.name) {
+                    this.msg_1 = this.loading_text
+                    axios.get(url)
+                        .then((response) => {
+                            // console.log(response.data)
+                            this.data1 = this.sort_date(response.data)
+                            this.msg_1 = ""
+                            this.get_predict_suggest()
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                            this.msg_1 = this.err_text
+                        })
+                }
+            },
+            async d_2() {
+                //護持三寶2
+                let url = "https://script.google.com/macros/s/AKfycbyrpk4vqjgnZXbrqdpAXaC2pzv7RKnWRxa6ceNCSJgIuAUMBcBXcU1Ea5KWWnOMYQb-/exec"
+                url += "?name=" + this.name
+
+                this.data2 = []
+                if (!!this.name) {
+                    this.msg_2 = this.loading_text
+                    axios.get(url)
+                        .then((response) => {
+                            // console.log(response.data)
+                            this.data2 = this.sort_date(response.data)
+                            this.msg_2 = ""
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                            this.msg_2 = this.err_text
+                        })
+                }
+            },
+            async d_3() {
+                //護持精舍3
+                let url = "https://script.google.com/macros/s/AKfycbxNrS3UWWVitdOYEbM52KwuOdVz0yUvLbZ9kmo5QywuqxwHl9eF8E7DvNs2TxIIevSr/exec"
+                url += "?name=" + this.name
+
+                this.data3 = []
+                if (!!this.name) {
+                    this.msg_3 = this.loading_text
+                    axios.get(url)
+                        .then((response) => {
+                            // console.log(response.data)
+                            this.data3 = this.sort_date(response.data)
+                            this.msg_3 = ""
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                            this.msg_3 = this.err_text
+                        })
+                }
+            },
+            async d_4() {
+                //共修4
+                let url = "https://script.google.com/macros/s/AKfycbxvbzsxj3SAuWBHVEiTLb5xu4d7xAytGFrpf38JJV-1p3KG-wVUbrqMDPA_lePKSG-f4g/exec"
+                url += "?name=" + this.name
+
+                this.data4 = []
+                if (!!this.name) {
+                    this.msg_4 = this.loading_text
+                    await axios.get(url)
+                        .then((response) => {
+                            //console.log(response.data)
+                            this.data4 = this.sort_date(response.data)
+                            // let data=this.sort_date(response.data)
+                            // this.data4=data.map(e=>{
+                            //     e.item=e.item.replace(/、/g,"\n")
+                            //     return e
+                            // })
+
+                            this.msg_4 = ""
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                            this.msg_4 = this.err_text
+                        })
+                }
+            },
+            async d_5() {
+                //聖賢5
+                let url = "https://script.google.com/macros/s/AKfycbxFej9S4xSQoLS10SujPgpN8Z9iL7kPhm_ApTbXeLN5nHkP2FsSsG5U4VvII3n6q39cyw/exec"
+                url += "?name=" + this.name
+
+                this.data5 = []
+                if (!!this.name) {
+                    this.msg_5 = this.loading_text
+                    axios.get(url)
+                        .then((response) => {
+                            // console.log(response.data)
+                            this.data5 = this.sort_date(response.data)
+                            this.msg_5 = ""
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                            this.msg_5 = this.err_text
+                        })
+                }
+            },
+            async d_6() {
+                // 煙供粉6
+                let url = "https://script.google.com/macros/s/AKfycbzVhm8TyYuvVfE4BBu71XoslNPse1lWQLfvVTCOCniqugkUmJy4K_b5rN11-WunnQSZ3Q/exec"
+                url += "?name=" + this.name
+
+                this.data6 = []
+                if (!!this.name) {
+                    this.msg_6 = this.loading_text
+                    axios.get(url)
+                        .then((response) => {
+                            // console.log(response.data)
+                            this.data6 = this.sort_date(response.data)
+                            this.msg_6 = ""
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                            this.msg_6 = this.err_text
+                        })
+                }
+            },
+            async d_7() {
+                //神明衣7
+                let url = "https://script.google.com/macros/s/AKfycbwcJ4vys-EZWvRpd6Cu0yO9OrAhuB37eIftOERtYe6QMGmMmTuAyR1xxXSBX6GrIWUp/exec"
+                url += "?name=" + this.name
+
+                this.data7 = []
+                if (!!this.name) {
+                    this.msg_7 = this.loading_text
+                    axios.get(url)
+                        .then((response) => {
+                            // console.log(response.data)
+                            this.data7 = this.sort_date(response.data)
+                            this.msg_7 = ""
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                            this.msg_7 = this.err_text
+                        })
+                }
+            },
+            async get_predict_suggest() {
+                let url = "https://script.google.com/macros/s/AKfycbzZQu7K_gNrYkSLTX7P_R7g5rjw1hwwYfI18nh09ILYPog3ENZje1-7RhiPRppixwRK/exec"
+                url += "?name=" + this.name
+                if (!!this.name) {
+                    this.msg_8 = this.loading_text2
+                    axios.get(url)
+                        .then((response) => {
+                            //console.log(response.data)
+
+                            if (response.data.length > 0) {
+                                let data = response.data[0]
+                                this.predict_value = data.predict
+                                this.suggest_value = data.suggest
+                                this.msg_8 = ""
+                            }
+                            // this.data7 = this.sort_date(response.data)
+                            // this.msg_7 = ""
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                            // this.msg_7 = this.err_text
+                        })
+                }
+            },
+            async get_data() {
+                // if (!!this.name) {
+                this.d_1()
+                this.d_2()
+                this.d_3()
+                this.d_4()
+                this.d_5()
+                this.d_6()
+                this.d_7()
+
+                // }
+                //this.d_8()
+
+            }
+        },
+        mounted() {
+            if (!!this.name) {
+                this.d_1()
+                this.d_2()
+                this.d_3()
+                this.d_4()
+                this.d_5()
+                this.d_6()
+                this.d_7()
+            }
+
+            // this.get_data()
+        },
+        created() {
+            setInterval(() => {
+                let date = new Date()
+                let sec = date.getSeconds() % 4 + 1
+                this.text_point = "...".repeat(sec)
+            }, 1000)
+
+        }
+    }).mount('#app')
+</script>
+
+</html>

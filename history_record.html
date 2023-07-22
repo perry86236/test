@@ -17,9 +17,12 @@
     <div id="app">
 
 
-
+        
         <div class="row justify-content-center">
             <div class="col-12 col-sm-8 col-lg-6">
+                <center><button type="button" class="btn btn-outline-primary" @click="return_f()" v-if="show_button">重新查詢</button></center>
+                <hr style="filter: progid:dximagetransform.microsoft.shadow(color:#987cb9,direction:145,strength:15)" width="90%" color="#987cb9" size=1>
+                
 <!--                 <input type="text" @blur="get_data" v-model="name"> -->
 
                 <ul class="nav nav-tabs">
@@ -191,7 +194,8 @@
                         </table>
                     </div>
                 </div>
-
+                <hr style="filter: progid:dximagetransform.microsoft.shadow(color:#987cb9,direction:145,strength:15)" width="90%" color="#987cb9" size=1>
+                <center><button type="button" class="btn btn-outline-primary" @click="return_f()" v-if="show_button">重新查詢</button></center>
             </div>
         </div>
 
@@ -226,6 +230,7 @@
     createApp({
         data() {
             return {
+                show_button:false,
                 predict_value: "",
                 suggest_value: "",
                 center_class: "text-center",
@@ -273,6 +278,11 @@
             }
         },
         methods: {
+            return_f(){
+                let url="https://script.google.com/macros/s/AKfycbypRmknN9RW78dER0P-x2fteydGWh9UIZDtvpnoQTOX4T9nhHfIUeQPzYDBFtennTWC/exec"
+                location.href=url
+            },
+            
             price_sum(list, tag) {
                 list = this.sort_date(list)
                 if (list.length > 0) {
@@ -462,6 +472,7 @@
                                 this.predict_value = data.predict
                                 this.suggest_value = data.suggest
                                 this.msg_8 = ""
+                                this.show_button=true
                             }
                             // this.data7 = this.sort_date(response.data)
                             // this.msg_7 = ""

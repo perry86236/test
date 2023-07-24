@@ -576,7 +576,7 @@
                 this.predict_value = data.predict
                 this.suggest_value = data.suggest
                 this.msg_8 = ""
-                this.show_button = true
+                // this.show_button = true
               }
               // this.data7 = this.sort_date(response.data)
               // this.msg_7 = ""
@@ -630,6 +630,7 @@
             
             let bb = a.sort((a1, a2) => (a1.YM.replace('/',"") > a2.YM.replace('/',"") ? -1 : 1))
             this.msg_all=""
+            this.show_button = true
             this.data_all = (bb)
             // console.log(bb)
 

@@ -277,7 +277,7 @@
         let val = f1(data.date)
         console.log(val)
         if (groups.every(e => e.YM != val)) {
-
+          // console.log(data.price)
           if (data.item == "儲值") {
             groups.push({ YM: val, save: data.price, price: 0 })
           }
@@ -449,7 +449,7 @@
               // console.log(response.data)
               this.data1 = this.sort_date(response.data)
               this.msg_1 = ""
-              this.get_predict_suggest()
+              // this.get_predict_suggest()
             })
             .catch((error) => {
               console.log(error)
@@ -637,7 +637,7 @@
 
       if (!!this.name) {
         this.msg_all = this.loading_text
-        Promise.all([this.d_1(), this.d_2(), this.d_3(), this.d_4(), this.d_5(), this.d_6(), this.d_7()])
+        Promise.all([this.d_1(), this.d_2(), this.d_3(), this.d_4(), this.d_5(), this.d_6(), this.d_7(), this.get_predict_suggest()])
           .then(() => {
             console.log("OK")
             // let all_data = [...JSON.parse(JSON.stringify(this.data1)), ...JSON.parse(JSON.stringify(this.data2)),
@@ -648,12 +648,20 @@
             // console.log(all_data)
             // alert(123)
             let a = all_data.groupByDate()
+            if (a.map(e => e.save).reduce((sum, bb) => sum + bb) == 0)
+              a = all_data.groupByDate()
+            if (a.map(e => e.save).reduce((sum, bb) => sum + bb) == 0)
+              a = all_data.groupByDate()
+            if (a.map(e => e.save).reduce((sum, bb) => sum + bb) == 0)
+              a = all_data.groupByDate()
 
             let bb = a.sort((a1, a2) => (a1.YM.replace('/', "") > a2.YM.replace('/', "") ? -1 : 1))
             this.msg_all = ""
             this.show_button = true
             this.data_all = (bb)
             // console.log(bb)
+            this.select_all = true
+            this.select_item = "All"
 
 
           })

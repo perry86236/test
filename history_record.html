@@ -24,26 +24,25 @@
             v-if="show_button">重新查詢</button></center>
         <hr style="filter: progid:dximagetransform.microsoft.shadow(color:#987cb9,direction:145,strength:15)"
           width="90%" color="#987cb9" size=1>
-          <div class="dropdown open">
-            <button class="btn btn-secondary dropdown-toggle"
-                    type="button" id="dropdownMenu4" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false" v-text="dropdown_text">
-              
-            </button>
-            <div class="dropdown-menu">
-              <!-- <span class="dropdown-item-text">Dropdown item text</span> -->
-              <!-- <a class="dropdown-item" href="#">Action</a>
+        <div class="dropdown open">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu4" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false" v-text="dropdown_text">
+
+          </button>
+          <div class="dropdown-menu">
+            <!-- <span class="dropdown-item-text">Dropdown item text</span> -->
+            <!-- <a class="dropdown-item" href="#">Action</a>
               <a class="dropdown-item" href="#">Another action</a> -->
-              <a class="dropdown-item" v-for="item in data_all" v-text="item.YM" @click="change_selected_YM(item.YM)"></a>
-            </div>
+            <a class="dropdown-item" v-for="item in data_all" v-text="item.YM" @click="change_selected_YM(item.YM)"></a>
           </div>
-          <div v-text="'目前選擇年月：'+select_item"></div>
+        </div>
+        <div v-text="'目前選擇年月：'+select_item"></div>
 
         <!--                 <input type="text" @blur="get_data" v-model="name"> -->
 
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link active" href="#tab_all" data-toggle="tab" >總金額</a>
+            <a class="nav-link active" href="#tab_all" data-toggle="tab">總金額</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#tab1" data-toggle="tab" v-text="tab_arr[1]" v-if="!!select_item"></a>
@@ -76,15 +75,15 @@
               <thead>
                 <tr>
                   <th>年/月</th>
-                  <th class="text-sm-right">儲值金額</th>
-                  <th class="text-sm-right">花費金額</th>
+                  <th class="text-right">儲值金額</th>
+                  <th class="text-right">花費金額</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(d,i) in data_all" :class="class_arr[i%class_arr.length]">
                   <td v-text="d.YM"></td>
-                  <td v-text="d.save"  class="text-sm-right"></td>
-                  <td v-text="d.price" class="text-sm-right"></td>
+                  <td v-text="d.save" class="text-right"></td>
+                  <td v-text="d.price" class="text-right"></td>
                 </tr>
               </tbody>
             </table>
@@ -107,7 +106,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(d,i) in data1.filter(e=>e.date.startsWith(select_item))" :class="class_arr[i%class_arr.length]">
+                <tr v-for="(d,i) in data1.filter(e=>e.date.startsWith(select_item))"
+                  :class="class_arr[i%class_arr.length]">
                   <td v-text="d.date"></td>
                   <td v-text="d.item"></td>
                   <td v-text="add_unit(d.price)"></td>
@@ -127,7 +127,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(d,i) in data2.filter(e=>e.date.startsWith(select_item))" :class="class_arr[i%class_arr.length]">
+                <tr v-for="(d,i) in data2.filter(e=>e.date.startsWith(select_item))"
+                  :class="class_arr[i%class_arr.length]">
                   <td v-text="d.item"></td>
                   <td v-text="add_unit(d.price)"></td>
                 </tr>
@@ -146,7 +147,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(d,i) in data3.filter(e=>e.date.startsWith(select_item))" :class="class_arr[i%class_arr.length]">
+                <tr v-for="(d,i) in data3.filter(e=>e.date.startsWith(select_item))"
+                  :class="class_arr[i%class_arr.length]">
                   <td v-text="d.item"></td>
                   <td v-text="add_unit(d.price)"></td>
                 </tr>
@@ -166,7 +168,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(d,i) in data4.filter(e=>e.date.startsWith(select_item))" :class="class_arr[i%class_arr.length]">
+                <tr v-for="(d,i) in data4.filter(e=>e.date.startsWith(select_item))"
+                  :class="class_arr[i%class_arr.length]">
                   <td v-text="d.date"></td>
                   <td v-text="d.item"></td>
                   <td v-text="add_unit(d.price)"></td>
@@ -187,7 +190,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(d,i) in data5.filter(e=>e.date.startsWith(select_item))" :class="class_arr[i%class_arr.length]">
+                <tr v-for="(d,i) in data5.filter(e=>e.date.startsWith(select_item))"
+                  :class="class_arr[i%class_arr.length]">
                   <td v-text="d.date"></td>
                   <td v-html="d.item.replace(/、/g,'<br>')"></td>
                   <td v-text="add_unit(d.price)"></td>
@@ -207,7 +211,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(d,i) in data6.filter(e=>e.date.startsWith(select_item))" :class="class_arr[i%class_arr.length]">
+                <tr v-for="(d,i) in data6.filter(e=>e.date.startsWith(select_item))"
+                  :class="class_arr[i%class_arr.length]">
                   <td v-text="d.item"></td>
                   <td v-text="add_unit(d.price)"></td>
                 </tr>
@@ -226,7 +231,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(d,i) in data7.filter(e=>e.date.startsWith(select_item))" :class="class_arr[i%class_arr.length]">
+                <tr v-for="(d,i) in data7.filter(e=>e.date.startsWith(select_item))"
+                  :class="class_arr[i%class_arr.length]">
                   <td v-text="d.item"></td>
                   <td v-text="add_unit(d.price)"></td>
                 </tr>
@@ -253,7 +259,7 @@
 
 <script type="module">
   let f1 = (timeString) => {
-    let date = timeString?.split('/') || ['','']
+    let date = timeString?.split('/') || ['', '']
     let year = date[0]
     let month = date[1]
     //console.log(year,month)
@@ -261,42 +267,44 @@
   }
   Array.prototype.groupByDate = function () {
     return this.reduce(function (groups, data) {
-      if(!!data){
+      if (!!data) {
         let val = f1(data.date)
-	      console.log(val)
-      if (groups.every(e => e.YM != val)) {
-        
-		if (data.item == "儲值") {
-          groups.push({ YM: val, save: data.price, price: 0 })
+        console.log(val)
+        if (groups.every(e => e.YM != val)) {
+
+          if (data.item == "儲值") {
+            groups.push({ YM: val, save: data.price, price: 0 })
+          }
+          else {
+            groups.push({ YM: val, save: 0, price: data.price })
+          }
+
+        } else {
+          let index = -1;
+          for (let i = 0; i < groups.length; i++) {
+            if (groups[i].YM == val) {
+              index = i
+              break;
+            }
+          }
+          console.log(index)
+
+          if (data.item == "儲值") {
+            groups[index].save += data.price ? data.price : 0
+          }
+          else {
+            groups[index].price += data.price ? data.price : 0
+          }
+
         }
-        else {
-          groups.push({ YM: val, save: 0, price: data.price })
-        }
-		
-      } else {
-        let index=-1;
-		for(let i=0;i<groups.length;i++){
-			if(groups[i].YM==val)
-				index=i
-		}
-		console.log(index)
-		
-			if (data.item == "儲值") {
-			  groups[index].save += data.price?data.price:0
-			}
-			else {
-			  groups[index].price += data.price?data.price:0
-			}
-		
+
+        // groups["d_" + f1(val)] = groups["d_" + f1(val)] || []
+        // groups["d_" + f1(val)].push(item)
+        console.log(groups)
+        return groups
+
       }
 
-      // groups["d_" + f1(val)] = groups["d_" + f1(val)] || []
-      // groups["d_" + f1(val)].push(item)
-	  console.log(groups)
-      return groups
-        
-      }
-      
     }, [])
   };
 
@@ -320,8 +328,8 @@
   createApp({
     data() {
       return {
-        dropdown_text:"請選擇年/月",
-        select_item:"",
+        dropdown_text: "請選擇年/月",
+        select_item: "",
         show_button: false,
         predict_value: "",
         suggest_value: "",
@@ -338,7 +346,7 @@
         loading_text2: "資料系統查詢中，請再等候2-3秒",
         err_text: "搜尋異常...",
         msg_1: "", msg_2: "", msg_3: "", msg_4: "",
-        msg_5: "", msg_6: "", msg_7: "", msg_8: "",msg_all:"",
+        msg_5: "", msg_6: "", msg_7: "", msg_8: "", msg_all: "",
         data1: [],
         data2: [],
         data3: [],
@@ -371,8 +379,8 @@
       }
     },
     methods: {
-      change_selected_YM(text){
-        this.select_item=text
+      change_selected_YM(text) {
+        this.select_item = text
       },
       return_f() {
         let url = "https://script.google.com/macros/s/AKfycbypRmknN9RW78dER0P-x2fteydGWh9UIZDtvpnoQTOX4T9nhHfIUeQPzYDBFtennTWC/exec"
@@ -622,14 +630,14 @@
             // let all_data = [...JSON.parse(JSON.stringify(this.data1)), ...JSON.parse(JSON.stringify(this.data2)),
             // ...JSON.parse(JSON.stringify(this.data3)), ...JSON.parse(JSON.stringify(this.data4)),
             // ...JSON.parse(JSON.stringify(this.data5)), ...JSON.parse(JSON.stringify(this.data6)), ...JSON.parse(JSON.stringify(this.data7))]
-            let all_data=[...this.data1,...this.data2,...this.data3,
-            ...this.data4,...this.data5,...this.data6,...this.data7,]
+            let all_data = [...this.data1, ...this.data2, ...this.data3,
+            ...this.data4, ...this.data5, ...this.data6, ...this.data7,]
             // console.log(all_data)
             // alert(123)
             let a = all_data.groupByDate()
-            
-            let bb = a.sort((a1, a2) => (a1.YM.replace('/',"") > a2.YM.replace('/',"") ? -1 : 1))
-            this.msg_all=""
+
+            let bb = a.sort((a1, a2) => (a1.YM.replace('/', "") > a2.YM.replace('/', "") ? -1 : 1))
+            this.msg_all = ""
             this.show_button = true
             this.data_all = (bb)
             // console.log(bb)

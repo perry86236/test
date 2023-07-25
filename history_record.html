@@ -17,32 +17,33 @@
   <div id="app">
 
 
-    <div class="row justify-content-center">
-      <div class="col-sm-2 col-lg-3"></div>
-      <div>
-        <div class="dropdown open">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu4" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false" v-text="dropdown_text">
 
-          </button>
-          <div class="dropdown-menu">
-            <!-- <span class="dropdown-item-text">Dropdown item text</span> -->
-            <a class="dropdown-item" v-for="item in data_all" v-text="item.YM" @click="change_selected_YM(item.YM)"></a>
-          </div>
-        </div>
-      </div>
-      <div>
-        <div v-text="'目前選擇年月：'+select_item" class="h4 mb-0 mt-2 text-primary font-weight-bold"></div>
-      </div>
-      <div class="col"></div>
-    </div>
     <div class="row justify-content-center">
       <div class="col-12 col-sm-8 col-lg-6">
         <center><button type="button" class="btn btn-outline-primary" @click="return_f()"
             v-if="show_button">重新查詢</button></center>
         <hr style="filter: progid:dximagetransform.microsoft.shadow(color:#987cb9,direction:145,strength:15)"
           width="90%" color="#987cb9" size=1>
+        <div class="row justify-content-center">
+          <div class="col-sm-2 col-lg-3"></div>
+          <div>
+            <div class="dropdown open">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu4" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false" v-text="dropdown_text">
 
+              </button>
+              <div class="dropdown-menu">
+                <!-- <span class="dropdown-item-text">Dropdown item text</span> -->
+                <a class="dropdown-item" v-for="item in data_all" v-text="item.YM"
+                  @click="change_selected_YM(item.YM)"></a>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div v-text="'目前選擇年月：'+select_item" class="h4 mb-0 mt-2 text-primary font-weight-bold"></div>
+          </div>
+          <div class="col"></div>
+        </div>
 
         <ul class="nav nav-tabs">
           <li class="nav-item">

@@ -82,7 +82,7 @@
                 <tr>
                   <th>年/月</th>
                   <th class="text-right">儲值金額</th>
-                  <th class="text-right">護持金額</th>
+                  <th class="text-right">花費金額</th>
                 </tr>
               </thead>
               <tbody>
@@ -129,6 +129,7 @@
               <thead>
                 <tr>
                   <th>日期</th>
+                  <th>項目</th>
                   <th>金額</th>
                 </tr>
               </thead>
@@ -136,6 +137,7 @@
                 <tr v-for="(d,i) in data2.filter(e=>select_all||e.date.startsWith(select_item))"
                   :class="class_arr[i%class_arr.length]">
                   <td v-text="d.item"></td>
+                  <td v-text="tab_arr[2]"></td>
                   <td v-text="add_unit(d.price)"></td>
                 </tr>
               </tbody>
@@ -149,6 +151,7 @@
               <thead>
                 <tr>
                   <th>日期</th>
+                  <th>項目</th>
                   <th>金額</th>
                 </tr>
               </thead>
@@ -156,6 +159,7 @@
                 <tr v-for="(d,i) in data3.filter(e=>select_all||e.date.startsWith(select_item))"
                   :class="class_arr[i%class_arr.length]">
                   <td v-text="d.item"></td>
+                  <td v-text="tab_arr[3]"></td>
                   <td v-text="add_unit(d.price)"></td>
                 </tr>
               </tbody>
@@ -213,6 +217,7 @@
               <thead>
                 <tr>
                   <th>日期</th>
+                  <th>項目</th>
                   <th>金額</th>
                 </tr>
               </thead>
@@ -220,6 +225,7 @@
                 <tr v-for="(d,i) in data6.filter(e=>select_all||e.date.startsWith(select_item))"
                   :class="class_arr[i%class_arr.length]">
                   <td v-text="d.item"></td>
+                  <td v-text="tab_arr[6]"></td>
                   <td v-text="add_unit(d.price)"></td>
                 </tr>
               </tbody>
@@ -233,6 +239,7 @@
               <thead>
                 <tr>
                   <th>日期</th>
+                  <th>項目</th>
                   <th>金額</th>
                 </tr>
               </thead>
@@ -240,6 +247,7 @@
                 <tr v-for="(d,i) in data7.filter(e=>select_all||e.date.startsWith(select_item))"
                   :class="class_arr[i%class_arr.length]">
                   <td v-text="d.item"></td>
+                  <td v-text="tab_arr[7]"></td>
                   <td v-text="add_unit(d.price)"></td>
                 </tr>
               </tbody>
@@ -334,7 +342,7 @@
   createApp({
     data() {
       return {
-        dropdown_text: "護持明細(下拉式選單)",//"請選擇年/月",
+        dropdown_text: "請選擇年/月",
         select_item: "",
         select_all: false,
         show_button: false,

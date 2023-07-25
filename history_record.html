@@ -75,8 +75,8 @@
         <div class="tab-content">
           <div class="tab-pane active" id="tab_all">
             <!-- <div v-text="price_sum(data2,2)" class="text-center"></div> -->
-            <div v-text="price_sum(data1.filter(e=>select_all||e.date.startsWith(select_item)),1)" class="text-center">
-            </div v-if="!msg_all.length">
+            <div v-text="price_sum(data1.filter(e=>select_all||e.date.startsWith(select_item)),1)" class="text-center" v-if="!msg_all.length">
+            </div>
             <div v-text="predict_suggest('predict',predict_value)" class="text-center" v-if="!msg_all.length"></div>
             <div v-text="predict_suggest('suggest',suggest_value)" class="text-center" v-if="!msg_all.length"></div>
             <div v-text="msg_all+text_point" :class="red_bold" class="text-center" v-if="msg_all.length"></div>

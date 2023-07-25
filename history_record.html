@@ -101,16 +101,16 @@
               <thead>
                 <tr>
                   <th>日期</th>
-                  <th class="text-right">項目</th>
-                  <th class="text-right">金額</th>
+                  <th>項目</th>
+                  <th>金額</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(d,i) in data1.filter(e=>e.date.startsWith(select_item))"
                   :class="class_arr[i%class_arr.length]">
                   <td v-text="d.date"></td>
-                  <td v-text="d.item" class="text-right"></td>
-                  <td v-text="add_unit(d.price)" class="text-right"></td>
+                  <td v-text="d.item"></td>
+                  <td v-text="add_unit(d.price)"></td>
                 </tr>
               </tbody>
             </table>
@@ -123,14 +123,14 @@
               <thead>
                 <tr>
                   <th>日期</th>
-                  <th class="text-right">金額</th>
+                  <th>金額</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(d,i) in data2.filter(e=>e.date.startsWith(select_item))"
                   :class="class_arr[i%class_arr.length]">
                   <td v-text="d.item"></td>
-                  <td v-text="add_unit(d.price)" class="text-right"></td>
+                  <td v-text="add_unit(d.price)"></td>
                 </tr>
               </tbody>
             </table>
@@ -143,14 +143,14 @@
               <thead>
                 <tr>
                   <th>日期</th>
-                  <th class="text-right">金額</th>
+                  <th>金額</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(d,i) in data3.filter(e=>e.date.startsWith(select_item))"
                   :class="class_arr[i%class_arr.length]">
                   <td v-text="d.item"></td>
-                  <td v-text="add_unit(d.price)" class="text-right"></td>
+                  <td v-text="add_unit(d.price)"></td>
                 </tr>
               </tbody>
             </table>
@@ -163,16 +163,16 @@
               <thead>
                 <tr>
                   <th>日期</th>
-                  <th class="text-right">項目</th>
-                  <th class="text-right">金額</th>
+                  <th>項目</th>
+                  <th>金額</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(d,i) in data4.filter(e=>e.date.startsWith(select_item))"
                   :class="class_arr[i%class_arr.length]">
                   <td v-text="d.date"></td>
-                  <td v-text="d.item" class="text-right"></td>
-                  <td v-text="add_unit(d.price)" class="text-right"></td>
+                  <td v-text="d.item"></td>
+                  <td v-text="add_unit(d.price)"></td>
                 </tr>
               </tbody>
             </table>
@@ -186,7 +186,7 @@
                 <tr>
                   <th>日期</th>
                   <th>項目</th>
-                  <th class="text-right">金額</th>
+                  <th>金額</th>
                 </tr>
               </thead>
               <tbody>
@@ -194,7 +194,7 @@
                   :class="class_arr[i%class_arr.length]">
                   <td v-text="d.date"></td>
                   <td v-html="d.item.replace(/、/g,'<br>')"></td>
-                  <td v-text="add_unit(d.price)" class="text-right"></td>
+                  <td v-text="add_unit(d.price)"></td>
                 </tr>
               </tbody>
             </table>
@@ -207,14 +207,14 @@
               <thead>
                 <tr>
                   <th>日期</th>
-                  <th class="text-right">金額</th>
+                  <th>金額</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(d,i) in data6.filter(e=>e.date.startsWith(select_item))"
                   :class="class_arr[i%class_arr.length]">
                   <td v-text="d.item"></td>
-                  <td v-text="add_unit(d.price)" class="text-right"></td>
+                  <td v-text="add_unit(d.price)"></td>
                 </tr>
               </tbody>
             </table>
@@ -227,14 +227,14 @@
               <thead>
                 <tr>
                   <th>日期</th>
-                  <th class="text-right">金額</th>
+                  <th>金額</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(d,i) in data7.filter(e=>e.date.startsWith(select_item))"
                   :class="class_arr[i%class_arr.length]">
                   <td v-text="d.item"></td>
-                  <td v-text="add_unit(d.price)" class="text-right"></td>
+                  <td v-text="add_unit(d.price)"></td>
                 </tr>
               </tbody>
             </table>
@@ -290,10 +290,10 @@
           console.log(index)
 
           if (data.item == "儲值") {
-            groups[index].save += data.price ? data.price : 0
+            groups[index].save += data.price || 0
           }
           else {
-            groups[index].price += data.price ? data.price : 0
+            groups[index].price += data.price || 0
           }
 
         }

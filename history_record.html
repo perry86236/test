@@ -15,7 +15,7 @@
 
 
   <div id="app">
-
+    <!-- <li v-for="item  in 20 " :key="item">{{item}}</li> -->
 
 
     <div class="row justify-content-center">
@@ -49,6 +49,9 @@
         <ul class="nav nav-tabs">
           <li class="nav-item">
             <a class="nav-link active" href="#tab_all" data-toggle="tab">總金額</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#tab_detail" data-toggle="tab" v-if="select_all||!!select_item">簡易明細</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#tab1" data-toggle="tab" v-text="tab_arr[1]" v-if="select_all||!!select_item"></a>
@@ -90,16 +93,59 @@
               <thead>
                 <tr>
                   <th>年/月</th>
+                  <!-- <th v-for="(d,i) in filter_without_first(tab_arr)">{{d}}</th> -->
                   <th class="text-right">儲值金額</th>
                   <th class="text-right">護持金額</th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(d,i) in data_all" :class="class_arr[i%class_arr.length]">
+                <tr v-for="(d,i) in (data_all)" :class="class_arr[i%class_arr.length]">
+                  <td v-text="d.YM"></td>
+                  <td v-text="d.data[1]" class="text-right"></td>
+                  <td v-text="d.data[0]" class="text-right"></td>
+                  
+                  <!-- <td v-text="d.YM"></td>
+                  <td v-text="d.save" class="text-right"></td>
+                  <td v-text="d.price" class="text-right"></td> -->
+                </tr>
+                <!-- <tr v-for="(d,i) in data_all" :class="class_arr[i%class_arr.length]">
                   <td v-text="d.YM"></td>
                   <td v-text="d.save" class="text-right"></td>
                   <td v-text="d.price" class="text-right"></td>
+                </tr> -->
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-pane" id="tab_detail">
+            
+            <table class="table table-sm table-bordered" v-if="data_all.length!=0">
+              <thead>
+                <tr>
+                  <th class="text-right">年/月</th>
+                  <th v-for="(d,i) in filter_without_first(tab_arr)" class="text-right">{{d}}</th>
+                  <!-- <th class="text-right">儲值金額</th>
+                  <th class="text-right">護持金額</th> -->
                 </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(d,i) in (data_all)" :class="class_arr[i%class_arr.length]">
+                  <td v-text="d.YM" class="text-right"></td>
+                  <td v-for="j in 7" v-text="d.data[j]"  class="text-right"></td>
+                  <!-- <td v-text="d.data[2]"></td>
+                  <td v-text="d.data[3]"></td>
+                  <td v-text="d.data[4]"></td>
+                  <td v-text="d.data[5]"></td>
+                  <td v-text="d.data[6]"></td>
+                  <td v-text="d.data[7]"></td> -->
+                  <!-- <td v-text="d.YM"></td>
+                  <td v-text="d.save" class="text-right"></td>
+                  <td v-text="d.price" class="text-right"></td> -->
+                </tr>
+                <!-- <tr v-for="(d,i) in data_all" :class="class_arr[i%class_arr.length]">
+                  <td v-text="d.YM"></td>
+                  <td v-text="d.save" class="text-right"></td>
+                  <td v-text="d.price" class="text-right"></td>
+                </tr> -->
               </tbody>
             </table>
           </div>
@@ -298,20 +344,24 @@
   Array.prototype.groupByDate = function () {
     return this.reduce(function (groups, data) {
       if (!!data) {
-        let date = data.date
-        // console.log(data.index)
-        let val = f1(date)
-        // console.log(val)
+        let d_date = data.date
+        let d_index = data.index
+        let d_price = data.price
+        let val = f1(d_date)
         if (groups.every(e => e.YM != val)) {
-          // console.log(data.price)
-          let index = data.index
-          let price = data.price
-          if (index == 1) {//儲值
-            groups.push({ YM: val, save: price, price: 0 })
-          }
-          else {
-            groups.push({ YM: val, save: 0, price: price })
-          }
+          let d_data = [0, 0, 0, 0, 0, 0, 0, 0]
+          //0_護持(全),1_儲值,2_三寶,3_精舍,4_共修,5_聖賢,6_煙供粉,7_神明衣
+          d_data[d_index] = d_price
+          if(d_index!=1)
+            d_data[0]=d_price
+          
+          groups.push({ YM: val, data: d_data })
+          // if (index == 1) {//儲值
+          //   groups.push({ YM: val, save: price, price: 0 })
+          // }
+          // else {
+          //   groups.push({ YM: val, save: 0, price: price })
+          // }
 
         } else {
           let index = -1;
@@ -322,24 +372,24 @@
             }
           }
           // console.log(index)
-
-          if (data.index == 1) {//儲值
-            groups[index].save += data.price || 0
-          }
-          else {
-            groups[index].price += data.price || 0
-          }
+          groups[index].data[d_index] += d_price
+          if(d_index!=1)
+            groups[index].data[0] += d_price
+          // if (data.index == 1) {//儲值
+          //   groups[index].save += data.price || 0
+          // }
+          // else {
+          //   groups[index].price += data.price || 0
+          // }
 
         }
 
-        // groups["d_" + f1(val)] = groups["d_" + f1(val)] || []
-        // groups["d_" + f1(val)].push(item)
-        // console.log(groups)
         return groups
 
       }
 
-    }, [])
+    
+}, [])
   };
 
   var getUrlParameter = function getUrlParameter(sParam) {
@@ -418,6 +468,9 @@
     },
 
     methods: {
+      filter_without_first(arr) {
+        return arr.filter((item, index) => index != 0);
+      },
       change_selected_YM(text) {
         if (!!text) {
           this.select_all = false
@@ -432,12 +485,14 @@
         location.href = url
       },
       price_sum_all(dateString) {
+        console.log(dateString)
         let date_arr = dateString.split('/')
         let year = date_arr[0]
         let month = date_arr[1]
         let data = this.data_all
         let select_data = data.filter(e => e.YM == dateString)[0]
-        return `目前選擇${year}年${month}月儲值金額${select_data.save}元/護持金額${select_data.price}元`
+        console.log(select_data)
+         return `目前選擇${year}年${month}月儲值金額${select_data.data[1]}元/護持金額${select_data.data[0]}元`
       },
       price_sum(list, tag) {//.filter(e=>select_all||e.date.startsWith(select_item))
         list = this.sort_date(list)
@@ -736,16 +791,7 @@
             // console.log(all_data)
             // alert(123)
             let a = all_data.groupByDate()
-            while (a.map(e => e.save).reduce((sum, bb) => sum + bb) == 0) {
-              a = all_data.groupByDate()
-            }
-
-            // if (a.map(e => e.save).reduce((sum, bb) => sum + bb) == 0)
-            //   a = all_data.groupByDate()
-            // if (a.map(e => e.save).reduce((sum, bb) => sum + bb) == 0)
-            //   a = all_data.groupByDate()
-            // if (a.map(e => e.save).reduce((sum, bb) => sum + bb) == 0)
-            //   a = all_data.groupByDate()
+            
 
             let bb = a.sort((a1, a2) => (a1.YM.replace('/', "") > a2.YM.replace('/', "") ? -1 : 1))
             this.msg_all = ""

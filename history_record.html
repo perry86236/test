@@ -75,7 +75,10 @@
         <div class="tab-content">
           <div class="tab-pane active" id="tab_all">
             <!-- <div v-text="price_sum(data2,2)" class="text-center"></div> -->
-            <div v-text="price_sum(data1,1)" class="text-center" v-if="!msg_all.length">
+            <div v-text="price_sum_all(select_item)" class="text-center" v-if="!msg_all.length && select_item!='All'">
+            </div>
+            <!-- .filter(e=>select_all||e.date.startsWith(select_item)) -->
+            <div v-text="price_sum(data1,1)" class="text-center" v-if="!msg_all.length && select_item=='All'">
             </div>
             <div v-text="predict_suggest('predict',predict_value)" class="text-center" v-if="!msg_all.length"></div>
             <div v-text="predict_suggest('suggest',suggest_value)" class="text-center" v-if="!msg_all.length"></div>
@@ -418,7 +421,14 @@
         let url = "https://script.google.com/macros/s/AKfycbypRmknN9RW78dER0P-x2fteydGWh9UIZDtvpnoQTOX4T9nhHfIUeQPzYDBFtennTWC/exec"
         location.href = url
       },
-
+      price_sum_all(dateString) {
+        let date_arr = dateString.split('/')
+        let year = date_arr[0]
+        let month = date_arr[1]
+        let data = this.data_all
+        let select_data = data.filter(e => e.YM == dateString)[0]
+        return `目前選擇${year}年${month}月儲值${select_data.save}元/護持金額${select_data.price}元`
+      },
       price_sum(list, tag) {//.filter(e=>select_all||e.date.startsWith(select_item))
         list = this.sort_date(list)
         let all = this.select_all

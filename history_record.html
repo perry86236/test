@@ -147,7 +147,7 @@
               <tbody>
                 <tr v-for="(d,i) in data2.filter(e=>select_all||e.date.startsWith(select_item))"
                   :class="class_arr[i%class_arr.length]" class="row m-0">
-                  <td v-text="d.item" class="d-inline-block col-3"></td>
+                  <td v-text="year_slash(d.item)" class="d-inline-block col-3"></td>
                   <td v-text="tab_arr[2]" class="d-inline-block col-7"></td>
                   <td v-text="add_unit(d.price)" class="d-inline-block col-2"></td>
                 </tr>
@@ -170,7 +170,7 @@
               <tbody>
                 <tr v-for="(d,i) in data3.filter(e=>select_all||e.date.startsWith(select_item))"
                   :class="class_arr[i%class_arr.length]" class="row m-0">
-                  <td v-text="d.item" class="d-inline-block col-3"></td>
+                  <td v-text="year_slash(d.item)" class="d-inline-block col-3"></td>
                   <td v-text="tab_arr[3]" class="d-inline-block col-7"></td>
                   <td v-text="add_unit(d.price)" class="d-inline-block col-2"></td>
                 </tr>
@@ -239,7 +239,7 @@
               <tbody>
                 <tr v-for="(d,i) in data6.filter(e=>select_all||e.date.startsWith(select_item))"
                   :class="class_arr[i%class_arr.length]" class="row m-0">
-                  <td v-text="d.item" class="d-inline-block col-3"></td>
+                  <td v-text="year_slash(d.item)" class="d-inline-block col-3"></td>
                   <td v-text="tab_arr[6]" class="d-inline-block col-7"></td>
                   <td v-text="add_unit(d.price)" class="d-inline-block col-2"></td>
                 </tr>
@@ -262,7 +262,7 @@
               <tbody>
                 <tr v-for="(d,i) in data7.filter(e=>select_all||e.date.startsWith(select_item))"
                   :class="class_arr[i%class_arr.length]" class="row m-0">
-                  <td v-text="d.item" class="d-inline-block col-3"></td>
+                  <td v-text="year_slash(d.item)" class="d-inline-block col-3"></td>
                   <td v-text="tab_arr[7]" class="d-inline-block col-7"></td>
                   <td v-text="add_unit(d.price)" class="d-inline-block col-2"></td>
                 </tr>
@@ -407,8 +407,12 @@
       },
       add_unit() {
         return text => `${text} 元`
+      },
+      year_slash() {
+        return text => text.replace(/年/g, "/")
       }
     },
+
     methods: {
       change_selected_YM(text) {
         if (!!text) {

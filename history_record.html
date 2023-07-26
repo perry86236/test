@@ -298,11 +298,13 @@
   Array.prototype.groupByDate = function () {
     return this.reduce(function (groups, data) {
       if (!!data) {
+        // console.log(data.index)
         let val = f1(data.date)
         // console.log(val)
         if (groups.every(e => e.YM != val)) {
           // console.log(data.price)
-          if (data.item == "儲值") {
+
+          if (data.index == 1) {//儲值
             groups.push({ YM: val, save: data.price, price: 0 })
           }
           else {
@@ -319,7 +321,7 @@
           }
           // console.log(index)
 
-          if (data.item == "儲值") {
+          if (data.index == 1) {//儲值
             groups[index].save += data.price || 0
           }
           else {
@@ -509,7 +511,11 @@
           axios.get(url)
             .then((response) => {
               // console.log(response.data)
-              this.data1 = this.sort_date(response.data)
+              this.data1 = this.sort_date(response.data).map(e => {
+                e.index = 1
+                return e
+              })
+              console.log(this.data1)
               this.msg_1 = ""
               // this.get_predict_suggest()
             })
@@ -530,7 +536,10 @@
           axios.get(url)
             .then((response) => {
               // console.log(response.data)
-              this.data2 = this.sort_date(response.data)
+              this.data2 = this.sort_date(response.data).map(e => {
+                e.index = 2
+                return e
+              })
               this.msg_2 = ""
             })
             .catch((error) => {
@@ -550,7 +559,10 @@
           axios.get(url)
             .then((response) => {
               // console.log(response.data)
-              this.data3 = this.sort_date(response.data)
+              this.data3 = this.sort_date(response.data).map(e => {
+                e.index = 3
+                return e
+              })
               this.msg_3 = ""
             })
             .catch((error) => {
@@ -570,7 +582,10 @@
           await axios.get(url)
             .then((response) => {
               //console.log(response.data)
-              this.data4 = this.sort_date(response.data)
+              this.data4 = this.sort_date(response.data).map(e => {
+                e.index = 4
+                return e
+              })
               // let data=this.sort_date(response.data)
               // this.data4=data.map(e=>{
               //     e.item=e.item.replace(/、/g,"\n")
@@ -596,7 +611,10 @@
           axios.get(url)
             .then((response) => {
               // console.log(response.data)
-              this.data5 = this.sort_date(response.data)
+              this.data5 = this.sort_date(response.data).map(e => {
+                e.index = 5
+                return e
+              })
               this.msg_5 = ""
             })
             .catch((error) => {
@@ -616,7 +634,10 @@
           axios.get(url)
             .then((response) => {
               // console.log(response.data)
-              this.data6 = this.sort_date(response.data)
+              this.data6 = this.sort_date(response.data).map(e => {
+                e.index = 6
+                return e
+              })
               this.msg_6 = ""
             })
             .catch((error) => {
@@ -636,7 +657,10 @@
           axios.get(url)
             .then((response) => {
               // console.log(response.data)
-              this.data7 = this.sort_date(response.data)
+              this.data7 = this.sort_date(response.data).map(e => {
+                e.index = 7
+                return e
+              })
               this.msg_7 = ""
             })
             .catch((error) => {
@@ -710,9 +734,10 @@
             // console.log(all_data)
             // alert(123)
             let a = all_data.groupByDate()
-            while(a.map(e => e.save).reduce((sum, bb) => sum + bb) == 0){
-               a = all_data.groupByDate()
-            }
+            // while (a.map(e => e.save).reduce((sum, bb) => sum + bb) == 0) {
+            //   a = all_data.groupByDate()
+            // }
+
             // if (a.map(e => e.save).reduce((sum, bb) => sum + bb) == 0)
             //   a = all_data.groupByDate()
             // if (a.map(e => e.save).reduce((sum, bb) => sum + bb) == 0)

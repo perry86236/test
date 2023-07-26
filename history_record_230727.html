@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>歷史餘額紀錄查詢</title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+
+  <div id="app">
+
+
+
+    <div class="row justify-content-center">
+      <div class="col-12 col-sm-8 col-lg-6">
+        <center><button type="button" class="btn btn-outline-primary" @click="return_f()"
+            v-if="show_button">重新查詢</button></center>
+        <hr style="filter: progid:dximagetransform.microsoft.shadow(color:#987cb9,direction:145,strength:15)"
+          width="90%" color="#987cb9" size=1>
+        <div class="row">
+          <div class=""></div>
+          <div>
+            <div class="dropdown open">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu4" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false" v-text="dropdown_text">
+
+              </button>
+              <div class="dropdown-menu">
+                <!-- <span class="dropdown-item-text">Dropdown item text</span> -->
+                <a class="dropdown-item" @click="change_selected_YM()">(All)</a>
+                <a class="dropdown-item" v-for="item in data_all" v-text="item.YM"
+                  @click="change_selected_YM(item.YM)"></a>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div v-text="'目前選擇年月：'+select_item" class="h4 mb-0 mt-2 text-primary font-weight-bold"></div>
+          </div>
+          <div class="col-auto"></div>
+        </div>
+
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link active" href="#tab_all" data-toggle="tab">總金額</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#tab1" data-toggle="tab" v-text="tab_arr[1]" v-if="select_all||!!select_item"></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#tab2" data-toggle="tab" v-text="tab_arr[2]" v-if="select_all||!!select_item"></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#tab3" data-toggle="tab" v-text="tab_arr[3]" v-if="select_all||!!select_item"></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#tab4" data-toggle="tab" v-text="tab_arr[4]" v-if="select_all||!!select_item"></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#tab5" data-toggle="tab" v-text="tab_arr[5]" v-if="select_all||!!select_item"></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#tab6" data-toggle="tab" v-text="tab_arr[6]" v-if="select_all||!!select_item"></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#tab7" data-toggle="tab" v-text="tab_arr[7]" v-if="select_all||!!select_item"></a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="tab_all">
+            <!-- <div v-text="price_sum(data2,2)" class="text-center"></div> -->
+            <div v-text="price_sum_all(select_item)" class="text-center" v-if="!msg_all.length && select_item!='All'">
+            </div>
+            <!-- .filter(e=>select_all||e.date.startsWith(select_item)) -->
+            <div v-text="price_sum(data1,1)" class="text-center" v-if="!msg_all.length && select_item=='All'">
+            </div>
+            <div v-text="predict_suggest('predict',predict_value)" class="text-center" style="font-weight: 900;"
+              v-if="!msg_all.length"></div>
+            <div v-text="predict_suggest('suggest',suggest_value)" class="text-center" style="font-weight: 900;"
+              v-if="!msg_all.length"></div>
+            <div v-text="msg_all+text_point" :class="red_bold" class="text-center" v-if="msg_all.length"></div>
+            <!-- <div v-if="data2.length==0" class="text-center">( 尚無扣款紀錄 )</div> -->
+            <table class="table table-sm table-bordered" v-if="data_all.length!=0">
+              <thead>
+                <tr>
+                  <th>年/月</th>
+                  <th class="text-right">儲值金額</th>
+                  <th class="text-right">護持金額</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(d,i) in data_all" :class="class_arr[i%class_arr.length]">
+                  <td v-text="d.YM"></td>
+                  <td v-text="d.save" class="text-right"></td>
+                  <td v-text="d.price" class="text-right"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-pane" id="tab1">
+            <div v-text="price_sum(data1.filter(e=>select_all||e.date.startsWith(select_item)),1)" class="text-center">
+            </div>
+            <div v-text="msg_1+text_point" :class="red_bold" class="text-center" v-if="msg_1.length"></div>
+
+            <!-- <div v-text="predict_suggest('predict',predict_value)" class="text-center"></div>
+            <div v-text="predict_suggest('suggest',suggest_value)" class="text-center"></div> -->
+            <div v-text="msg_8+text_point" :class="red_bold" class="text-center" v-if="msg_8.length"></div>
+
+            <div v-if="data1.length==0" class="text-center">( 尚無扣款紀錄 )</div>
+            <table class="table table-sm table-bordered" v-if="data1.length!=0">
+              <thead>
+                <tr class="row m-0">
+                  <th class="d-inline-block col-3">日期</th>
+                  <th class="d-inline-block col-7">項目</th>
+                  <th class="d-inline-block col-2">金額</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(d,i) in data1.filter(e=>select_all||e.date.startsWith(select_item))"
+                  :class="class_arr[i%class_arr.length]" class="row m-0">
+                  <td v-text="d.date" class="d-inline-block col-3"></td>
+                  <td v-text="d.item" class="d-inline-block col-7"></td>
+                  <td v-text="add_unit(d.price)" class="d-inline-block col-2"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-pane" id="tab2">
+            <div v-text="price_sum(data2.filter(e=>select_all||e.date.startsWith(select_item)),2)" class="text-center">
+            </div>
+            <div v-text="msg_2+text_point" :class="red_bold" class="text-center" v-if="msg_2.length"></div>
+            <div v-if="data2.length==0" class="text-center">( 尚無扣款紀錄 )</div>
+            <table class="table table-sm table-bordered" v-if="data2.length!=0">
+              <thead>
+                <tr class="row m-0">
+                  <th class="d-inline-block col-3">日期</th>
+                  <th class="d-inline-block col-7">項目</th>
+                  <th class="d-inline-block col-2">金額</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(d,i) in data2.filter(e=>select_all||e.date.startsWith(select_item))"
+                  :class="class_arr[i%class_arr.length]" class="row m-0">
+                  <td v-text="year_slash(d.item)" class="d-inline-block col-3"></td>
+                  <td v-text="tab_arr[2]" class="d-inline-block col-7"></td>
+                  <td v-text="add_unit(d.price)" class="d-inline-block col-2"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-pane" id="tab3">
+            <div v-text="price_sum(data3.filter(e=>select_all||e.date.startsWith(select_item)),2)" class="text-center">
+            </div>
+            <div v-text="msg_3+text_point" :class="red_bold" class="text-center" v-if="msg_3.length"></div>
+            <div v-if="data3.length==0" class="text-center">( 尚無扣款紀錄 )</div>
+            <table class="table table-sm table-bordered" v-if="data3.length!=0">
+              <thead>
+                <tr class="row m-0">
+                  <th class="d-inline-block col-3">日期</th>
+                  <th class="d-inline-block col-7">項目</th>
+                  <th class="d-inline-block col-2">金額</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(d,i) in data3.filter(e=>select_all||e.date.startsWith(select_item))"
+                  :class="class_arr[i%class_arr.length]" class="row m-0">
+                  <td v-text="year_slash(d.item)" class="d-inline-block col-3"></td>
+                  <td v-text="tab_arr[3]" class="d-inline-block col-7"></td>
+                  <td v-text="add_unit(d.price)" class="d-inline-block col-2"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-pane" id="tab4">
+            <div v-text="price_sum(data4.filter(e=>select_all||e.date.startsWith(select_item)),2)" class="text-center">
+            </div>
+            <div v-text="msg_4+text_point" :class="red_bold" class="text-center" v-if="msg_4.length"></div>
+            <div v-if="data4.length==0" class="text-center">( 尚無扣款紀錄 )</div>
+            <table class="table table-sm table-bordered" v-if="data4.length!=0">
+              <thead>
+                <tr class="row m-0">
+                  <th class="d-inline-block col-3">日期</th>
+                  <th class="d-inline-block col-7">項目</th>
+                  <th class="d-inline-block col-2">金額</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(d,i) in data4.filter(e=>select_all||e.date.startsWith(select_item))"
+                  :class="class_arr[i%class_arr.length]" class="row m-0">
+                  <td v-text="d.date" class="d-inline-block col-3"></td>
+                  <td v-text="d.item" class="d-inline-block col-7"></td>
+                  <td v-text="add_unit(d.price)" class="d-inline-block col-2"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-pane" id="tab5">
+            <div v-text="price_sum(data5.filter(e=>select_all||e.date.startsWith(select_item)),2)" class="text-center">
+            </div>
+            <div v-text="msg_5+text_point" :class="red_bold" class="text-center" v-if="msg_5.length"></div>
+            <div v-if="data5.length==0" class="text-center">( 尚無扣款紀錄 )</div>
+            <table class="table table-sm table-bordered" v-if="data5.length!=0">
+              <thead>
+                <tr class="row m-0">
+                  <th class="d-inline-block col-3">日期</th>
+                  <th class="d-inline-block col-7">項目</th>
+                  <th class="d-inline-block col-2">金額</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(d,i) in data5.filter(e=>select_all||e.date.startsWith(select_item))"
+                  :class="class_arr[i%class_arr.length]" class="row m-0">
+                  <td v-text="d.date" class="d-inline-block col-3"></td>
+                  <td v-html="d.item.replace(/、/g,'<br>')" class="d-inline-block col-7"></td>
+                  <td v-text="add_unit(d.price)" class="d-inline-block col-2"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-pane" id="tab6">
+            <div v-text="price_sum(data6.filter(e=>select_all||e.date.startsWith(select_item)),2)" class="text-center">
+            </div>
+            <div v-text="msg_6+text_point" :class="red_bold" class="text-center" v-if="msg_6.length"></div>
+            <div v-if="data6.length==0" class="text-center">( 尚無扣款紀錄 )</div>
+            <table class="table table-sm table-bordered" v-if="data6.length!=0">
+              <thead>
+                <tr class="row m-0">
+                  <th class="d-inline-block col-3">日期</th>
+                  <th class="d-inline-block col-7">項目</th>
+                  <th class="d-inline-block col-2">金額</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(d,i) in data6.filter(e=>select_all||e.date.startsWith(select_item))"
+                  :class="class_arr[i%class_arr.length]" class="row m-0">
+                  <td v-text="year_slash(d.item)" class="d-inline-block col-3"></td>
+                  <td v-text="tab_arr[6]" class="d-inline-block col-7"></td>
+                  <td v-text="add_unit(d.price)" class="d-inline-block col-2"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-pane" id="tab7">
+            <div v-text="price_sum(data7.filter(e=>select_all||e.date.startsWith(select_item)),2)" class="text-center">
+            </div>
+            <div v-text="msg_7+text_point" :class="red_bold" class="text-center" v-if="msg_7.length"></div>
+            <div v-if="data7.length==0" class="text-center">( 尚無扣款紀錄 )</div>
+            <table class="table table-sm table-bordered" v-if="data7.length!=0">
+              <thead>
+                <tr class="row m-0">
+                  <th class="d-inline-block col-3">日期</th>
+                  <th class="d-inline-block col-7">項目</th>
+                  <th class="d-inline-block col-2">金額</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(d,i) in data7.filter(e=>select_all||e.date.startsWith(select_item))"
+                  :class="class_arr[i%class_arr.length]" class="row m-0">
+                  <td v-text="year_slash(d.item)" class="d-inline-block col-3"></td>
+                  <td v-text="tab_arr[7]" class="d-inline-block col-7"></td>
+                  <td v-text="add_unit(d.price)" class="d-inline-block col-2"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <hr style="filter: progid:dximagetransform.microsoft.shadow(color:#987cb9,direction:145,strength:15)"
+          width="90%" color="#987cb9" size=1>
+        <center><button type="button" class="btn btn-outline-primary" @click="return_f()"
+            v-if="show_button">重新查詢</button></center>
+      </div>
+    </div>
+
+
+
+    <!-- <div>{{msg}}</div> -->
+  </div>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/scripts.js"></script>
+</body>
+
+
+<script type="module">
+  let f1 = (timeString) => {
+    let date = timeString?.split('/') || ['', '']
+    let year = date[0]
+    let month = date[1]
+    //console.log(year,month)
+    return [year, month].join("/")
+  }
+  Array.prototype.groupByDate = function () {
+    return this.reduce(function (groups, data) {
+      if (!!data) {
+        let date = data.date
+        // console.log(data.index)
+        let val = f1(date)
+        // console.log(val)
+        if (groups.every(e => e.YM != val)) {
+          // console.log(data.price)
+          let index = data.index
+          let price = data.price
+          if (index == 1) {//儲值
+            groups.push({ YM: val, save: price, price: 0 })
+          }
+          else {
+            groups.push({ YM: val, save: 0, price: price })
+          }
+
+        } else {
+          let index = -1;
+          for (let i = 0; i < groups.length; i++) {
+            if (groups[i].YM == val) {
+              index = i
+              break;
+            }
+          }
+          // console.log(index)
+
+          if (data.index == 1) {//儲值
+            groups[index].save += data.price || 0
+          }
+          else {
+            groups[index].price += data.price || 0
+          }
+
+        }
+        return groups
+      }
+
+    }, [])
+  };
+
+  var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1),
+      sURLVariables = sPageURL.split('&'),
+      sParameterName,
+      i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+      sParameterName = sURLVariables[i].split('=');
+
+      if (sParameterName[0] === sParam) {
+        return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+      }
+    }
+    return false;
+  };
+  import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+
+  createApp({
+    data() {
+      return {
+        dropdown_text: "請選擇年/月",
+        select_item: "",
+        select_all: false,
+        show_button: false,
+        predict_value: "",
+        suggest_value: "",
+        center_class: "text-center",
+        text_point: "",
+        red_bold: "font-weight-bold text-danger",
+        tab_arr: ["", "儲值", "護持三寶", "護持精舍", "共修", "聖賢祝壽", "煙供粉", "神明衣"],
+        class_arr: ["table-success", "table-danger", "table-info", "table-warning", "table-active", ""],
+        name: getUrlParameter("name"),
+        // message: 'Hello Vue!',
+        // msg: "",
+
+        loading_text: "資料系統查詢中，請耐心等候10-15秒",
+        loading_text2: "資料系統查詢中，請再等候2-3秒",
+        err_text: "搜尋異常...",
+        msg_1: "", msg_2: "", msg_3: "", msg_4: "",
+        msg_5: "", msg_6: "", msg_7: "", msg_8: "", msg_all: "",
+        data1: [],
+        data2: [],
+        data3: [],
+        data4: [],
+        data5: [],
+        data6: [],
+        data7: [],
+        data_all: []
+
+      }
+    },
+    computed: {
+      predict_suggest() {
+        return (tag, price) => {
+          if (tag == "predict")
+            return this.predict_value != "" ? `截至本月月底餘額(預估) ${price}元` : ""
+          else if (tag == "suggest") {
+            let date1 = new Date()
+            let month1 = date1.getMonth() + 1
+            let days1 = date1.getDate()
+            // console.log(days1)
+            let next_month1 = (month1 + 1) > 12 ? 1 : (month1 + 1)
+            let full_date1 = days1 > 25 ? `${next_month1}月1日` : `${month1}月25日`
+            return this.suggest_value != "" ? `建議 ${full_date1}前 儲值金額 ${price}元` : ""
+          }
+        }
+      },
+      add_unit() {
+        return text => `${text} 元`
+      },
+      year_slash() {
+        return text => text.replace(/年/g, "/")
+      }
+    },
+
+    methods: {
+      change_selected_YM(text) {
+        if (!!text) {
+          this.select_all = false
+          this.select_item = text
+        } else {
+          this.select_all = true
+          this.select_item = "All"
+        }
+      },
+      return_f() {
+        let url = "https://script.google.com/macros/s/AKfycbypRmknN9RW78dER0P-x2fteydGWh9UIZDtvpnoQTOX4T9nhHfIUeQPzYDBFtennTWC/exec"
+        location.href = url
+      },
+      price_sum_all(dateString) {
+        let date_arr = dateString.split('/')
+        let year = date_arr[0]
+        let month = date_arr[1]
+        let data = this.data_all
+        let select_data = data.filter(e => e.YM == dateString)[0]
+        return `目前選擇${year}年${month}月儲值金額${select_data.save}元/護持金額${select_data.price}元`
+      },
+      price_sum(list, tag) {//.filter(e=>select_all||e.date.startsWith(select_item))
+        list = this.sort_date(list)
+        let all = this.select_all
+        if (list.length > 0) {
+          let arr = list.map(e => e.price)
+          let date = list[0].date
+          let tagWithText = !/^[0-9\/]+$/.test(date)
+          let date_arr = date.split('/')
+          let year = date_arr[0]
+          let month = date_arr[1]
+          // let sum=0
+          let price = arr.reduce((acc, cur) => acc + cur, 0);
+          if (tagWithText == true)
+            return `截至${date}累計 ${price} 元`
+          else if (tag == 1) {
+            if (!!all)
+              if (!!price)
+                return `截至${year}年${month}月累計儲值 ${price} 元`
+              else
+                return `( 尚無扣款紀錄 )`
+            else {
+              if (!!price)
+                return `目前選擇${this.select_item}小計${price}元`
+              else
+                return `目前選擇${this.select_item}無儲值金額`
+            }
+          } else if (tag == 2) {
+            if (!!all)
+              return `截至${year}年${month}月累計 ${price} 元`
+            else {
+              if (!!price)
+                return `目前選擇${this.select_item}小計${price}元`
+              else
+                return `目前選擇${this.select_item}無扣款金額`
+            }
+          }
+        }
+        else {
+          let select = this.select_item
+          if (tag == 1) {
+            return select == 'All' ? "" : `目前選擇${this.select_item}無儲值金額`
+          }
+          else if (tag == 2) {
+            return select == 'All' ? "" : `目前選擇${this.select_item}無扣款金額`
+          }
+        }
+      },
+      sort_YM(data) {
+        data = data.sort((a, b) => {
+          if (a.YM > b.YM) {
+            return -1;
+          }
+        });
+        return data
+      },
+      sort_date(data) {
+        data = data.sort((a, b) => {
+          if (a.date > b.date) {
+            return -1;
+          }
+        });
+        return data
+      },
+      async d_1() {
+        //儲值1
+        let url = "https://script.google.com/macros/s/AKfycbykwUXNwScBQU6ZBL-WWPipBGa-qQykIa__gbMey-DlwEoFR-9KjKAEIVcpMeiWzvEe/exec"
+        url += "?name=" + this.name
+
+        this.data1 = []
+        if (!!this.name) {
+          this.msg_1 = this.loading_text
+          axios.get(url)
+            .then((response) => {
+              // console.log(response.data)
+              this.data1 = this.sort_date(response.data).map(e => {
+                e.index = 1
+                return e
+              })
+              console.log(this.data1)
+              this.msg_1 = ""
+              // this.get_predict_suggest()
+            })
+            .catch((error) => {
+              console.log(error)
+              this.msg_1 = this.err_text
+            })
+        }
+      },
+      async d_2() {
+        //護持三寶2
+        let url = "https://script.google.com/macros/s/AKfycbyrpk4vqjgnZXbrqdpAXaC2pzv7RKnWRxa6ceNCSJgIuAUMBcBXcU1Ea5KWWnOMYQb-/exec"
+        url += "?name=" + this.name
+
+        this.data2 = []
+        if (!!this.name) {
+          this.msg_2 = this.loading_text
+          axios.get(url)
+            .then((response) => {
+              // console.log(response.data)
+              this.data2 = this.sort_date(response.data).map(e => {
+                e.index = 2
+                return e
+              })
+              this.msg_2 = ""
+            })
+            .catch((error) => {
+              console.log(error)
+              this.msg_2 = this.err_text
+            })
+        }
+      },
+      async d_3() {
+        //護持精舍3
+        let url = "https://script.google.com/macros/s/AKfycbxNrS3UWWVitdOYEbM52KwuOdVz0yUvLbZ9kmo5QywuqxwHl9eF8E7DvNs2TxIIevSr/exec"
+        url += "?name=" + this.name
+
+        this.data3 = []
+        if (!!this.name) {
+          this.msg_3 = this.loading_text
+          axios.get(url)
+            .then((response) => {
+              // console.log(response.data)
+              this.data3 = this.sort_date(response.data).map(e => {
+                e.index = 3
+                return e
+              })
+              this.msg_3 = ""
+            })
+            .catch((error) => {
+              console.log(error)
+              this.msg_3 = this.err_text
+            })
+        }
+      },
+      async d_4() {
+        //共修4
+        let url = "https://script.google.com/macros/s/AKfycbxvbzsxj3SAuWBHVEiTLb5xu4d7xAytGFrpf38JJV-1p3KG-wVUbrqMDPA_lePKSG-f4g/exec"
+        url += "?name=" + this.name
+
+        this.data4 = []
+        if (!!this.name) {
+          this.msg_4 = this.loading_text
+          await axios.get(url)
+            .then((response) => {
+              //console.log(response.data)
+              this.data4 = this.sort_date(response.data).map(e => {
+                e.index = 4
+                return e
+              })
+              // let data=this.sort_date(response.data)
+              // this.data4=data.map(e=>{
+              //     e.item=e.item.replace(/、/g,"\n")
+              //     return e
+              // })
+
+              this.msg_4 = ""
+            })
+            .catch((error) => {
+              console.log(error)
+              this.msg_4 = this.err_text
+            })
+        }
+      },
+      async d_5() {
+        //聖賢5
+        let url = "https://script.google.com/macros/s/AKfycbxFej9S4xSQoLS10SujPgpN8Z9iL7kPhm_ApTbXeLN5nHkP2FsSsG5U4VvII3n6q39cyw/exec"
+        url += "?name=" + this.name
+
+        this.data5 = []
+        if (!!this.name) {
+          this.msg_5 = this.loading_text
+          axios.get(url)
+            .then((response) => {
+              // console.log(response.data)
+              this.data5 = this.sort_date(response.data).map(e => {
+                e.index = 5
+                return e
+              })
+              this.msg_5 = ""
+            })
+            .catch((error) => {
+              console.log(error)
+              this.msg_5 = this.err_text
+            })
+        }
+      },
+      async d_6() {
+        // 煙供粉6
+        let url = "https://script.google.com/macros/s/AKfycbzVhm8TyYuvVfE4BBu71XoslNPse1lWQLfvVTCOCniqugkUmJy4K_b5rN11-WunnQSZ3Q/exec"
+        url += "?name=" + this.name
+
+        this.data6 = []
+        if (!!this.name) {
+          this.msg_6 = this.loading_text
+          axios.get(url)
+            .then((response) => {
+              // console.log(response.data)
+              this.data6 = this.sort_date(response.data).map(e => {
+                e.index = 6
+                return e
+              })
+              this.msg_6 = ""
+            })
+            .catch((error) => {
+              console.log(error)
+              this.msg_6 = this.err_text
+            })
+        }
+      },
+      async d_7() {
+        //神明衣7
+        let url = "https://script.google.com/macros/s/AKfycbwcJ4vys-EZWvRpd6Cu0yO9OrAhuB37eIftOERtYe6QMGmMmTuAyR1xxXSBX6GrIWUp/exec"
+        url += "?name=" + this.name
+
+        this.data7 = []
+        if (!!this.name) {
+          this.msg_7 = this.loading_text
+          axios.get(url)
+            .then((response) => {
+              // console.log(response.data)
+              this.data7 = this.sort_date(response.data).map(e => {
+                e.index = 7
+                return e
+              })
+              this.msg_7 = ""
+            })
+            .catch((error) => {
+              console.log(error)
+              this.msg_7 = this.err_text
+            })
+        }
+      },
+      async get_predict_suggest() {
+        let url = "https://script.google.com/macros/s/AKfycbzZQu7K_gNrYkSLTX7P_R7g5rjw1hwwYfI18nh09ILYPog3ENZje1-7RhiPRppixwRK/exec"
+        url += "?name=" + this.name
+        if (!!this.name) {
+          this.msg_8 = this.loading_text2
+          axios.get(url)
+            .then((response) => {
+              //console.log(response.data)
+
+              if (response.data.length > 0) {
+                let data = response.data[0]
+                this.predict_value = data.predict
+                this.suggest_value = data.suggest
+                this.msg_8 = ""
+                // this.show_button = true
+              }
+              // this.data7 = this.sort_date(response.data)
+              // this.msg_7 = ""
+            })
+            .catch((error) => {
+              console.log(error)
+              // this.msg_7 = this.err_text
+            })
+        }
+      },
+      async get_data() {
+        // if (!!this.name) {
+        this.d_1()
+        this.d_2()
+        this.d_3()
+        this.d_4()
+        this.d_5()
+        this.d_6()
+        this.d_7()
+
+        // }
+        //this.d_8()
+
+      }
+    },
+    mounted() {
+      setInterval(() => {
+        let date = new Date()
+        let sec = date.getSeconds() % 4 + 1
+        this.text_point = "...".repeat(sec)
+      }, 1000)
+
+      // this.get_data()
+    },
+    created() {
+
+
+      if (!!this.name) {
+        this.msg_all = this.loading_text
+        Promise.all([this.d_1(), this.d_2(), this.d_3(), this.d_4(), this.d_5(), this.d_6(), this.d_7(), this.get_predict_suggest()])
+          .then(() => {
+            console.log("OK")
+            // let all_data = [...JSON.parse(JSON.stringify(this.data1)), ...JSON.parse(JSON.stringify(this.data2)),
+            // ...JSON.parse(JSON.stringify(this.data3)), ...JSON.parse(JSON.stringify(this.data4)),
+            // ...JSON.parse(JSON.stringify(this.data5)), ...JSON.parse(JSON.stringify(this.data6)), ...JSON.parse(JSON.stringify(this.data7))]
+            let all_data = [...this.data1, ...this.data2, ...this.data3,
+            ...this.data4, ...this.data5, ...this.data6, ...this.data7,]
+            // console.log(all_data)
+            // alert(123)
+            let a = all_data.groupByDate()
+            while (a.map(e => e.save).reduce((sum, bb) => sum + bb) == 0) {
+              a = all_data.groupByDate()
+            }
+
+            // if (a.map(e => e.save).reduce((sum, bb) => sum + bb) == 0)
+            //   a = all_data.groupByDate()
+            // if (a.map(e => e.save).reduce((sum, bb) => sum + bb) == 0)
+            //   a = all_data.groupByDate()
+            // if (a.map(e => e.save).reduce((sum, bb) => sum + bb) == 0)
+            //   a = all_data.groupByDate()
+
+            let bb = a.sort((a1, a2) => (a1.YM.replace('/', "") > a2.YM.replace('/', "") ? -1 : 1))
+            this.msg_all = ""
+            this.show_button = true
+            this.data_all = (bb)
+            // console.log(bb)
+            this.select_all = true
+            this.select_item = "All"
+
+
+          })
+          .catch((err) => {
+            console.log(123)
+            console.log(err)
+            // one or more promises have been rejected
+          });
+
+
+      }
+
+    }
+  }).mount('#app')
+</script>
+
+</html>

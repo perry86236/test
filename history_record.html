@@ -95,7 +95,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-footer w-100 text-muted text-center" v-text="card_loading_text+text_point" :class="red_bold">
+                    <div class="card-footer w-100 text-muted text-center" v-html="card_loading_text+text_point" :class="red_bold">
 
                     </div>
                 </div>
@@ -494,7 +494,7 @@
         name: getUrlParameter("name"),
         // message: 'Hello Vue!',
         // msg: "",
-        card_loading_text:"資料處理中，請稍等時間，誦念南無觀世音菩薩",
+        card_loading_text:"資料處理中，<br>請稍等時間，<br>誦念南無觀世音菩薩",
         loading_text: "資料系統查詢中，請耐心等候10-15秒",
         loading_text2: "資料系統查詢中，請再等候2-3秒",
         err_text: "搜尋異常...",

@@ -710,12 +710,15 @@
             // console.log(all_data)
             // alert(123)
             let a = all_data.groupByDate()
-            if (a.map(e => e.save).reduce((sum, bb) => sum + bb) == 0)
-              a = all_data.groupByDate()
-            if (a.map(e => e.save).reduce((sum, bb) => sum + bb) == 0)
-              a = all_data.groupByDate()
-            if (a.map(e => e.save).reduce((sum, bb) => sum + bb) == 0)
-              a = all_data.groupByDate()
+            while(a.map(e => e.save).reduce((sum, bb) => sum + bb) == 0){
+               a = all_data.groupByDate()
+            }
+            // if (a.map(e => e.save).reduce((sum, bb) => sum + bb) == 0)
+            //   a = all_data.groupByDate()
+            // if (a.map(e => e.save).reduce((sum, bb) => sum + bb) == 0)
+            //   a = all_data.groupByDate()
+            // if (a.map(e => e.save).reduce((sum, bb) => sum + bb) == 0)
+            //   a = all_data.groupByDate()
 
             let bb = a.sort((a1, a2) => (a1.YM.replace('/', "") > a2.YM.replace('/', "") ? -1 : 1))
             this.msg_all = ""

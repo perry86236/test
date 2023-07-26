@@ -50,7 +50,7 @@
             <div class="row"> -->
         <ul class="nav nav-pills flex-wrap">
           <li class="nav-item px-0">
-            <a class="nav-link active text-nowrap" href="#tab_all" data-toggle="tab">總金額</a>
+            <a class="nav-link active text-nowrap" href="#tab_all" data-toggle="tab" v-if="select_all||!!select_item">總金額</a>
           </li>
           <li class="nav-item px-0">
             <a class="nav-link text-nowrap" href="#tab_detail" data-toggle="tab" v-if="select_all||!!select_item">簡易明細</a>

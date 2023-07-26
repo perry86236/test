@@ -868,7 +868,7 @@
             // console.log(all_data)
             // alert(123)
             let a = all_data.groupByDate()
-            while(a.reduce((sum,item)=>sum+=item.data[1])==0)
+            while(a.reduce((sum,item)=>sum+=item.data[1],0)==0)
                 a=all_data.groupByDate()
             
 

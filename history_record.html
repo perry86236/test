@@ -112,16 +112,16 @@
             <table class="table table-sm table-bordered" v-if="data1.length!=0">
               <thead>
                 <tr class="row m-0">
-                  <th class="d-inline-block col-2">日期</th>
-                  <th class="d-inline-block col-8">項目</th>
+                  <th class="d-inline-block col-3">日期</th>
+                  <th class="d-inline-block col-7">項目</th>
                   <th class="d-inline-block col-2">金額</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(d,i) in data1.filter(e=>select_all||e.date.startsWith(select_item))"
                   :class="class_arr[i%class_arr.length]" class="row m-0">
-                  <td v-text="d.date" class="d-inline-block col-2"></td>
-                  <td v-text="d.item" class="d-inline-block col-8"></td>
+                  <td v-text="d.date" class="d-inline-block col-3"></td>
+                  <td v-text="d.item" class="d-inline-block col-7"></td>
                   <td v-text="add_unit(d.price)" class="d-inline-block col-2"></td>
                 </tr>
               </tbody>
@@ -135,16 +135,16 @@
             <table class="table table-sm table-bordered" v-if="data2.length!=0">
               <thead>
                 <tr class="row m-0">
-                  <th class="d-inline-block col-2">日期</th>
-                  <th class="d-inline-block col-8">項目</th>
+                  <th class="d-inline-block col-3">日期</th>
+                  <th class="d-inline-block col-7">項目</th>
                   <th class="d-inline-block col-2">金額</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(d,i) in data2.filter(e=>select_all||e.date.startsWith(select_item))"
                   :class="class_arr[i%class_arr.length]" class="row m-0">
-                  <td v-text="d.item" class="d-inline-block col-2"></td>
-                  <td v-text="tab_arr[2]" class="d-inline-block col-8"></td>
+                  <td v-text="d.item" class="d-inline-block col-3"></td>
+                  <td v-text="tab_arr[2]" class="d-inline-block col-7"></td>
                   <td v-text="add_unit(d.price)" class="d-inline-block col-2"></td>
                 </tr>
               </tbody>
@@ -158,16 +158,16 @@
             <table class="table table-sm table-bordered" v-if="data3.length!=0">
               <thead>
                 <tr class="row m-0">
-                  <th class="d-inline-block col-2">日期</th>
-                  <th class="d-inline-block col-8">項目</th>
+                  <th class="d-inline-block col-3">日期</th>
+                  <th class="d-inline-block col-7">項目</th>
                   <th class="d-inline-block col-2">金額</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(d,i) in data3.filter(e=>select_all||e.date.startsWith(select_item))"
                   :class="class_arr[i%class_arr.length]" class="row m-0">
-                  <td v-text="d.item" class="d-inline-block col-2"></td>
-                  <td v-text="tab_arr[3]" class="d-inline-block col-8"></td>
+                  <td v-text="d.item" class="d-inline-block col-3"></td>
+                  <td v-text="tab_arr[3]" class="d-inline-block col-7"></td>
                   <td v-text="add_unit(d.price)" class="d-inline-block col-2"></td>
                 </tr>
               </tbody>
@@ -181,16 +181,16 @@
             <table class="table table-sm table-bordered" v-if="data4.length!=0">
               <thead>
                 <tr class="row m-0">
-                  <th class="d-inline-block col-2">日期</th>
-                  <th class="d-inline-block col-8">項目</th>
+                  <th class="d-inline-block col-3">日期</th>
+                  <th class="d-inline-block col-7">項目</th>
                   <th class="d-inline-block col-2">金額</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(d,i) in data4.filter(e=>select_all||e.date.startsWith(select_item))"
                   :class="class_arr[i%class_arr.length]" class="row m-0">
-                  <td v-text="d.date" class="d-inline-block col-2"></td>
-                  <td v-text="d.item" class="d-inline-block col-8"></td>
+                  <td v-text="d.date" class="d-inline-block col-3"></td>
+                  <td v-text="d.item" class="d-inline-block col-7"></td>
                   <td v-text="add_unit(d.price)" class="d-inline-block col-2"></td>
                 </tr>
               </tbody>
@@ -204,16 +204,16 @@
             <table class="table table-sm table-bordered" v-if="data5.length!=0">
               <thead>
                 <tr class="row m-0">
-                  <th class="d-inline-block col-2">日期</th>
-                  <th class="d-inline-block col-8">項目</th>
+                  <th class="d-inline-block col-3">日期</th>
+                  <th class="d-inline-block col-7">項目</th>
                   <th class="d-inline-block col-2">金額</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(d,i) in data5.filter(e=>select_all||e.date.startsWith(select_item))"
                   :class="class_arr[i%class_arr.length]" class="row m-0">
-                  <td v-text="d.date" class="d-inline-block col-2"></td>
-                  <td v-html="d.item.replace(/、/g,'<br>')" class="d-inline-block col-8"></td>
+                  <td v-text="d.date" class="d-inline-block col-3"></td>
+                  <td v-html="d.item.replace(/、/g,'<br>')" class="d-inline-block col-7"></td>
                   <td v-text="add_unit(d.price)" class="d-inline-block col-2"></td>
                 </tr>
               </tbody>
@@ -227,16 +227,16 @@
             <table class="table table-sm table-bordered" v-if="data6.length!=0">
               <thead>
                 <tr class="row m-0">
-                  <th class="d-inline-block col-2">日期</th>
-                  <th class="d-inline-block col-8">項目</th>
+                  <th class="d-inline-block col-3">日期</th>
+                  <th class="d-inline-block col-7">項目</th>
                   <th class="d-inline-block col-2">金額</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(d,i) in data6.filter(e=>select_all||e.date.startsWith(select_item))"
                   :class="class_arr[i%class_arr.length]" class="row m-0">
-                  <td v-text="d.item" class="d-inline-block col-2"></td>
-                  <td v-text="tab_arr[6]" class="d-inline-block col-8"></td>
+                  <td v-text="d.item" class="d-inline-block col-3"></td>
+                  <td v-text="tab_arr[6]" class="d-inline-block col-7"></td>
                   <td v-text="add_unit(d.price)" class="d-inline-block col-2"></td>
                 </tr>
               </tbody>
@@ -250,16 +250,16 @@
             <table class="table table-sm table-bordered" v-if="data7.length!=0">
               <thead>
                 <tr class="row m-0">
-                  <th class="d-inline-block col-2">日期</th>
-                  <th class="d-inline-block col-8">項目</th>
+                  <th class="d-inline-block col-3">日期</th>
+                  <th class="d-inline-block col-7">項目</th>
                   <th class="d-inline-block col-2">金額</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(d,i) in data7.filter(e=>select_all||e.date.startsWith(select_item))"
                   :class="class_arr[i%class_arr.length]" class="row m-0">
-                  <td v-text="d.item" class="d-inline-block col-2"></td>
-                  <td v-text="tab_arr[7]" class="d-inline-block col-8"></td>
+                  <td v-text="d.item" class="d-inline-block col-3"></td>
+                  <td v-text="tab_arr[7]" class="d-inline-block col-7"></td>
                   <td v-text="add_unit(d.price)" class="d-inline-block col-2"></td>
                 </tr>
               </tbody>

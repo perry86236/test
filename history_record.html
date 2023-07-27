@@ -28,8 +28,8 @@
           <div class=""></div>
           <div>
             <div class="dropdown open">
-              <button class="btn btn-secondary dropdown-toggle pl-3" type="button" id="dropdownMenu4" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false" v-text="dropdown_text">
+              <button class="btn btn-secondary dropdown-toggle pl-3" type="button" id="dropdownMenu4"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-text="dropdown_text">
 
               </button>
               <div class="dropdown-menu">
@@ -50,56 +50,66 @@
             <div class="row"> -->
         <ul class="nav nav-pills flex-wrap">
           <li class="nav-item px-0">
-            <a class="nav-link active text-nowrap" href="#tab_all" data-toggle="tab" v-if="select_all||!!select_item">總金額</a>
+            <a class="nav-link active text-nowrap" href="#tab_all" data-toggle="tab"
+              v-if="select_all||!!select_item">總金額</a>
           </li>
           <li class="nav-item px-0">
-            <a class="nav-link text-nowrap" href="#tab_detail" data-toggle="tab" v-if="select_all||!!select_item">簡易明細</a>
+            <a class="nav-link text-nowrap" href="#tab_detail" data-toggle="tab"
+              v-if="select_all||!!select_item">簡易明細</a>
           </li>
           <li class="nav-item px-0">
-            <a class="nav-link text-nowrap" href="#tab1" data-toggle="tab" v-text="tab_arr[1]" v-if="select_all||!!select_item"></a>
+            <a class="nav-link text-nowrap" href="#tab1" data-toggle="tab" v-text="tab_arr[1]"
+              v-if="select_all||!!select_item"></a>
           </li>
           <li class="nav-item px-0">
-            <a class="nav-link text-nowrap" href="#tab2" data-toggle="tab" v-text="tab_arr[2]" v-if="select_all||!!select_item"></a>
+            <a class="nav-link text-nowrap" href="#tab2" data-toggle="tab" v-text="tab_arr[2]"
+              v-if="select_all||!!select_item"></a>
           </li>
           <li class="nav-item px-0">
-            <a class="nav-link text-nowrap" href="#tab3" data-toggle="tab" v-text="tab_arr[3]" v-if="select_all||!!select_item"></a>
+            <a class="nav-link text-nowrap" href="#tab3" data-toggle="tab" v-text="tab_arr[3]"
+              v-if="select_all||!!select_item"></a>
           </li>
           <li class="nav-item px-0">
-            <a class="nav-link text-nowrap" href="#tab4" data-toggle="tab" v-text="tab_arr[4]" v-if="select_all||!!select_item"></a>
+            <a class="nav-link text-nowrap" href="#tab4" data-toggle="tab" v-text="tab_arr[4]"
+              v-if="select_all||!!select_item"></a>
           </li>
           <li class="nav-item px-0">
-            <a class="nav-link text-nowrap" href="#tab5" data-toggle="tab" v-text="tab_arr[5]" v-if="select_all||!!select_item"></a>
+            <a class="nav-link text-nowrap" href="#tab5" data-toggle="tab" v-text="tab_arr[5]"
+              v-if="select_all||!!select_item"></a>
           </li>
           <li class="nav-item px-0">
-            <a class="nav-link text-nowrap" href="#tab6" data-toggle="tab" v-text="tab_arr[6]" v-if="select_all||!!select_item"></a>
+            <a class="nav-link text-nowrap" href="#tab6" data-toggle="tab" v-text="tab_arr[6]"
+              v-if="select_all||!!select_item"></a>
           </li>
           <li class="nav-item px-0">
-            <a class="nav-link text-nowrap" href="#tab7" data-toggle="tab" v-text="tab_arr[7]" v-if="select_all||!!select_item"></a>
+            <a class="nav-link text-nowrap" href="#tab7" data-toggle="tab" v-text="tab_arr[7]"
+              v-if="select_all||!!select_item"></a>
           </li>
         </ul>
-        
+
         <div class="tab-content">
           <div class="tab-pane active" id="tab_all">
-    
-            <div class="container" v-if="card_show">
-                <div class="card">
-                    <div class="row no-gutters">
-                        <div class="col-auto" style="width: 30%;">
-                            <img :src="pic_name_f(random_index)" class="img-fluid" alt="">
-                        </div>
-                        <div class="col">
-                            <div class="card-block px-2">
-                                <h4 class="card-title" v-text="buddha_list[random_index].name"></h4>
-                                <p class="card-text" v-text="buddha_list[random_index].data"></p>
-                                <!-- <a href="#" class="btn btn-primary">BUTTON</a> -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer w-100 text-muted text-center" v-html="card_loading_text+text_point" :class="red_bold">
 
+            <div class="container" v-if="card_show">
+              <div class="card">
+                <div class="row no-gutters">
+                  <div class="col-auto" style="width: 30%;">
+                    <img :src="pic_name_f(random_index)" class="img-fluid" alt="">
+                  </div>
+                  <div class="col">
+                    <div class="card-block px-2">
+                      <h4 class="card-title" v-text="buddha_list[random_index].name"></h4>
+                      <p class="card-text" v-text="buddha_list[random_index].data"></p>
+                      <!-- <a href="#" class="btn btn-primary">BUTTON</a> -->
                     </div>
+                  </div>
                 </div>
-                
+                <div class="card-footer w-100 text-muted text-center" v-html="card_loading_text+text_point"
+                  :class="red_bold">
+
+                </div>
+              </div>
+
             </div>
             <!-- <div class="card" style="width: 18rem;" v-if="card_show">
                 <img :src="pic_name_f(random_index)" class="card-img-top" alt="">
@@ -108,7 +118,7 @@
                     <p class="card-text"  v-text="buddha_list[random_index].data"></p>
                 </div>
             </div> -->
-            
+
             <!-- <div v-text="price_sum(data2,2)" class="text-center"></div> -->
             <div v-text="price_sum_all(select_item)" class="text-center" v-if="!msg_all.length && select_item!='All'">
             </div>
@@ -135,7 +145,7 @@
                   <td v-text="d.YM"></td>
                   <td v-text="d.data[1]" class="text-right"></td>
                   <td v-text="d.data[0]" class="text-right"></td>
-                  
+
                   <!-- <td v-text="d.YM"></td>
                   <td v-text="d.save" class="text-right"></td>
                   <td v-text="d.price" class="text-right"></td> -->
@@ -149,7 +159,7 @@
             </table>
           </div>
           <div class="tab-pane" id="tab_detail">
-            
+
             <table class="table table-sm table-bordered" v-if="data_all.length!=0">
               <thead>
                 <tr>
@@ -162,7 +172,7 @@
               <tbody>
                 <tr v-for="(d,i) in (data_all)" :class="class_arr[i%class_arr.length]">
                   <td v-text="d.YM" class="text-right"></td>
-                  <td v-for="j in 7" v-text="d.data[j]"  class="text-right"></td>
+                  <td v-for="j in 7" v-text="d.data[j]" class="text-right"></td>
                   <!-- <td v-text="d.data[2]"></td>
                   <td v-text="d.data[3]"></td>
                   <td v-text="d.data[4]"></td>
@@ -204,7 +214,7 @@
                   :class="class_arr[i%class_arr.length]" class="row m-0">
                   <td v-text="d.date" class="d-inline-block col-3"></td>
                   <td v-text="d.item" class="d-inline-block col-7"></td>
-                  <td v-text="add_unit(d.price)" class="d-inline-block col-2"></td>
+                  <td v-text="add_unit(d.price)" class="d-inline-block col-2 small"></td>
                 </tr>
               </tbody>
             </table>
@@ -227,7 +237,7 @@
                   :class="class_arr[i%class_arr.length]" class="row m-0">
                   <td v-text="year_slash(d.item)" class="d-inline-block col-3"></td>
                   <td v-text="tab_arr[2]" class="d-inline-block col-7"></td>
-                  <td v-text="add_unit(d.price)" class="d-inline-block col-2"></td>
+                  <td v-text="add_unit(d.price)" class="d-inline-block col-2 small"></td>
                 </tr>
               </tbody>
             </table>
@@ -250,7 +260,7 @@
                   :class="class_arr[i%class_arr.length]" class="row m-0">
                   <td v-text="year_slash(d.item)" class="d-inline-block col-3"></td>
                   <td v-text="tab_arr[3]" class="d-inline-block col-7"></td>
-                  <td v-text="add_unit(d.price)" class="d-inline-block col-2"></td>
+                  <td v-text="add_unit(d.price)" class="d-inline-block col-2 small"></td>
                 </tr>
               </tbody>
             </table>
@@ -273,7 +283,7 @@
                   :class="class_arr[i%class_arr.length]" class="row m-0">
                   <td v-text="d.date" class="d-inline-block col-3"></td>
                   <td v-text="d.item" class="d-inline-block col-7"></td>
-                  <td v-text="add_unit(d.price)" class="d-inline-block col-2"></td>
+                  <td v-text="add_unit(d.price)" class="d-inline-block col-2 small"></td>
                 </tr>
               </tbody>
             </table>
@@ -296,7 +306,7 @@
                   :class="class_arr[i%class_arr.length]" class="row m-0">
                   <td v-text="d.date" class="d-inline-block col-3"></td>
                   <td v-html="d.item.replace(/、/g,'<br>')" class="d-inline-block col-7"></td>
-                  <td v-text="add_unit(d.price)" class="d-inline-block col-2"></td>
+                  <td v-text="add_unit(d.price)" class="d-inline-block col-2 small"></td>
                 </tr>
               </tbody>
             </table>
@@ -319,7 +329,7 @@
                   :class="class_arr[i%class_arr.length]" class="row m-0">
                   <td v-text="year_slash(d.item)" class="d-inline-block col-3"></td>
                   <td v-text="tab_arr[6]" class="d-inline-block col-7"></td>
-                  <td v-text="add_unit(d.price)" class="d-inline-block col-2"></td>
+                  <td v-text="add_unit(d.price)" class="d-inline-block col-2 small"></td>
                 </tr>
               </tbody>
             </table>
@@ -342,7 +352,7 @@
                   :class="class_arr[i%class_arr.length]" class="row m-0">
                   <td v-text="year_slash(d.item)" class="d-inline-block col-3"></td>
                   <td v-text="tab_arr[7]" class="d-inline-block col-7"></td>
-                  <td v-text="add_unit(d.price)" class="d-inline-block col-2"></td>
+                  <td v-text="add_unit(d.price)" class="d-inline-block col-2 small"></td>
                 </tr>
               </tbody>
             </table>
@@ -384,9 +394,9 @@
           let d_data = [0, 0, 0, 0, 0, 0, 0, 0]
           //0_護持(全),1_儲值,2_三寶,3_精舍,4_共修,5_聖賢,6_煙供粉,7_神明衣
           d_data[d_index] = d_price
-          if(d_index!=1)
-            d_data[0]=d_price
-          
+          if (d_index != 1)
+            d_data[0] = d_price
+
           groups.push({ YM: val, data: d_data })
           // if (index == 1) {//儲值
           //   groups.push({ YM: val, save: price, price: 0 })
@@ -405,7 +415,7 @@
           }
           // console.log(index)
           groups[index].data[d_index] += d_price
-          if(d_index!=1)
+          if (d_index != 1)
             groups[index].data[0] += d_price
           // if (data.index == 1) {//儲值
           //   groups[index].save += data.price || 0
@@ -420,8 +430,8 @@
 
       }
 
-    
-}, [])
+
+    }, [])
   };
 
   var getUrlParameter = function getUrlParameter(sParam) {
@@ -444,42 +454,42 @@
   createApp({
     data() {
       return {
-        random_index:-1,
-        card_show:true,
-        buddha_list:[
-            {index:1,name:' 一、楊柳觀音',data:' 大悲楊柳觀世音 哀愍淪溺拔苦疾 普入諸趣恆示現 令脫流轉超出塵 右手持楊柳枝，以楊柳枝替人消弭病災，誓言拔濟眾生病苦，故亦稱「藥王觀音」，為三十三觀音菩薩的首尊。'},
-            {index:2,name:' 二、龍頭觀音',data:' 聖德龍頭觀世音  照現光華澤物種  開眾蒙吝啟慧光  普願有情悟覺明 乘雲中之龍，以龍譬喻觀音之威德，是三十三身觀音中的天龍身。'},
-            {index:3,name:' 三、持經觀音',data:' 聲聞持經觀世音 覺照內明光嚴飾  最勝境界微妙智 不循根塵歸元真 坐於岩石上，右手持經卷，是三十三身觀音中的聲聞身。'},
-            {index:4,name:' 四、圓光觀音',data:' 無垢圓光觀世音 性淨明露常寂光  能伏眾生災風火 普明圓照遍十方 身放光明，合掌而坐。「圓光」表觀世音菩薩的福德圓滿無缺。'},
-            {index:5,name:' 五、遊戲觀音',data:' 神通遊戲觀世音 自在幻化遍知海 千手千眼救倒懸 三十二應普現身 安坐雲端之上，表觀世音菩薩的教化圓通無礙，不拘時處，示現遊戲自在。'},
-            {index:6,name:' 六、白衣觀音',data:' 大慈白衣觀世音 隨緣赴感應群機  三昧辯才善誘誨 妙德圓成證菩提 身穿白衣，左手持蓮花，右手作與願印。 白色意指純淨，象徵菩提心，表示觀音胸懷菩提之心，是三十三身觀音中的比丘、比丘尼身'},
-            {index:7,name:' 七、卧蓮觀音',data:' 合掌蓮卧觀世音 寂湛生光寶華開  悟心無際性常凝 圓明清淨大覺海 合掌坐在池中蓮花之上，是三十三身觀音中的小王身'},
-            {index:8,name:' 八、瀧見觀音',data:' 莊嚴瀧見觀世音 妙香芬馥悅意常  般若真智施無畏 進趣真淨妙吉祥 倚於山崖，眺望瀑布。《普門品》云：「假使興害意，推落大火坑，念彼觀音力，火坑變成池。」為其由來。'},
-            {index:9,name:' 九、施藥觀音',data:' 寂靜施藥觀世音 尋聲救苦難思議 諦觀圓照三千界 楊枝淨水洗凡塵 坐於池邊，右手托頰，倚於膝上，凝視著面前的蓮花。 施藥觀音因能施予良藥，除治眾生身心病苦而得名。'},
-            {index:10,name:' 十、魚籃觀音',data:' 除障魚籃觀世音 慈無能勝演圓音 精真洞然眾業海 六道群迷蒙慈恩 乘於大魚背上，或一手提盛有大魚之籃。 表示排除羅剎、毒龍、惡鬼等障礙。'},
-            {index:11,name:' 十一、德王觀音',data:' 赴感德王觀世音 性淨妙常香光嚴 慧啟群萌觀自在 梵王身相應現來 趺坐於岩上，右手持綠葉一枝。 是三十三身觀音中的梵王身。 梵王為界之王，因德性高超故名「德王」。'},
-            {index:12,name:' 十二、水月觀音',data:' 吉祥水月觀世音 寶光常寂照三途 解結怨瞋八難苦 週徧寂湛大悲母 月下乘蓮瓣，飄蕩海面觀看映照水上之月。 是三十三身觀音中的闢支佛身。'},
-            {index:13,name:' 十三、一葉觀音',data:' 乘蓮一葉觀世音 解縈眾生煩惱結 法音常轉廣長舌 定慧等持契果覺'},
-            {index:14,name:' 十四、青頸觀音',data:' 勇健青頸觀世音 大悲示現威猛相 晦暗長夜為燈燭 苦海波翻作舟航 坐於斷崖上，右膝立起，右手置於膝上， 左手扶著岩壁，旁置一有柳枝之瓶， 是三十三身觀音中的佛身。'},
-            {index:15,name:' 十五、威德觀音',data:' 攝眾威德觀世音 摧破邪妖鎮魍魎 天大將軍度滄海 普門示現降吉祥 岩上觀水，左手持蓮花，右手著地。 是三十三身觀音中的天大將軍身。'},
-            {index:16,name:' 十六、延命觀音',data:' 息災延命觀世音 滅諸咒詛毒怨害 懸示留礙輪回種 紫金光照覺滄海 倚水邊岩上，悠然觀賞景物。 此尊能消除咒詛及毒藥，令眾生延命長壽故稱「延命」。 乘一葉蓮瓣浮於水面漂行。 是三十三身觀音中的宰官身。'},
-            {index:17,name:' 十七、眾寶觀音',data:' 妙嚴眾寶觀世音 般若光宣示真際 寂靜明心覺觀照 長者身相度群迷 坐在地上，右手向地，左手放在彎起的膝上， 是三十三身觀音中的長者身。'},
-            {index:18,name:' 十八、岩戶觀音',data:' 寂然岩戶觀世音 淨眼普觀週沙界 息滅三毒貪愛苦 蚖蛇蝮蠍出窟穴 端坐於岩窟內。 《普門品》雲：「蚖蛇及蝮蠍，氣毒煙火燃，念彼觀音力，尋聲自回去。」 因這些毒蟲多盤踞洞穴內，為免其出洞危害眾生，觀音因此坐鎮岩窟中保護眾生。'},
-            {index:19,name:' 十九、能靜觀音',data:' 安穩能靜觀世音 開示法藏戒定慧 三無漏學善護念 悲智雙運登覺岸 坐水邊岩上，雙手安置石上作靜寂相。 能靜觀音因能救護遭難者，使得平靜安穩而得名，為海路守護神。'},
-            {index:20,name:' 二十、阿耨觀音',data:' 觀海阿耨觀世音 妙善圓明不思議 銷塵龍魚諸鬼難 度脫有情出淪溺 立右膝坐於岩上，雙手抱膝觀望大海。'},
-            {index:21,name:' 二十一、阿摩提觀音',data:' 無畏觀音阿摩提 毘沙門天威神力 顧盼微塵目雄毅 智慧照見離苦際 雙手置膝上，遍身有光燄坐在岩上， 是三十三身觀音中的毘沙門身。'},
-            {index:22,name:' 二十二、葉衣觀音',data:' 圓明葉衣觀世音 三千威儀妙慈容 神光內凝覺真澄 心光發宣帝釋身 坐於敷草的岩上，是三十三身觀音中的帝釋身。'},
-            {index:23,name:' 二十三、琉璃觀音',data:' 淨妙琉璃觀世音 旋湛清瑩熙怡相 息諸災厄成虛淨 銷滅三毒證菩提 觀音雙手捧琉璃香爐(或缽)，乘蓮瓣浮於水面， 是三十三身觀音中的自在天身。'},
-            {index:24,name:' 二十四、多羅觀音',data:' 救苦多羅觀世音 與樂拔苦現剎塵 甘露徧灑十方界 遍應六趣普現身 直立乘雲，合掌，手持青蓮花。 梵名「多羅」亦為救度，故又名「救度母觀音」。 《普門品》雲：「或值怨賊繞，各執刀加害，念彼觀音力，鹹即起慈心。」為此尊由來。'},
-            {index:25,name:' 二十五、蛤蜊觀音',data:' 啟悟蛤蜊觀世音 慈誨愛語殷玄示 無礙神變覺有情 歷劫燻修應微塵 自蛤蜊貝殼中示現，是三十三身觀音中的菩薩身。'},
-            {index:26,name:' 二十六、六時觀音',data:' 光六時觀世音 晝夜開敷慈音揚 普願輪回諸眾生 鹹令安樂超出相 右手持梵篋的立像，此篋是六字章句陀羅尼，誦之得脫六道苦果得六妙門，證六根相應。為三十三身觀音中的居士身。'},
-            {index:27,name:' 二十七、普悲觀音',data:' 光普悲觀世音 妙相慈顏淨端嚴 圓明照徹三有海 大自在天聖威神 雙手披衣，立於山岳之上。 「普慈」意即普遍施給眾生慈悲。 是三十三身觀音中的大自在天身。'},
-            {index:28,name:' 二十八、馬郎觀音',data:' 德觀音馬郎婦 寂妙湛然淨明露 夢幻泡影示出離 光照癡暗煩惱除 民間婦女形象。即在「魚籃觀音」故事中化身為少女嫁給馬郎的觀音。 是三十三身觀音中的婦女身。'},
-            {index:29,name:' 二十九、合掌觀音',data:' 禮敬合掌觀世音 耳根圓通法門開 清淨寶覺徧含容 普令解脫越苦海 合掌立於蓮華台上，乃三十三身觀音中的婆羅門身。'},
-            {index:30,name:' 三十、一如觀音',data:' 法性一如觀世音 大悲如海性圓澄 慈音無遮開沉惑 直趣覺海不二門 觀音坐在雲中蓮華座上立左膝，現征伏雷電之姿，為《普門品》雲：「雲雷鼓掣電，降雹澍大雨，念彼觀音力，應時得消散。」之表徵。'},
-            {index:31,name:' 三十一、不二觀音',data:' 圓融不二觀世音 普救眾生施無畏 金剛教化覺岸回 無上妙淨蓮池會 兩手低垂，乘一片蓮葉浮於水面， 是三十三身觀音中的執金剛神身。'},
-            {index:32,name:' 三十二、持蓮觀音',data:' 妙哉持蓮觀世音 缽頭摩華淨妙香 十四無畏功德藏 六道眾生同悲仰 雙手執持一莖蓮華，是三十三身觀音中的童男童女身。'},
-            {index:33,name:' 三十三、灑水觀音',data:' 清淨灑水觀世音 妙湛慈母化閻浮 如海印現悉平等 普濟含識出三途 又名滴水觀音，左手持缽，右手執楊枝作灑水狀'},],
+        random_index: -1,
+        card_show: true,
+        buddha_list: [
+          { index: 1, name: ' 一、楊柳觀音', data: ' 大悲楊柳觀世音 哀愍淪溺拔苦疾 普入諸趣恆示現 令脫流轉超出塵 右手持楊柳枝，以楊柳枝替人消弭病災，誓言拔濟眾生病苦，故亦稱「藥王觀音」，為三十三觀音菩薩的首尊。' },
+          { index: 2, name: ' 二、龍頭觀音', data: ' 聖德龍頭觀世音  照現光華澤物種  開眾蒙吝啟慧光  普願有情悟覺明 乘雲中之龍，以龍譬喻觀音之威德，是三十三身觀音中的天龍身。' },
+          { index: 3, name: ' 三、持經觀音', data: ' 聲聞持經觀世音 覺照內明光嚴飾  最勝境界微妙智 不循根塵歸元真 坐於岩石上，右手持經卷，是三十三身觀音中的聲聞身。' },
+          { index: 4, name: ' 四、圓光觀音', data: ' 無垢圓光觀世音 性淨明露常寂光  能伏眾生災風火 普明圓照遍十方 身放光明，合掌而坐。「圓光」表觀世音菩薩的福德圓滿無缺。' },
+          { index: 5, name: ' 五、遊戲觀音', data: ' 神通遊戲觀世音 自在幻化遍知海 千手千眼救倒懸 三十二應普現身 安坐雲端之上，表觀世音菩薩的教化圓通無礙，不拘時處，示現遊戲自在。' },
+          { index: 6, name: ' 六、白衣觀音', data: ' 大慈白衣觀世音 隨緣赴感應群機  三昧辯才善誘誨 妙德圓成證菩提 身穿白衣，左手持蓮花，右手作與願印。 白色意指純淨，象徵菩提心，表示觀音胸懷菩提之心，是三十三身觀音中的比丘、比丘尼身' },
+          { index: 7, name: ' 七、卧蓮觀音', data: ' 合掌蓮卧觀世音 寂湛生光寶華開  悟心無際性常凝 圓明清淨大覺海 合掌坐在池中蓮花之上，是三十三身觀音中的小王身' },
+          { index: 8, name: ' 八、瀧見觀音', data: ' 莊嚴瀧見觀世音 妙香芬馥悅意常  般若真智施無畏 進趣真淨妙吉祥 倚於山崖，眺望瀑布。《普門品》云：「假使興害意，推落大火坑，念彼觀音力，火坑變成池。」為其由來。' },
+          { index: 9, name: ' 九、施藥觀音', data: ' 寂靜施藥觀世音 尋聲救苦難思議 諦觀圓照三千界 楊枝淨水洗凡塵 坐於池邊，右手托頰，倚於膝上，凝視著面前的蓮花。 施藥觀音因能施予良藥，除治眾生身心病苦而得名。' },
+          { index: 10, name: ' 十、魚籃觀音', data: ' 除障魚籃觀世音 慈無能勝演圓音 精真洞然眾業海 六道群迷蒙慈恩 乘於大魚背上，或一手提盛有大魚之籃。 表示排除羅剎、毒龍、惡鬼等障礙。' },
+          { index: 11, name: ' 十一、德王觀音', data: ' 赴感德王觀世音 性淨妙常香光嚴 慧啟群萌觀自在 梵王身相應現來 趺坐於岩上，右手持綠葉一枝。 是三十三身觀音中的梵王身。 梵王為界之王，因德性高超故名「德王」。' },
+          { index: 12, name: ' 十二、水月觀音', data: ' 吉祥水月觀世音 寶光常寂照三途 解結怨瞋八難苦 週徧寂湛大悲母 月下乘蓮瓣，飄蕩海面觀看映照水上之月。 是三十三身觀音中的闢支佛身。' },
+          { index: 13, name: ' 十三、一葉觀音', data: ' 乘蓮一葉觀世音 解縈眾生煩惱結 法音常轉廣長舌 定慧等持契果覺' },
+          { index: 14, name: ' 十四、青頸觀音', data: ' 勇健青頸觀世音 大悲示現威猛相 晦暗長夜為燈燭 苦海波翻作舟航 坐於斷崖上，右膝立起，右手置於膝上， 左手扶著岩壁，旁置一有柳枝之瓶， 是三十三身觀音中的佛身。' },
+          { index: 15, name: ' 十五、威德觀音', data: ' 攝眾威德觀世音 摧破邪妖鎮魍魎 天大將軍度滄海 普門示現降吉祥 岩上觀水，左手持蓮花，右手著地。 是三十三身觀音中的天大將軍身。' },
+          { index: 16, name: ' 十六、延命觀音', data: ' 息災延命觀世音 滅諸咒詛毒怨害 懸示留礙輪回種 紫金光照覺滄海 倚水邊岩上，悠然觀賞景物。 此尊能消除咒詛及毒藥，令眾生延命長壽故稱「延命」。 乘一葉蓮瓣浮於水面漂行。 是三十三身觀音中的宰官身。' },
+          { index: 17, name: ' 十七、眾寶觀音', data: ' 妙嚴眾寶觀世音 般若光宣示真際 寂靜明心覺觀照 長者身相度群迷 坐在地上，右手向地，左手放在彎起的膝上， 是三十三身觀音中的長者身。' },
+          { index: 18, name: ' 十八、岩戶觀音', data: ' 寂然岩戶觀世音 淨眼普觀週沙界 息滅三毒貪愛苦 蚖蛇蝮蠍出窟穴 端坐於岩窟內。 《普門品》雲：「蚖蛇及蝮蠍，氣毒煙火燃，念彼觀音力，尋聲自回去。」 因這些毒蟲多盤踞洞穴內，為免其出洞危害眾生，觀音因此坐鎮岩窟中保護眾生。' },
+          { index: 19, name: ' 十九、能靜觀音', data: ' 安穩能靜觀世音 開示法藏戒定慧 三無漏學善護念 悲智雙運登覺岸 坐水邊岩上，雙手安置石上作靜寂相。 能靜觀音因能救護遭難者，使得平靜安穩而得名，為海路守護神。' },
+          { index: 20, name: ' 二十、阿耨觀音', data: ' 觀海阿耨觀世音 妙善圓明不思議 銷塵龍魚諸鬼難 度脫有情出淪溺 立右膝坐於岩上，雙手抱膝觀望大海。' },
+          { index: 21, name: ' 二十一、阿摩提觀音', data: ' 無畏觀音阿摩提 毘沙門天威神力 顧盼微塵目雄毅 智慧照見離苦際 雙手置膝上，遍身有光燄坐在岩上， 是三十三身觀音中的毘沙門身。' },
+          { index: 22, name: ' 二十二、葉衣觀音', data: ' 圓明葉衣觀世音 三千威儀妙慈容 神光內凝覺真澄 心光發宣帝釋身 坐於敷草的岩上，是三十三身觀音中的帝釋身。' },
+          { index: 23, name: ' 二十三、琉璃觀音', data: ' 淨妙琉璃觀世音 旋湛清瑩熙怡相 息諸災厄成虛淨 銷滅三毒證菩提 觀音雙手捧琉璃香爐(或缽)，乘蓮瓣浮於水面， 是三十三身觀音中的自在天身。' },
+          { index: 24, name: ' 二十四、多羅觀音', data: ' 救苦多羅觀世音 與樂拔苦現剎塵 甘露徧灑十方界 遍應六趣普現身 直立乘雲，合掌，手持青蓮花。 梵名「多羅」亦為救度，故又名「救度母觀音」。 《普門品》雲：「或值怨賊繞，各執刀加害，念彼觀音力，鹹即起慈心。」為此尊由來。' },
+          { index: 25, name: ' 二十五、蛤蜊觀音', data: ' 啟悟蛤蜊觀世音 慈誨愛語殷玄示 無礙神變覺有情 歷劫燻修應微塵 自蛤蜊貝殼中示現，是三十三身觀音中的菩薩身。' },
+          { index: 26, name: ' 二十六、六時觀音', data: ' 光六時觀世音 晝夜開敷慈音揚 普願輪回諸眾生 鹹令安樂超出相 右手持梵篋的立像，此篋是六字章句陀羅尼，誦之得脫六道苦果得六妙門，證六根相應。為三十三身觀音中的居士身。' },
+          { index: 27, name: ' 二十七、普悲觀音', data: ' 光普悲觀世音 妙相慈顏淨端嚴 圓明照徹三有海 大自在天聖威神 雙手披衣，立於山岳之上。 「普慈」意即普遍施給眾生慈悲。 是三十三身觀音中的大自在天身。' },
+          { index: 28, name: ' 二十八、馬郎觀音', data: ' 德觀音馬郎婦 寂妙湛然淨明露 夢幻泡影示出離 光照癡暗煩惱除 民間婦女形象。即在「魚籃觀音」故事中化身為少女嫁給馬郎的觀音。 是三十三身觀音中的婦女身。' },
+          { index: 29, name: ' 二十九、合掌觀音', data: ' 禮敬合掌觀世音 耳根圓通法門開 清淨寶覺徧含容 普令解脫越苦海 合掌立於蓮華台上，乃三十三身觀音中的婆羅門身。' },
+          { index: 30, name: ' 三十、一如觀音', data: ' 法性一如觀世音 大悲如海性圓澄 慈音無遮開沉惑 直趣覺海不二門 觀音坐在雲中蓮華座上立左膝，現征伏雷電之姿，為《普門品》雲：「雲雷鼓掣電，降雹澍大雨，念彼觀音力，應時得消散。」之表徵。' },
+          { index: 31, name: ' 三十一、不二觀音', data: ' 圓融不二觀世音 普救眾生施無畏 金剛教化覺岸回 無上妙淨蓮池會 兩手低垂，乘一片蓮葉浮於水面， 是三十三身觀音中的執金剛神身。' },
+          { index: 32, name: ' 三十二、持蓮觀音', data: ' 妙哉持蓮觀世音 缽頭摩華淨妙香 十四無畏功德藏 六道眾生同悲仰 雙手執持一莖蓮華，是三十三身觀音中的童男童女身。' },
+          { index: 33, name: ' 三十三、灑水觀音', data: ' 清淨灑水觀世音 妙湛慈母化閻浮 如海印現悉平等 普濟含識出三途 又名滴水觀音，左手持缽，右手執楊枝作灑水狀' },],
         dropdown_text: "請選擇年/月",
         select_item: "",
         select_all: false,
@@ -494,7 +504,7 @@
         name: getUrlParameter("name"),
         // message: 'Hello Vue!',
         // msg: "",
-        card_loading_text:"資料處理中，<br>請稍等時間，<br>誦念南無觀世音菩薩",
+        card_loading_text: "資料處理中，<br>請稍等時間，<br>誦念南無觀世音菩薩",
         loading_text: "資料系統查詢中，請耐心等候10-15秒",
         loading_text2: "資料系統查詢中，請再等候2-3秒",
         err_text: "搜尋異常...",
@@ -512,7 +522,7 @@
       }
     },
     computed: {
-      
+
       predict_suggest() {
         return (tag, price) => {
           if (tag == "predict")
@@ -537,12 +547,12 @@
     },
 
     methods: {
-      pic_name_f(index){
-        return `菩薩/${index+1}.jpg`
+      pic_name_f(index) {
+        return `菩薩/${index + 1}.jpg`
       },
-        
-      random_pic_index(){
-        this.random_index= Math.floor(Math.random()*this.buddha_list.length)
+
+      random_pic_index() {
+        this.random_index = Math.floor(Math.random() * this.buddha_list.length)
       },
       filter_without_first(arr) {
         return arr.filter((item, index) => index != 0);
@@ -568,7 +578,7 @@
         let data = this.data_all
         let select_data = data.filter(e => e.YM == dateString)[0]
         console.log(select_data)
-         return `目前選擇${year}年${month}月儲值金額${select_data.data[1]}元/護持金額${select_data.data[0]}元`
+        return `目前選擇${year}年${month}月儲值金額${select_data.data[1]}元/護持金額${select_data.data[0]}元`
       },
       price_sum(list, tag) {//.filter(e=>select_all||e.date.startsWith(select_item))
         list = this.sort_date(list)
@@ -843,7 +853,7 @@
       }
     },
     mounted() {
-      
+
       setInterval(() => {
         let date = new Date()
         let sec = date.getSeconds() % 4 + 1
@@ -853,7 +863,7 @@
       // this.get_data()
     },
     created() {
-        this.random_pic_index()
+      this.random_pic_index()
 
       if (!!this.name) {
         this.msg_all = this.loading_text
@@ -868,13 +878,13 @@
             // console.log(all_data)
             // alert(123)
             let a = all_data.groupByDate()
-            // while(a.reduce((sum,item)=>sum+item.data[1],0)==0)
-            //     a=all_data.groupByDate()
-            
+            // while (a.reduce((sum, item) => sum + item.data[1], 0) == 0)
+            //   a = all_data.groupByDate()
+
 
             let bb = a.sort((a1, a2) => (a1.YM.replace('/', "") > a2.YM.replace('/', "") ? -1 : 1))
             this.msg_all = ""
-            this.card_show=false
+            this.card_show = false
             this.show_button = true
             this.data_all = (bb)
             // console.log(bb)

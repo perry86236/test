@@ -203,7 +203,7 @@
                   <td v-text="d.YM" class="text-right"></td>
                   <td  v-text="d.data[0]" class="text-right"></td>
                   <td v-for="j in 6" class="text-right">
-                    <div v-if="i==0&&(j==3||j==4)&&d.data[j+1]==0">(尚未更新)</div>
+                    <div v-if="i==0&&(j==3||j==4)&&d.data[j+1]==0">尚未更新</div>
                     <div v-else>{{d.data[j+1]}}</div>
                     
                   </td>

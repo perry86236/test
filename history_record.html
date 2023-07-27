@@ -104,7 +104,7 @@
                         <div class="col"></div>
                       </div>
                       <div class="row">
-                        <h6 class="card-text col-auto"
+                        <h6 class="card-text font-weight-bold col-auto"
                           v-text="buddha_select(buddha_list[random_index].data,random_text_index,'title')">
                         </h6>
                         <div class="col"></div>
@@ -422,7 +422,8 @@
           if (d_index != 1)
             d_data[0] = d_price
 
-          groups.push({ YM: val, data: d_data })
+          // groups.push({ YM: val, data: d_data })
+          return [...groups, { YM: val, data: d_data }]
           // if (index == 1) {//儲值
           //   groups.push({ YM: val, save: price, price: 0 })
           // }
@@ -448,10 +449,10 @@
           // else {
           //   groups[index].price += data.price || 0
           // }
-
+          return groups
         }
 
-        return groups
+        // return groups
 
       }
 

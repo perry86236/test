@@ -112,7 +112,7 @@
                         <div class="col"></div>
                       </div>
                       <div class="row">
-<!--                         <div class="col-1"></div> -->
+                        <div class="col-1"></div>
                         <h6 class="card-text col"
                           v-text="buddha_select(buddha_list[random_index].data,random_text_index,'content')"
                           ></h6>
@@ -192,7 +192,8 @@
               <thead>
                 <tr>
                   <th class="text-right">年/月</th>
-                  <th v-for="(d,i) in filter_without_first(tab_arr)" class="text-right">{{d}}</th>
+                  <th  class="text-right">護持金額</th>
+                  <th v-for="(d,i) in filter_without_2(tab_arr)" class="text-right">{{d}}</th>
                   <!-- <th class="text-right">儲值金額</th>
                   <th class="text-right">護持金額</th> -->
                 </tr>
@@ -200,7 +201,12 @@
               <tbody>
                 <tr v-for="(d,i) in (data_all)" :class="class_arr[i%class_arr.length]">
                   <td v-text="d.YM" class="text-right"></td>
-                  <td v-for="j in 7" v-text="d.data[j]" class="text-right"></td>
+                  <td  v-text="d.data[0]" class="text-right"></td>
+                  <td v-for="j in 6" class="text-right">
+                    <div v-if="i==0&&(j==3||j==4)&&d.data[j+1]==0">(尚未更新)</div>
+                    <div v-else>{{d.data[j+1]}}</div>
+                    
+                  </td>
                   <!-- <td v-text="d.data[2]"></td>
                   <td v-text="d.data[3]"></td>
                   <td v-text="d.data[4]"></td>
@@ -612,6 +618,9 @@
       },
       filter_without_first(arr) {
         return arr.filter((item, index) => index != 0);
+      },
+      filter_without_2(arr) {
+        return arr.filter((item, index) => index >1);
       },
       change_selected_YM(text) {
         if (!!text) {

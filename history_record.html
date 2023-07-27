@@ -24,7 +24,7 @@
             v-if="show_button">重新查詢</button></center>
         <hr style="filter: progid:dximagetransform.microsoft.shadow(color:#987cb9,direction:145,strength:15)"
           width="90%" color="#987cb9" size=1>
-        <div class="row">
+        <div class="row" v-if="select_all||!!select_item">
           <div class=""></div>
           <div>
             <div class="dropdown open">
@@ -48,42 +48,33 @@
         <!-- nav-tabs -->
         <!-- <div class="grid">
             <div class="row"> -->
-        <ul class="nav nav-pills flex-wrap">
+        <ul class="nav nav-pills flex-wrap" v-if="select_all||!!select_item">
           <li class="nav-item px-0">
-            <a class="nav-link active text-nowrap" href="#tab_all" data-toggle="tab"
-              v-if="select_all||!!select_item">總金額</a>
+            <a class="nav-link active text-nowrap" href="#tab_all" data-toggle="tab">總金額</a>
           </li>
           <li class="nav-item px-0">
-            <a class="nav-link text-nowrap" href="#tab_detail" data-toggle="tab"
-              v-if="select_all||!!select_item">簡易明細</a>
+            <a class="nav-link text-nowrap" href="#tab_detail" data-toggle="tab">簡易明細</a>
           </li>
           <li class="nav-item px-0">
-            <a class="nav-link text-nowrap" href="#tab1" data-toggle="tab" v-text="tab_arr[1]"
-              v-if="select_all||!!select_item"></a>
+            <a class="nav-link text-nowrap" href="#tab1" data-toggle="tab" v-text="tab_arr[1]"></a>
           </li>
           <li class="nav-item px-0">
-            <a class="nav-link text-nowrap" href="#tab2" data-toggle="tab" v-text="tab_arr[2]"
-              v-if="select_all||!!select_item"></a>
+            <a class="nav-link text-nowrap" href="#tab2" data-toggle="tab" v-text="tab_arr[2]"></a>
           </li>
           <li class="nav-item px-0">
-            <a class="nav-link text-nowrap" href="#tab3" data-toggle="tab" v-text="tab_arr[3]"
-              v-if="select_all||!!select_item"></a>
+            <a class="nav-link text-nowrap" href="#tab3" data-toggle="tab" v-text="tab_arr[3]"></a>
           </li>
           <li class="nav-item px-0">
-            <a class="nav-link text-nowrap" href="#tab4" data-toggle="tab" v-text="tab_arr[4]"
-              v-if="select_all||!!select_item"></a>
+            <a class="nav-link text-nowrap" href="#tab4" data-toggle="tab" v-text="tab_arr[4]"></a>
           </li>
           <li class="nav-item px-0">
-            <a class="nav-link text-nowrap" href="#tab5" data-toggle="tab" v-text="tab_arr[5]"
-              v-if="select_all||!!select_item"></a>
+            <a class="nav-link text-nowrap" href="#tab5" data-toggle="tab" v-text="tab_arr[5]"></a>
           </li>
           <li class="nav-item px-0">
-            <a class="nav-link text-nowrap" href="#tab6" data-toggle="tab" v-text="tab_arr[6]"
-              v-if="select_all||!!select_item"></a>
+            <a class="nav-link text-nowrap" href="#tab6" data-toggle="tab" v-text="tab_arr[6]"></a>
           </li>
           <li class="nav-item px-0">
-            <a class="nav-link text-nowrap" href="#tab7" data-toggle="tab" v-text="tab_arr[7]"
-              v-if="select_all||!!select_item"></a>
+            <a class="nav-link text-nowrap" href="#tab7" data-toggle="tab" v-text="tab_arr[7]"></a>
           </li>
         </ul>
 
@@ -95,14 +86,21 @@
               <div class="row no-gutters">
                 <!-- style="width: 30%;" -->
                 <div class="col-4">
-                  <img :src="pic_name_f(random_index)" class="img-fluid" alt="">
+                  <div class="container pt-2">
+                    <div class="row">
+                      <div class="col">
+                        <img :src="pic_name_f(random_index)" class="img-fluid" alt="">
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
                 <div class="col-8">
                   <div class="card-block px-2">
                     <div class="container">
 
                       <div class="row">
-                        <h4 class="card-title col-auto" v-text="buddha_list[random_index].name"></h4>
+                        <h4 class="card-title font-weight-bold col-auto" v-text="buddha_list[random_index].name"></h4>
                         <div class="col"></div>
                       </div>
                       <div class="row">
@@ -122,9 +120,9 @@
                   </div>
                 </div>
                 <div class="container">
-                  <div class="row align-items-end">
+                  <div class="row align-items-center">
                     <div class="col"></div>
-                    <a href="https://sites.google.com/view/prajna3631/%E4%BD%9B%E8%8F%A9%E8%96%A9%E4%BB%8B%E7%B4%B9/%E8%A7%80%E9%9F%B3%E7%99%BE%E5%9C%96?authuser=0#h.d5zz6fxke20e"
+                    <a href="https://sites.google.com/view/prajna3631/%E4%BD%9B%E8%8F%A9%E8%96%A9%E4%BB%8B%E7%B4%B9/%E8%A7%80%E9%9F%B3%E7%99%BE%E5%9C%96?authuser=0"
                       class="btn btn-outline-primary col-auto btn-sm">詳看更多介紹：請至 太平般若精舍-觀音百圖 介紹</a>
                     <div class="col"></div>
                   </div>

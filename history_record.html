@@ -99,7 +99,7 @@
                   <div class="col">
                     <div class="card-block px-2">
                       <h4 class="card-title" v-text="buddha_list[random_index].name"></h4>
-                      <h5 class="card-text"
+                      <h6 class="card-text font-weight-bold"
                         v-text="buddha_select(buddha_list[random_index].data,random_text_index,'title')"></h5>
                       <p class="card-text small"
                         v-text="buddha_select(buddha_list[random_index].data,random_text_index,'content')"></p>
@@ -117,7 +117,7 @@
             <!-- <div class="card" style="width: 18rem;" v-if="card_show">
                 <img :src="pic_name_f(random_index)" class="card-img-top" alt="">
                 <div class="card-body">
-                    <h5 class="card-title" v-text="buddha_list[random_index].name"></h5>
+                    <h6 class="card-title" v-text="buddha_list[random_index].name"></h5>
                     <p class="card-text"  v-text="buddha_list[random_index].data"></p>
                 </div>
             </div> -->
@@ -563,9 +563,9 @@
         if (tag == "title") {
           let text = ""
           switch (select_0) {
-            case '1': { text = "願力"; break; }
-            case '2': { text = "法像"; break; }
-            case '3': { text = "故事"; break; }
+            case '1': { text = "願力："; break; }
+            case '2': { text = "法像："; break; }
+            case '3': { text = "故事："; break; }
             default: { break; }
           }
           return text

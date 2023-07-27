@@ -99,7 +99,7 @@
                   <div class="col">
                     <div class="card-block px-2">
                       <h4 class="card-title" v-text="buddha_list[random_index].name"></h4>
-                      <h6 class="card-text font-weight-bold"
+                      <h5 class="card-text"
                         v-text="buddha_select(buddha_list[random_index].data,random_text_index,'title')"></h5>
                       <p class="card-text small"
                         v-text="buddha_select(buddha_list[random_index].data,random_text_index,'content')"></p>
@@ -139,15 +139,15 @@
                 <tr>
                   <th>年/月</th>
                   <!-- <th v-for="(d,i) in filter_without_first(tab_arr)">{{d}}</th> -->
-                  <th class="text-right">儲值金額</th>
-                  <th class="text-right">護持金額</th>
+                  <th class="text-center">儲值金額</th>
+                  <th class="text-center">護持金額</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(d,i) in (data_all)" :class="class_arr[i%class_arr.length]">
                   <td v-text="d.YM"></td>
-                  <td v-text="d.data[1]" class="text-right"></td>
-                  <td v-text="d.data[0]" class="text-right"></td>
+                  <td v-text="d.data[1]" class="text-center"></td>
+                  <td v-text="d.data[0]" class="text-center"></td>
 
                   <!-- <td v-text="d.YM"></td>
                   <td v-text="d.save" class="text-right"></td>
@@ -563,9 +563,9 @@
         if (tag == "title") {
           let text = ""
           switch (select_0) {
-            case '1': { text = "願力："; break; }
-            case '2': { text = "法像："; break; }
-            case '3': { text = "故事："; break; }
+            case '1': { text = "願力"; break; }
+            case '2': { text = "法像"; break; }
+            case '3': { text = "故事"; break; }
             default: { break; }
           }
           return text

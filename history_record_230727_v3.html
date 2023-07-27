@@ -1,1 +1,971 @@
 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>歷史餘額紀錄查詢</title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+
+  <div id="app">
+    <!-- <li v-for="item  in 20 " :key="item">{{item}}</li> -->
+
+
+    <div class="row justify-content-center">
+      <div class="col-12 col-sm-8 col-lg-6">
+        <center><button type="button" class="btn btn-outline-primary" @click="return_f()"
+            v-if="show_button">重新查詢</button></center>
+        <hr style="filter: progid:dximagetransform.microsoft.shadow(color:#987cb9,direction:145,strength:15)"
+          width="90%" color="#987cb9" size=1>
+        <div class="row" v-if="select_all||!!select_item">
+          <div class=""></div>
+          <div>
+            <div class="dropdown open">
+              <button class="btn btn-secondary dropdown-toggle pl-3" type="button" id="dropdownMenu4"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-text="dropdown_text">
+
+              </button>
+              <div class="dropdown-menu">
+                <!-- <span class="dropdown-item-text">Dropdown item text</span> -->
+                <a class="dropdown-item" @click="change_selected_YM()">(All)</a>
+                <a class="dropdown-item" v-for="item in data_all" v-text="item.YM"
+                  @click="change_selected_YM(item.YM)"></a>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div v-text="'目前選擇年月：'+select_item" class="h4 mb-0 mt-2 text-primary font-weight-bold"></div>
+          </div>
+          <div class="col-auto"></div>
+        </div>
+        <!-- nav-tabs -->
+        <!-- <div class="grid">
+            <div class="row"> -->
+        <ul class="nav nav-pills flex-wrap" v-if="select_all||!!select_item">
+          <li class="nav-item px-0">
+            <a class="nav-link active text-nowrap" href="#tab_all" data-toggle="tab">總金額</a>
+          </li>
+          <li class="nav-item px-0">
+            <a class="nav-link text-nowrap" href="#tab_detail" data-toggle="tab">簡易明細</a>
+          </li>
+          <li class="nav-item px-0">
+            <a class="nav-link text-nowrap" href="#tab1" data-toggle="tab" v-text="tab_arr[1]"></a>
+          </li>
+          <li class="nav-item px-0">
+            <a class="nav-link text-nowrap" href="#tab2" data-toggle="tab" v-text="tab_arr[2]"></a>
+          </li>
+          <li class="nav-item px-0">
+            <a class="nav-link text-nowrap" href="#tab3" data-toggle="tab" v-text="tab_arr[3]"></a>
+          </li>
+          <li class="nav-item px-0">
+            <a class="nav-link text-nowrap" href="#tab4" data-toggle="tab" v-text="tab_arr[4]"></a>
+          </li>
+          <li class="nav-item px-0">
+            <a class="nav-link text-nowrap" href="#tab5" data-toggle="tab" v-text="tab_arr[5]"></a>
+          </li>
+          <li class="nav-item px-0">
+            <a class="nav-link text-nowrap" href="#tab6" data-toggle="tab" v-text="tab_arr[6]"></a>
+          </li>
+          <li class="nav-item px-0">
+            <a class="nav-link text-nowrap" href="#tab7" data-toggle="tab" v-text="tab_arr[7]"></a>
+          </li>
+        </ul>
+
+        <div class="tab-content">
+          <div class="tab-pane active" id="tab_all">
+
+            <!-- <div class="container" v-if="card_show"> -->
+            <div class="card container" v-if="card_show">
+              <div class="row no-gutters">
+                <!-- style="width: 30%;" -->
+                <div class="col-4">
+                  <div class="container pt-3">
+                    <div class="row">
+                      <div class="col">
+                        <img :src="pic_name_f(random_index)" class="img-fluid" alt="">
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="col-8">
+                  <div class="card-block px-2">
+                    <div class="container">
+
+                      <div class="row">
+                        <h4 class="card-title font-weight-bold col-auto" v-text="buddha_list[random_index].name"
+                          ></h4>
+                        <div class="col"></div>
+                      </div>
+                      <div class="row">
+                        <h5 class="card-text col-auto"
+                          v-text="buddha_select(buddha_list[random_index].data,random_text_index,'title')"
+                          >
+                        </h5>
+                        <div class="col"></div>
+                      </div>
+                      <div class="row">
+<!--                         <div class="col-1"></div> -->
+                        <h6 class="card-text col"
+                          v-text="buddha_select(buddha_list[random_index].data,random_text_index,'content')"
+                          ></h6>
+                      </div>
+
+                    </div>
+
+                  </div>
+                </div>
+                <div class="container">
+                  <div class="row align-items-center">
+                    <div class="col"></div>
+                    <a href="https://sites.google.com/view/prajna3631/%E4%BD%9B%E8%8F%A9%E8%96%A9%E4%BB%8B%E7%B4%B9/%E8%A7%80%E9%9F%B3%E7%99%BE%E5%9C%96?authuser=0"
+                      class="btn btn-outline-primary col-auto btn-sm">詳看更多介紹：請至 太平般若精舍-觀音百圖 介紹</a>
+                    <div class="col"></div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="card-footer w-100 text-muted text-center" v-html="card_loading_text+text_point"
+                :class="red_bold">
+
+              </div>
+            </div>
+
+            <!-- </div> -->
+            <!-- <div class="card" style="width: 18rem;" v-if="card_show">
+                <img :src="pic_name_f(random_index)" class="card-img-top" alt="">
+                <div class="card-body">
+                    <h6 class="card-title" v-text="buddha_list[random_index].name"></h5>
+                    <p class="card-text"  v-text="buddha_list[random_index].data"></p>
+                </div>
+            </div> -->
+
+            <!-- <div v-text="price_sum(data2,2)" class="text-center"></div> -->
+            <div v-text="price_sum_all(select_item)" class="text-center" v-if="!msg_all.length && select_item!='All'">
+            </div>
+            <!-- .filter(e=>select_all||e.date.startsWith(select_item)) -->
+            <div v-text="price_sum(data1,1)" class="text-center" v-if="!msg_all.length && select_item=='All'">
+            </div>
+            <div v-text="predict_suggest('predict',predict_value)" class="text-center" style="font-weight: 900;"
+              v-if="!msg_all.length"></div>
+            <div v-text="predict_suggest('suggest',suggest_value)" class="text-center" style="font-weight: 900;"
+              v-if="!msg_all.length"></div>
+            <!-- <div v-text="msg_all+text_point" :class="red_bold" class="text-center" v-if="msg_all.length"></div> -->
+            <!-- <div v-if="data2.length==0" class="text-center">( 尚無扣款紀錄 )</div> -->
+            <table class="table table-sm table-bordered" v-if="data_all.length!=0">
+              <thead>
+                <tr>
+                  <th>年/月</th>
+                  <!-- <th v-for="(d,i) in filter_without_first(tab_arr)">{{d}}</th> -->
+                  <th class="text-center">儲值金額</th>
+                  <th class="text-center">護持金額</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(d,i) in (data_all)" :class="class_arr[i%class_arr.length]">
+                  <td v-text="d.YM"></td>
+                  <td v-text="d.data[1]" class="text-center"></td>
+                  <td v-text="d.data[0]" class="text-center"></td>
+
+                  <!-- <td v-text="d.YM"></td>
+                  <td v-text="d.save" class="text-right"></td>
+                  <td v-text="d.price" class="text-right"></td> -->
+                </tr>
+                <!-- <tr v-for="(d,i) in data_all" :class="class_arr[i%class_arr.length]">
+                  <td v-text="d.YM"></td>
+                  <td v-text="d.save" class="text-right"></td>
+                  <td v-text="d.price" class="text-right"></td>
+                </tr> -->
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-pane" id="tab_detail">
+
+            <table class="table table-sm table-bordered" v-if="data_all.length!=0">
+              <thead>
+                <tr>
+                  <th class="text-right">年/月</th>
+                  <th v-for="(d,i) in filter_without_first(tab_arr)" class="text-right">{{d}}</th>
+                  <!-- <th class="text-right">儲值金額</th>
+                  <th class="text-right">護持金額</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(d,i) in (data_all)" :class="class_arr[i%class_arr.length]">
+                  <td v-text="d.YM" class="text-right"></td>
+                  <td v-for="j in 7" v-text="d.data[j]" class="text-right"></td>
+                  <!-- <td v-text="d.data[2]"></td>
+                  <td v-text="d.data[3]"></td>
+                  <td v-text="d.data[4]"></td>
+                  <td v-text="d.data[5]"></td>
+                  <td v-text="d.data[6]"></td>
+                  <td v-text="d.data[7]"></td> -->
+                  <!-- <td v-text="d.YM"></td>
+                  <td v-text="d.save" class="text-right"></td>
+                  <td v-text="d.price" class="text-right"></td> -->
+                </tr>
+                <!-- <tr v-for="(d,i) in data_all" :class="class_arr[i%class_arr.length]">
+                  <td v-text="d.YM"></td>
+                  <td v-text="d.save" class="text-right"></td>
+                  <td v-text="d.price" class="text-right"></td>
+                </tr> -->
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-pane" id="tab1">
+            <div v-text="price_sum(data1.filter(e=>select_all||e.date.startsWith(select_item)),1)" class="text-center">
+            </div>
+            <div v-text="msg_1+text_point" :class="red_bold" class="text-center" v-if="msg_1.length"></div>
+
+            <!-- <div v-text="predict_suggest('predict',predict_value)" class="text-center"></div>
+            <div v-text="predict_suggest('suggest',suggest_value)" class="text-center"></div> -->
+            <div v-text="msg_8+text_point" :class="red_bold" class="text-center" v-if="msg_8.length"></div>
+
+            <div v-if="data1.length==0" class="text-center">( 尚無扣款紀錄 )</div>
+            <table class="table table-sm table-bordered" v-if="data1.length!=0">
+              <thead>
+                <tr class="row m-0">
+                  <th class="d-inline-block col-3">日期</th>
+                  <th class="d-inline-block col-7">項目</th>
+                  <th class="d-inline-block col-2">金額</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(d,i) in data1.filter(e=>select_all||e.date.startsWith(select_item))"
+                  :class="class_arr[i%class_arr.length]" class="row m-0">
+                  <td v-text="d.date" class="d-inline-block col-3"></td>
+                  <td v-text="d.item" class="d-inline-block col-7"></td>
+                  <td v-text="add_unit(d.price)" class="d-inline-block col-2 small"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-pane" id="tab2">
+            <div v-text="price_sum(data2.filter(e=>select_all||e.date.startsWith(select_item)),2)" class="text-center">
+            </div>
+            <div v-text="msg_2+text_point" :class="red_bold" class="text-center" v-if="msg_2.length"></div>
+            <div v-if="data2.length==0" class="text-center">( 尚無扣款紀錄 )</div>
+            <table class="table table-sm table-bordered" v-if="data2.length!=0">
+              <thead>
+                <tr class="row m-0">
+                  <th class="d-inline-block col-3">日期</th>
+                  <th class="d-inline-block col-7">項目</th>
+                  <th class="d-inline-block col-2">金額</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(d,i) in data2.filter(e=>select_all||e.date.startsWith(select_item))"
+                  :class="class_arr[i%class_arr.length]" class="row m-0">
+                  <td v-text="year_slash(d.item)" class="d-inline-block col-3"></td>
+                  <td v-text="tab_arr[2]" class="d-inline-block col-7"></td>
+                  <td v-text="add_unit(d.price)" class="d-inline-block col-2 small"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-pane" id="tab3">
+            <div v-text="price_sum(data3.filter(e=>select_all||e.date.startsWith(select_item)),2)" class="text-center">
+            </div>
+            <div v-text="msg_3+text_point" :class="red_bold" class="text-center" v-if="msg_3.length"></div>
+            <div v-if="data3.length==0" class="text-center">( 尚無扣款紀錄 )</div>
+            <table class="table table-sm table-bordered" v-if="data3.length!=0">
+              <thead>
+                <tr class="row m-0">
+                  <th class="d-inline-block col-3">日期</th>
+                  <th class="d-inline-block col-7">項目</th>
+                  <th class="d-inline-block col-2">金額</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(d,i) in data3.filter(e=>select_all||e.date.startsWith(select_item))"
+                  :class="class_arr[i%class_arr.length]" class="row m-0">
+                  <td v-text="year_slash(d.item)" class="d-inline-block col-3"></td>
+                  <td v-text="tab_arr[3]" class="d-inline-block col-7"></td>
+                  <td v-text="add_unit(d.price)" class="d-inline-block col-2 small"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-pane" id="tab4">
+            <div v-text="price_sum(data4.filter(e=>select_all||e.date.startsWith(select_item)),2)" class="text-center">
+            </div>
+            <div v-text="msg_4+text_point" :class="red_bold" class="text-center" v-if="msg_4.length"></div>
+            <div v-if="data4.length==0" class="text-center">( 尚無扣款紀錄 )</div>
+            <table class="table table-sm table-bordered" v-if="data4.length!=0">
+              <thead>
+                <tr class="row m-0">
+                  <th class="d-inline-block col-3">日期</th>
+                  <th class="d-inline-block col-7">項目</th>
+                  <th class="d-inline-block col-2">金額</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(d,i) in data4.filter(e=>select_all||e.date.startsWith(select_item))"
+                  :class="class_arr[i%class_arr.length]" class="row m-0">
+                  <td v-text="d.date" class="d-inline-block col-3"></td>
+                  <td v-text="d.item" class="d-inline-block col-7"></td>
+                  <td v-text="add_unit(d.price)" class="d-inline-block col-2 small"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-pane" id="tab5">
+            <div v-text="price_sum(data5.filter(e=>select_all||e.date.startsWith(select_item)),2)" class="text-center">
+            </div>
+            <div v-text="msg_5+text_point" :class="red_bold" class="text-center" v-if="msg_5.length"></div>
+            <div v-if="data5.length==0" class="text-center">( 尚無扣款紀錄 )</div>
+            <table class="table table-sm table-bordered" v-if="data5.length!=0">
+              <thead>
+                <tr class="row m-0">
+                  <th class="d-inline-block col-3">日期</th>
+                  <th class="d-inline-block col-7">項目</th>
+                  <th class="d-inline-block col-2">金額</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(d,i) in data5.filter(e=>select_all||e.date.startsWith(select_item))"
+                  :class="class_arr[i%class_arr.length]" class="row m-0">
+                  <td v-text="d.date" class="d-inline-block col-3"></td>
+                  <td v-html="d.item.replace(/、/g,'<br>')" class="d-inline-block col-7"></td>
+                  <td v-text="add_unit(d.price)" class="d-inline-block col-2 small"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-pane" id="tab6">
+            <div v-text="price_sum(data6.filter(e=>select_all||e.date.startsWith(select_item)),2)" class="text-center">
+            </div>
+            <div v-text="msg_6+text_point" :class="red_bold" class="text-center" v-if="msg_6.length"></div>
+            <div v-if="data6.length==0" class="text-center">( 尚無扣款紀錄 )</div>
+            <table class="table table-sm table-bordered" v-if="data6.length!=0">
+              <thead>
+                <tr class="row m-0">
+                  <th class="d-inline-block col-3">日期</th>
+                  <th class="d-inline-block col-7">項目</th>
+                  <th class="d-inline-block col-2">金額</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(d,i) in data6.filter(e=>select_all||e.date.startsWith(select_item))"
+                  :class="class_arr[i%class_arr.length]" class="row m-0">
+                  <td v-text="year_slash(d.item)" class="d-inline-block col-3"></td>
+                  <td v-text="tab_arr[6]" class="d-inline-block col-7"></td>
+                  <td v-text="add_unit(d.price)" class="d-inline-block col-2 small"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-pane" id="tab7">
+            <div v-text="price_sum(data7.filter(e=>select_all||e.date.startsWith(select_item)),2)" class="text-center">
+            </div>
+            <div v-text="msg_7+text_point" :class="red_bold" class="text-center" v-if="msg_7.length"></div>
+            <div v-if="data7.length==0" class="text-center">( 尚無扣款紀錄 )</div>
+            <table class="table table-sm table-bordered" v-if="data7.length!=0">
+              <thead>
+                <tr class="row m-0">
+                  <th class="d-inline-block col-3">日期</th>
+                  <th class="d-inline-block col-7">項目</th>
+                  <th class="d-inline-block col-2">金額</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(d,i) in data7.filter(e=>select_all||e.date.startsWith(select_item))"
+                  :class="class_arr[i%class_arr.length]" class="row m-0">
+                  <td v-text="year_slash(d.item)" class="d-inline-block col-3"></td>
+                  <td v-text="tab_arr[7]" class="d-inline-block col-7"></td>
+                  <td v-text="add_unit(d.price)" class="d-inline-block col-2 small"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <hr style="filter: progid:dximagetransform.microsoft.shadow(color:#987cb9,direction:145,strength:15)"
+          width="90%" color="#987cb9" size=1>
+        <center><button type="button" class="btn btn-outline-primary" @click="return_f()"
+            v-if="show_button">重新查詢</button></center>
+      </div>
+    </div>
+
+
+
+    <!-- <div>{{msg}}</div> -->
+  </div>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/scripts.js"></script>
+</body>
+
+
+<script type="module">
+  let f1 = (timeString) => {
+    let date = timeString?.split('/') || ['', '']
+    let year = date[0]
+    let month = date[1]
+    //console.log(year,month)
+    return [year, month].join("/")
+  }
+  Array.prototype.groupByDate = function () {
+    return this.reduce(function (groups, data) {
+      if (!!data) {
+        let d_date = data.date
+        let d_index = data.index
+        let d_price = data.price
+        let val = f1(d_date)
+        if (groups.every(e => e.YM != val)) {
+          let d_data = [0, 0, 0, 0, 0, 0, 0, 0]
+          //0_護持(全),1_儲值,2_三寶,3_精舍,4_共修,5_聖賢,6_煙供粉,7_神明衣
+          d_data[d_index] = d_price
+          if (d_index != 1)
+            d_data[0] = d_price
+
+          // groups.push({ YM: val, data: d_data })
+          return [...groups, { YM: val, data: d_data }]
+          // if (index == 1) {//儲值
+          //   groups.push({ YM: val, save: price, price: 0 })
+          // }
+          // else {
+          //   groups.push({ YM: val, save: 0, price: price })
+          // }
+
+        } else {
+          let index = -1;
+          for (let i = 0; i < groups.length; i++) {
+            if (groups[i].YM == val) {
+              index = i
+              break;
+            }
+          }
+          // console.log(index)
+          groups[index].data[d_index] += d_price
+          if (d_index != 1)
+            groups[index].data[0] += d_price
+          // if (data.index == 1) {//儲值
+          //   groups[index].save += data.price || 0
+          // }
+          // else {
+          //   groups[index].price += data.price || 0
+          // }
+          return groups
+        }
+
+        // return groups
+
+      } else return groups
+
+
+    }, [])
+  };
+
+  var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1),
+      sURLVariables = sPageURL.split('&'),
+      sParameterName,
+      i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+      sParameterName = sURLVariables[i].split('=');
+
+      if (sParameterName[0] === sParam) {
+        return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+      }
+    }
+    return false;
+  };
+  import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+
+  createApp({
+    data() {
+      return {
+        random_index: -1,
+        random_text_index: -1,
+
+        card_show: true,
+        buddha_list: [
+          { index: 1, name: '一、楊柳觀音', data: '1楊柳觀音是以手執楊柳枝為其特徵的觀音像。民間流行的楊枝觀音像，一般作手持淨瓶、楊枝。楊柳觀音又稱聖觀音，又稱楊枝觀音，因手執楊枝替人消除病災而得名，故又稱藥王觀音。||2據唐義淨《南海寄歸內法傳》講，西域習俗，每日以楊枝細條剔齒，熟嚼枝頭以淨牙，稱齒木。當地有這樣的禮節，向貴客贈齒木及淨水，以表示祝人健康及懇請之意。另外，古代印度，人們認為楊枝可以消災袪病。身患種種疾病者，應手執楊柳枝誦念真言。||2古人心目中的柳枝是可以除邪驅惡，佛教傳入後，楊柳就成為聖物。觀音菩薩一手持楊柳枝，一手托甘露淨瓶，「楊枝淨水，遍灑三千」，一掃人間煩惱垢濁，普渡眾生，所以，楊枝觀音的出現應當與此有關。此外楊柳枝是非常具有旺盛的生命力，這也是以楊柳喻佛法的興旺發展，右手持楊柳枝，以楊柳枝替人消弭病災，誓言拔濟眾生病苦，是三十三觀音菩薩的首尊，佛身。' },
+          { index: 2, name: '二、龍頭觀音', data: '1乘坐龍頭之上的觀音龍是獸中之王，譬喻觀音威德力。也有的法相是右手持楊柳，左手持淨瓶作瀉水狀，呈雲中乘龍之像，故又稱「乘龍觀音」。然而，佛教之龍在具象上又無異於中國民間傳說之龍，所以稱龍頭觀音。現代也有一新名稱騎龍觀音。||2古印度的說法，相信觀世音菩薩，是水神之神濕婆神演進而成，語波濕水神阿難陀女神，貌合又神合，所以油水神演生的。觀音乘在龍神上的法像，是承襲太古時代的思想。 ||3相傳東海有一種頭像龍身像龜的怪物經常危害人間。觀音菩薩知道後，大發慈悲之心，決定為民除害，便來到東海將怪物降伏，並躍上龍頭怪物的背上現出寶相。於是，從此過上了太平日子的百姓便塑了一尊腳踏龍頭怪物的觀音菩薩像供奉起來。表示觀音菩薩法力無邊，樂於為民除害，保佑眾生安居樂業。這故是有點像是鰲頭觀音的故事，可以互相看一下。' },
+          { index: 3, name: '三、持經觀音', data: '1持經觀音又稱讀經觀音，坐於岩石上，右手持經卷。持經觀音手持經卷，,閉目而坐，持經觀音菩薩，捧經端坐蓮池，“紫竹林中觀自在，白蓮臺上笑人忙”，拯救百姓于水火之中，成了人們最大的希望與救星。慈悲為懷，救世為旨。其形容儀範體現出觀音菩薩的清淨端莊、慈悲的道德風範。||1海南三亞的國內最大的南海觀音三面雕塑中，其中一面就是持經觀音形象。持經觀音是身聞之身的現世。身聞在梵語中稱為“久拉維卡”，意義是聆聽佛的聲音的人。說的是聽了佛的話而感悟的人。||2因手持經卷之故，稱為持經觀音。相當於法華經卷七普門品所載：「應以聲聞身得度者，即現聲聞身而為說法」之觀音化身。此係因聲聞乃聽聞如來之說法而得道者，「聲聞」是指聞佛聲教，悟出四聖諦理，斷三界見思惑，進入涅槃的聲聞僧，經典又代表著智慧的象徵，此觀音因手持或閱讀經卷而得名。故以手持經卷表示說法。是三十三身觀音中的聲聞身。' },
+          { index: 4, name: '四、圓光觀音', data: '1身放光明，合掌而坐。其基本特徵是觀音 背後有一輪熾盛火燄的圓光，「圓光」表觀世音菩薩的福德圓滿無缺。 ||3 相傳閩南有一山村，人們以打獵為生，但山中有一隻怪獸經常趁人們進山打獵時到村子傷害小孩。觀音 菩薩知道後，便化身一個小孩來到村口，等怪獸進村傷人時，現出身後烈焰閃爍的寶像，將怪獸降伏。表示眾生只要臨危不亂，樹立必勝信念，觀音菩薩就會保佑眾生解除災難。' },
+          { index: 5, name: '五、遊戲觀音', data: '1安坐雲端之上，表觀世音菩薩的教化圓通無礙，不拘時處，示現遊戲自在。||2觀音 菩薩教化的圓通無礙，不拘時處，示現遊戲自在，無滯無礙，故有此稱。即觀世音菩薩普門品「或被惡人逐，墮落金剛山；念彼觀音 力，不能損一毛」，說的是即使被惡人追逐，只要向遊戲觀音 祈禱,就會毫髮無損。戲者自在之義，無礙之義。||2《嘉祥疏》說： 「外道二乘，神通即有礙，不名遊戲，今菩薩無礙，雲戲也」。據此合意，就是說遊戲觀音 能遊於神通，圓通無礙，隨處點化，普濟眾生。緣此，作遊戲觀音 ，基本特徵是觀音 閑適地乘坐於鯉魚背上遊於大海，右手按於魚背上，左手拂帔帛，呈遊觀法界之相」。' },
+          { index: 6, name: '六、白衣觀音', data: '1白衣觀音 又稱白衣觀自在母、大白衣觀音 、白處尊菩薩、白處觀音 、服白衣觀音 、白衣觀自在母。大白衣觀音 是「胎藏界曼荼羅」的蓮花部母，密號離垢金剛身穿白衣，左手持白蓮花祈求息災，右手作與願印或結定印。即伸出五指，掌向外而安置於腰前，結跏趺坐於赤蓮花上。表示觀音 胸懷菩提之心。按《圖畫普門品》所繪，因觀音 身穿白衣，又在白蓮之中，故就其衣飾名為「白衣」，就其住處名為 「白處」，亦稱 「大白衣」、「白處觀音 」。在日本稱慈母大觀音 。||3 民間相傳中原兵亂，無辜百姓死傷無數，到處都是孤魂野鬼，不得安寧。觀音 菩薩在鬼節的那天來到中原，現出一襲白衣的寶相，超度冤魂。表示觀音 菩薩懷有純淨的菩提之心，接引眾生往生西方極樂世界。' },
+          { index: 7, name: '七、蓮臥觀音', data: '1蓮臥觀音 又稱，臥蓮觀音 ，合掌坐在池中蓮花之上。其基本特徵皆為雙手合掌抱於胸前，結跏趺坐於蓮座之上。||2 最早的觀音 是出現在印度的蓮華手菩薩，蓮花因此成為觀音 的重要標記之一。蓮臥觀音 ，是在蓮華葉上坐臥應現的菩薩。是普門品中譬喻小王尊貴之身坐臥蓮上。觀音 悠然自得，坐臥於蓮葉之上的形象，由觀音 渡眾濟世急切之心，應可瞭解，佛菩薩與眾生的心是一樣的，今菩薩坐臥於蓮花之上，乃藉形象提醒眾生，蓮為聖潔之花，是出污泥而不染的，亦告訴我們在塵不染塵之意。人因迷戀紅塵假景，忘卻歸鄉之路，常沉苦海，永失真道。' },
+          { index: 8, name: '八、瀧見觀音', data: '1瀧見觀音 又名飛瀑觀音 、山泉觀音 ，倚於山崖，眺望瀑布。||2〈普門品〉云：「假使興害意，推落大火坑，念彼觀音 力，火坑變成池。」為其由來。是三十三身觀音 中的大自在天身。令一願力，瀧見觀音 又稱「山泉觀音 」、 「飛瀑觀音 」，是道地的民間創造，她的信仰與我國古代農業經濟社會祈禳穀物豐稔，求雨習俗有關。按：《說文》說瀧，雨瀧瀧也。音轉讀浪浪。大雨時，山澗流泉直瀉發出的聲響謂「雨浪浪響」， 「澗坑浪浪響」。據此，瀧見即出現滂沱大雨之義。' },
+          { index: 9, name: '九、施藥觀音', data: '1坐於水旁岩石上，右手托頰，左手叉腰倚於膝上，凝視著面前的蓮華的思惟相，蓮華以經典的解釋則是水，象徵生命力。古印度經典記載，掌管萬物生命的『觀世音菩薩』，和所有藥的功能一樣，以水神的萬能力量，操縱人的生命，自然界的水，以及人體內的水份。如果清淨的話，是天下最珍貴的寶物，『施藥觀音 』思惟相，是思考未來的印相。佛像圖彙，稱『施藥觀音 』為『施樂觀音 』。有專家認為是先有施樂觀音 ，後世才變成施藥觀音 。||2施藥觀音 因因憐憫人間疾苦，謀治藥草，施予良藥，除治眾生身心病苦而得名。此尊之形象，常為右手拄頰深思，左手放在膝上撚蓮花，表示觀音 無時不在惦念世間疾苦，思慮拯救眾生。 又常施予良藥，除治眾生身心兩面病苦。除苦施藥。普門品說：「觀世音淨聖，於苦惱死厄，能為作依估。」' },
+          { index: 10, name: '十、馬郎婦觀音', data: '1馬郎婦觀音 又稱為魚籃觀音 ，立姿，右手手持經書。   由於這一應現，在觀音 像中，就有女相的「魚籃觀音 」，在《法華經顯應錄》中，又將之稱為「馬郎觀音 」。||2民間婦女形象。即在「魚籃觀音 」故事中化身為少女嫁給馬郎的觀音 。' },
+          { index: 11, name: '十一、德王觀音', data: '1趺坐於岩上，右手持綠葉一枝。' },
+          { index: 12, name: '十二、水月觀音', data: '1水月觀音 有各種形像，據圖像鈔卷七所說：『水月觀音 坐於大海中之岩石上，垂左足，右足豎膝，與左膝相叉鉤，面部微仰，作思惟之相。』另有三面六臂像，左三手分別持寶蓮花、金輪、孔雀尾，右三手分別持利劍、寶珠、青蓮花，身色如日光，坐於寶山 上。又其圖像於尊容鈔載為，跏坐於岩石上之蓮座，左手持未開蓮花，右手結與願印，由掌中出水。這幅觀音 像是，月下乘蓮瓣，飄蕩海面觀看映照水上之月。“水月”意為“水中之月”。' },
+          { index: 13, name: '十三、一葉觀音', data: '1一葉觀音 又稱作蓮葉觀音 。因觀音 大士乘一片蓮葉浮於水上，故有此名。此外佛經稱蓮瓣為葉，千葉蓮即千瓣蓮，一葉蓮即一瓣蓮，故又名一瓣蓮觀音 。||2普門品中記載：「或漂流巨海，龍魚諸鬼難，念彼觀音 力，波浪不能沒」。無論手執蓮葉或乘一瓣蓮花，所呈現的，皆是禪宗解悟：「幻人呈幻事，依幻非真相，真滅幻亦滅，了無相可得。」||2一葉觀音 也是「救水難之身」，如〈普門品〉載：「若為大水所漂，稱其名號，即得淺處。」文意是說，若遇到海難，稱念觀世音菩薩聖號，必會漂至淺處。大水也可以比喻為人生的生死大海，人在此海中浮沉，受了種種愛欲的迷惑，以致沉淪墮落。人們若能以理智克服貪欲心，心生慈悲喜捨，必能從驚濤駭浪中漂至淺灘。除了具體的海難之外，『一葉觀音 』也有拯救處在，動亂現實的社會中，所有受難者的功德。||3相傳日本曹洞宗開山祖師「道元」禪師，自宋朝返回日本途中，遇到狂風巨浪，眼見船即將沉沒，「道元」隨即口唸法華經普門品，頓時出現乘坐一片蓮花的觀音 ，隨即風平浪靜，船隻也安穩無恙。及登岸，師自刻其所睹觀音 像，安奉於南海普陀山 （古稱「梅岑山」）觀音 寺。以此故有「南海觀音 」之號。' },
+          { index: 14, name: '十四、青頸觀音', data: '1青頸，梵語nila-kantha，音譯抳羅健詑、建制。又稱青頸觀自在菩薩。 其形像，據不空羂索經卷九載，左手執蓮華，右手揚掌，結跏趺坐。又青頸大悲念誦儀軌載，其像為三面四臂，所持之物為杖、蓮花、輪、螺四種，身色為紅白，頸為青色，表煩惱即菩提之義。此尊之三昧耶形為蓮花或輪寶。||1 青頸觀音 ，本有捨已為人的奉獻精神，其法像，另依《不空羂索經》卷九記載，則為右手揚掌，左手執蓮花，結跏趺坐。也有說其身呈紅白二色，頸為青色，代表煩惱即菩提的意思。||2 青頸觀音 ，〈普門品〉偈云：「觀世音淨聖，於苦惱死厄，能為做依怙。」每個人生在這個婆娑世界，身心隨時都有憂苦煩惱事，也可以稱之為毒藥，「厄」是指天災人禍，在這憂苦的人海中，觀世音菩薩能救我們脫離苦惱死厄，能讓我們做依怙的。青頸觀音 降魔解救眾生，為不使毒藥傳世害人而吞食，致使頸呈現青色。||3 相傳諸天天神，為了要求得甘露，竟群起擾動乳海。不料卻打翻了被護法神將鎖縛於海底的毒壺，此毒壺，裝有天下各種奇毒。海水受到毒液的侵襲，由藍轉綠〈青〉，變成了一海毒水。濕婆神，恐眾生會受嚴重污染而中毒，於是，大發慈悲心，將一海滲有劇毒的海水，全給吞進了口中，由於強烈的毒質，引發毒害的緣故，使得濕婆神被燒青了脖子，連上半身也燒成一條火帶。因此，此菩薩，便以濕婆的脖子青黑色而得名。後來，隨著時代的演變，此菩薩，便為佛教所吸收，成為「青頸觀音 」。' },
+          { index: 15, name: '十五、威德觀音', data: '1此法像為，岩上觀水，左手持蓮花，右手著地。『佛像圖彙第二』所繪姿態，左手執金剛杵（Vajra），現折伏之威，右手執蓮華，坐岩石上。金剛，佛教用語，漢語近似音，譯為「嚩日羅」或「伐折羅」。||2 威德觀音 是折伏之威和攝取愛護之德兼備的觀音 。金剛(即鑽石)是古印度的一種礦石，堅硬無比。佛教運用金剛杵﹝Vajra﹞來形容教法的堅固和能夠破斥天魔與外道，而不被其所破壞。威德觀音 與水月觀音 相同，在岩山上面遊戲坐，眺望水面。傳說中的威德觀音 ，可能是源自禮讚觀世音的偈語，而出現的新觀世音菩薩，所以命名為威德觀音 ，右手著地的手印，左持蓮花。||3相傳，魏末年，沙門，法禪，一日，偕法侶多人山行。忽逢強賊，法禪見賊人來勢兇暴，知難理喻。惟虔誦觀音 名號，賊追之不得。挽弓射之，欲放不能。賊人大為驚訝，投弓於地，又不能得。認為遇到神人，遂捨命逃走。法禪等，因此安然脫險。」||3相傳，元魏沙門，道集，行於壽陽西山 ，為賊擄掠，縛於樹，將殺之，道集至誠誦念觀世音。賊人引刀，屢斬皆不能傷其分毫。賊人大為恐懼，慌忙逃逸，道集因之脫離險境。' },
+          { index: 16, name: '十六、延命觀音', data: '1 倚水邊岩上，悠然觀賞景物，身旁放赤杞柳。補陀落海會軌第三院東門延命觀音 條，載有此尊觀音 之形像，謂其頂上戴大寶冠，冠中有佛身，身相深黃色，現慈悲柔軟相。又有相為二十臂，以示接引各類眾生，左面各臂分別握有寶珠、寶劍、金輪、金剛橛、榜棑、金剛鐸、金剛鈴、大蓮花、數珠及結拳印；右面各臂分別執戟銷、金剛劍、化佛像、金剛寶、寶鏡、金剛索、跋折羅、五股杵、縛日羅及結無畏印等。兩足有輻輪相，安住於蓮花月輪，圓光周遍。又有百千種瓔珞、妙鬘、天衣，莊嚴其身。||2 延命一詞並非只有長生、延長生命的意思，而是指由生命產生新生命，不久又和他處誕生的生命，延續關係，一直衍生不斷，這才是延命觀音 的偉大力量。在延命觀音 的內心，一定在思考，給予生就等於給予苦與死，既然如此，就應該為如何解除，眾生之苦與死的煩惱而操心，因為深入了解苦與死的本質，所以延命觀音 才會產生，為眾生幸福而憂愁的表情。以除咒詛、毒藥之害，故有延命觀音 之稱。' },
+          { index: 17, name: '十七、眾寶觀音', data: '1坐於巖岸，右足伸巖上，右手向地，平立左膝，左手安放於左膝，成安穩之相。||3相傳江北百姓兇殘貪財，觀音 菩薩便化身一個帶著許多財寶的和尚前來點化。一夥貪婪的歹徒見到後，便把財物搶劫一空，沒想到財寶拿回家後全都化為灰燼。表示貧富自有天命，不可強求。只要是正當的願望，觀音 菩薩都會讓眾生得到滿足。 ||3相傳，唐，岑文本，字景仁，棘陽人。自幼習佛甚篤，虔誦普門品。有次經商乘舟往吳江，中途遇黑風，舟覆，船上乘客俱溺死江中。文本亦沒入水裡，正危急間，忽聞有人說，此人能誦普門品，水難應免。遂浮出水面，不一會，便安然抵達岸邊。回家後，於是設齋齋僧。中有一僧，俟眾僧離去後，才向文本言道：『天下方亂，君以善緣，幸免於難，終逢太平，致富貴。』說完，突然在眾人眼前消逝無蹤。眾皆感驚訝。撤齋之時，在缽中得到舍利兩顆。後棄商入仕，官至中書令。' },
+          { index: 18, name: '十八、巖戶觀音', data: '1 端坐於巖窟之中。因蚖蛇、蝮蠍等毒蟲多住於巖窟中。若念此觀音 力，可應時消散其毒氣，故此觀音 之畫像均採端坐於巖窟之姿。||2〈普門品〉偈云：「蚖蛇及蝮蝎，氣毒烟火然；念彼觀音 力，尋聲自迴去。」因這些蚖蛇及蝮蝎，毒蟲多居住於岩窟內，而且能吐出如煙火般的毒氣，觀世音菩薩為救護眾生，端坐於危岩外，阻止毒蟲出來害人，所以有岩戶觀音 之稱。||2蚖蛇及蝮蝎這四種毒物，也代表人類的貪心、嗔罣心、愚癡心及驕慢之心，這四種心有如毒氣烟火，隨時都會從人們的體內噴發出來，稍一不慎便會傷人。唯有稱念觀世音菩薩，人人興起菩薩心，則毒氣除，還我清淨安樂之社會為。為免其出洞危害眾生，觀音 因此坐鎮岩窟中保護眾生。||3在古印度是觀音 在岩窟中以禪定印盤坐，古印度岩窟寺院，曾經興盛一時，最有名的是耶羅拉阿迦達石窟，岩窟本身代表宇宙，又表示生命誕生之源的母胎，觀世坐在石窟中，代表宇宙生命神，人類生命神的原形。' },
+          { index: 19, name: '十九、能靜觀音', data: '2 坐在岩石上沈思，法華經普門品讚美能靜觀音 ，擁有拯救海難的法力，使波浪平靜之意，也有滅諸眾苦的意思，是稱讚具有肅靜功德的『觀世音菩薩』。能靜之名，蓋使蒙難者遠離災難，獲得安靜之意。||2巨海譬喻茫茫人海，龍魚諸鬼難則如愛欲的波濤，若失去清明理智，招來情慾摧殘，此時若能稱念觀世音菩薩名號，洞悉諸法皆空，則迷惑遠離，顯現安和祥靜的避風港。能靜觀音 能使遇難者平靜；「靜」也可解釋「淨」。清淨、潔淨，故又名能淨觀音||3宋徽宗崇寧年間，戶部侍郎劉達，給事中吳大人，一同出使高麗國。至群山，經四晝夜，月黑雲翳，冥濛不知所向，船長大為驚怖，遙叩普陀，口誦觀音 名號，不一會，只見神光滿海，如同白晝，遠遠看見招寶山 方向，遂得平安登岸。《冥祥記》亦載：「劉宋元嘉年間，顧邁，乘船自石頭城出發，途中狂風怒號，波濤洶湧，情況危急，急誦《高王觀世音真經》十餘遍，隨即奇蹟出現，不但風浪即止，而且更聞得陣陣檀香撲鼻而來，遂安然抵達目的地。」||3相傳，宋徐熙載之母程氏，素來虔誠禮敬觀世音。紹興四年，熙載與兒子，自外地返鄉，其所乘大船突遭暴風雨襲擊，怒濤掀天，船身不穩，幾遭傾覆。於是急率眾人，齊聲持誦觀音 名號。不久之後，海上漂來巨桑一株，眾人合力將其急繫於船身，船即安穩不動。翌晨視之，則船不知何時，已停泊在沙灘上。再四周搜尋，復不見巨桑蹤影。抵達家門，其母出迎，笑曰『昨夜夢見觀音 菩薩，引導汝父子平然歸來，今日果然靈驗。』徐熙載父子，這才明白，原來是觀音 菩薩顯化垂救。' },
+          { index: 20, name: '二十、阿耨觀音', data: '2普門品記載︰「或漂流巨海，龍、魚、諸鬼難，念彼觀音 力，波浪不能沒。」蓋以巨海、龍、魚於阿耨達池有因緣，佛教傳說阿耨達池位於瞻部州香山以南、大雪山 以北，《大唐西域記》亦有提及。阿耨觀音 名即由此而來。||3依照古代印度的傳說：大雪山 之北，香醉山之南，有一大湖 ，流經四大靈川，有金、銀、琉璃裝飾其岸，水波清徹如鏡，惠育眾生，而後流入大海。有說這是喜馬拉雅山中的水源，結合自古以來印度崇拜河川的思想，因此有阿耨觀音 之說。據〈普門品〉所載，阿耨觀音 也是「救湖海水難之身」。巨海亦可指無邊生死大海，龍魚諸鬼為內心煩惱，煩惱在眾生心中興風作浪，致使眾生漂流在生死海中，不能到達涅盤彼岸。如眾生念此菩薩法號，仰仗阿耨觀音 神威之力，縱使海澇波濤，也不致被諸波浪淹沒。' },
+          { index: 21, name: '二十一、阿摩提觀音', data: '1  阿摩提觀音 ，又作、阿摩<齒來>觀音 。意譯無畏觀音 、寬廣觀音 。即無畏觀自在菩薩。形像為三目四臂，乘白獅子座，面向左方，頭上載寶冠，以白蓮花妝飾，前二手執持鳳頭之箜篌，另左上之手掌托摩竭魚，右上之手持白色吉祥鳥，左足彎屈於獅子之頂上，右足垂下，通身發光燄，面貌慈祥。 ||2  阿摩提乃梵語，意為「全然無懼的人」或是「令人安心、平靜者」，因掌施無畏之德故名，又稱為無畏觀自在菩薩。〈普門品〉：「是觀世音摩訶薩，於怖畏急難之中，能施無畏，是故此娑婆世界，皆號之施無畏。」又因乘坐獅子，故稱獅子無畏觀音 。||3傳說宋末明初，流寇李全殺進河南登封縣少林寺，觀世音化身燒火的和尚，打退賊寇，少林寺僧眾就依當時菩薩所顯化的寳相，塑成金身，另闢觀音 殿供養，這就是阿摩提觀音 。據《阿摩提觀音 》儀軌記載：「即使犯無間重罪，兩日夜精進，勤唸誦，即得見菩薩尊相。」賊寇打家劫舍，本當死罪，觀音 菩薩大慈大悲，即現此相，有救援與警告之意。' },
+          { index: 22, name: '二十二、葉衣觀音', data: '1 其形像依『葉衣觀自在菩薩經』為天女形，戴寶冠，冠中安置無量壽佛。飾有瓔珞及環釧，火燄環繞，通身圓光。共有四臂，右第一手當胸，持吉祥果；第二手結施願印；左第一手執鉞斧；第二手握絹索，坐蓮華上，身穿千葉衣，為消除災疫、蟲劫，祈求農作物及人無病的觀音 。||2 自古以來為消除瘟疫、畜疫、劫賊、苗稼蟲害等，均以此觀音 菩薩為本尊。葉衣觀音 身穿千葉衣以綠色為基調，乃為顯示觀世音菩薩忍辱柔和的慈悲，有如大地之能容。葉衣觀音 ，以消除疫病、畜疫、劫賊、苗稼、蟲等，祈願無病長壽為其願力。' },
+          { index: 23, name: '二十三、琉璃觀音', data: '1  琉璃觀音 ，又名高王觀音 、香王觀音 。觀音 雙手捧琉璃香爐（或缽），乘蓮瓣浮於水面，遊化水上之姿。 ||2 普門品記載「設復有人，若有罪，若無罪，杻械枷鎖檢繫其身，稱觀世音菩薩名者，皆悉斷壞，即得解脫。」 普門品記載：「或遭王難苦，臨刑欲壽終，念彼觀音 力，刀尋斷斷壞。」是三十三身觀音 中的自在天身。 ||3傳聞有人遭受敵人襲擊，船被放火，四週都是火焰，在船隻眾人專心誦唸觀音 經，頓時看到一個人站在河中，前來拯救，使眾人脫離險境。火焰消失之時，出現在眼前是身著白衣，手持琉璃爐，腳踏蓮花的菩薩，有這段傳說之後，後人才尊稱他為『琉璃觀音 』。' },
+          { index: 24, name: '二十四、多羅尊觀音', data: '1 直立乘雲，其形像青白色，微笑，著鮮白衣，手持青蓮；通身圓光，首有髮髻，作天髻形。||3是源自古印度的多羅女神，通常以白色衣服立於雲端，以慈悲的眼神，引導眾生登上彼岸。相傳有身孕的婦人，可祈請多羅觀音 保佑安產，『多羅觀音 』又稱『多羅尊觀音 』。' },
+          { index: 25, name: '二十五、蛤蜊觀音', data: '1自蛤蜊貝殼中示現，以其坐於蛤蜊中，故有此稱。||3相傳，唐文宗一向極好喜食蛤蜊，沿海地方官吏以進貢為口實，大加收刮民脂民膏，致使怨聲載道。觀音 聞知後為解救眾生，變為大蛤蜊，示現於皇宮的廚房。文宗見後驚奇，請終南山 恒政禪師致問，乃知觀音 化現教示，即下旨停罷貢蛤蜊，永戒食蛤。又令天下寺建觀音 殿，沿海漁民額手稱慶，家家奉供，稱為蛤蜊觀音 。||3起源於中國廣東的民間故事。相傳有一位窮漁夫，在海邊拾一個美麗的蛤蜊，因此就帶回家中，放在水缸中養，此後每天打漁回來之時，都發現飯菜都準備好了，而感到不可思議。有一天漁夫就躲起來，偷看到缸中的蛤蜊，脫去外殼變成美女，要去準備飯菜，此時漁夫就抱住美女，將殼藏起來，因此兩人就結婚，數年後美女生下嬰孩。可是卻表示，自己是「海龍王」的女兒，不回去不可，並且交代好好養育孩子，到時必定有所幫助，說完就進入殼中消失蹤影。有這一段民間故事之後，後人就認為此美女，是『觀世音』顯化，並尊稱為『蛤蜊觀音 』。' },
+          { index: 26, name: '二十六、六時觀音', data: '1   一般流通者為立像，右手持六字章句陀羅尼梵篋。著天衣，瓔珞嚴飾，髻上頂化佛。赤足站在岩石上，端視下方眾生。||2六時觀音 ，又稱為「常視眾生觀音 」。右手持梵篋，此篋是六字章句陀羅尼，誦之得脫六道苦果得六妙門，證六根相應。取觀音 大悲甚深，於晝夜六時常哀湣護念眾生之意。所謂的六時是指，晨朝、日中、日沒、初夜、中夜、後夜，是為六時。也就是說二十四小時不休息，一直照顧眾生。故稱六時觀音 。' },
+          { index: 27, name: '二十七、普悲觀音', data: '1普悲觀音 ，雙手披衣，兩手隱藏於法衣而向前下垂，立於山嶽之上，呈衣端受風立像。||2    「普慈」意即普遍施給眾生慈悲。觀音 菩薩的法相，從高峰向下看凡間，代表普悲觀音 的威德與慈悲，普及大地，救渡之心遍及眾生。' },
+          { index: 28, name: '二十八、魚籃觀音', data: '1 魚籃觀音 於民間是婦女形象。即在「馬郎婦觀音 」故事中化身為少女嫁給馬郎的觀音 。係起源於我國唐代民間之信仰，其形像有乘於大魚背上，或一手提盛有大魚之籃。||2表示排除羅剎、毒龍、惡鬼等障礙。是三十三身觀音中的小王身。 ||3「馬郎婦觀音 」在宋朝時也有著應化的事蹟。相傳當時擔任泉州知府的蔡襄，因為發現時常有人在橫渡洛陽江時溺斃，因此便發願興建一條橫跨兩岸的大橋，但是造橋需相當的物資和財源，蔡襄因此非常傷腦筋。蔡襄的願心感動了觀世音菩薩，於是菩薩便化身為一位手提魚籃的美麗少女，為這個造橋計畫募得了許多款項，不但讓許多眾生結下了布施的善緣，也助蔡襄完成了整個造福人群的工程。自宋代以後，因其，手提魚籃，故世人又簡稱之為「魚籃觀音 」。' },
+          { index: 29, name: '二十九、合掌觀音', data: '1 此菩薩為立像，以其虛（空）心合掌之故，稱為合掌觀音 。||2合掌即合十，表示虔誠之敬意。《法華經‧譬喻品》載：「即從座起，整衣服，偏袒右肩，右膝著地，一心合掌，曲躬恭敬，瞻仰尊嚴。」〈普門品〉記載：「應以婆羅門身得度者，即現婆羅門身而為說法」，「若有眾生，多於淫欲，常念恭敬觀世音菩薩，便得離欲。」因淫慾，把智慧之光都給蒙蔽了，若能虛心合掌，恭念南無大慈大悲觀世音菩薩聖號，觀世音菩薩因為有般若的智慧，照見五蘊皆空，所以能救苦救難。' },
+          { index: 30, name: '三十、一如觀音', data: '3相傳，《天竺志》載：「宋真宗，祥符九年九月，飛蝗蔽天，群情震駭。皇帝以連年苦旱蝗蟲為災，是時來勢兇猛，多方補捉，不見寸效。乃遣中使禱祝於觀音 菩薩。是日午時，忽黑雲至，訊雷掣電，雨雹疾如矢石，聲大如砲。蝗蟲堆積川陸，傾刻即殲，皇帝甚神之，民信心，益見宏普。」||2一如即真如之理，因此又名真如觀音 。真如，意謂「事事無礙，遍滿法界」。一如觀音 法相，現雲擂鼓掣電身，降服雷電之姿。觀世音菩薩乘雲飛翔於空中，現制伏雷電之法身，坐在雲端豎起左腳，法華經普門品記載：「雲雷鼓掣電，降雹澍大雨；念彼觀音 力，應時得消散。」之表徵。一如觀音 也是「救天災難之身」，亦即若不幸遇到大自然災害，要趕快定下心來，稱念觀世音菩薩，靠菩薩的慈祐，必能雲消雨止，重見晴天。||3 相傳，《高僧傳》載道：「山西蔚州，夏秋間，每雨必有小雹，其地各村小廟中，必有僧往。自夏至秋收，不許閒人入廟，甚嚴肅。僧每日按時誦經咒，名為念苗經。若逢天濃陰，雲現兇象，雖非誦經鐘點，亦必特為虔誦，以期不至雨雹壞稼也。」此乃觀音 靈感免除雹災之力。||3  相傳，《南海一勺》曰：「清，孝簾，程昭，西浮梁人，早晚禮敬觀世音，從不間斷。道光，癸已年北上，至大江，狂風大作，怒濤洶湧，至誠誦念觀音 聖號，倖免於難。」' },
+          { index: 31, name: '三十一、不二觀音', data: '1兩手低垂，乘立於一片蓮葉浮於水面，表像本跡不二的觀音 。也可以說名相不二，意思是沒有第二個，就是萬物同一之意。諸多『觀世音』名號，雖有各種差異，但是『觀世音菩薩』，關懷眾生的慈悲來說，眾生對『觀世音』的讚美是不二的。||3相傳，梁釋道融。獨宿旅舍，彼時，天落大雪，其凍無比，至半夜方才困倦入眠。剛欲閤上雙眼，忽見有無數鬼卒，出現榻前。中有一鬼將，身披盔甲，腰佩寶刀，身形高大雄偉，走到床前，粗暴地厲聲說道：「君為何方鬼神，見著本將軍，何不參拜？」。言畢，急令鬼卒拖曳釋道融下地。諸鬼卒即將動手，他趕忙虔誦「觀世音」聖號，初誦一句，即見所住床後有一天將，身高丈餘，身穿黃色戰袍，手執金剛杵，撲向鬼將。眾鬼大喫一驚，急作鳥獸散，鬼將避之不及，身被金剛杵擊中，甲冑為之碎裂，化作灰塵。眨眼間，執金剛神即消逝無蹤。||3相傳，《天竺志》云：宋太宗雍熙三年〈西元九八六年〉五月。大將曹彬有歧溝之敗，見辱於契丹。帝以兵敗寇迫，形勢險惡。內心深感煩憂。於是，派遣內使，赴上天竺。虔誦祈禱觀音 菩薩，請求解救，不久之後，派齊賢途有代州之捷。是時諸將夜戰，遙見火光中有金甲大將，高數丈許，立於雲端。持赤幟指揮，軍心為之大振，虜騎望之。俱時膽顫心驚，爭相奔逃，以致潰不成軍，國土方得轉危為安。' },
+          { index: 32, name: '三十二、持蓮觀音', data: '1  手持蓮華的觀音 。觀世音菩薩都以蓮華為本誓象徵，以未開蓮華或已開蓮華為持物，亦稱蓮華手。又以蓮華為台，與蓮華有特殊因緣。持蓮觀音 形像立於荷葉上，雙手捧持一莖蓮華，多為容貌姣好的少女形象。||3相傳，五代梁貞明二年，日本僧人慧諤和尚前來中國五台山 ，請了一尊玉雕觀音 打算回日本膜拜。不料，當船開到舟山群島附近時，海上忽然興起陣陣波浪，如朵朵蓮花（因此有蓮華洋之稱），擋住了船的去路。後來慧諤許願留在當地弘法，船隻果然順利開向普陀山 ，從此慧諤所主持的觀音 庵被稱為「不肯去觀音 院」（有觀世音菩薩不願意去日本之意）。而船在蓮華洋打轉時，觀音 菩薩曾在普陀山 的白華絕頂顯現手持蓮花的金身，後人又稱為持蓮觀音 。這個故事跟，一葉觀音 、南海觀音 的小故事一樣。所以有人說，一葉觀音 又稱為，持蓮觀音 、南海觀音 。||2 因手持蓮花而得名。蓮花淑世芬芳，出汙泥而不染。' },
+          { index: 33, name: '三十三、灑水觀音', data: '3相傳姑蘇有數十萬百姓慘遭金兵殺害，觀音 菩薩便化身一位美麗少婦前來建台誦經超度，將甘露功法水遍灑四方，讓亡靈往生樂土，並在河中顯示寶相。於是姑蘇人便在觀音 菩薩誦經的地方供奉一尊誦經灑水的觀音 法像。表示觀音 菩薩樂於救贖眾生，即解除生者的苦難，還超度死者的亡靈。||3相傳，宋侍郎，邊知白，元豐二年，觸暑成病，忽夢觀音 ，以水灑之，自頂而至腳底，倍感清涼，醒而頓爽，病立癒。又該書中，另有一則宋法師繼忠，浙江永嘉邱氏子。初其父母求嗣於佛。同時夢一僧，授予好子。云螺溪尊者，寄汝養之。母娠，即厭葷血，幼見佛像必致敬。八歲入開元，即往湖南依廣智學。積勞成疾，乃行請觀音 三昧。感動大士放光，以水灌頂，其疾即癒，既而洞悟教觀，無所疑滯。||3相傳，元，釋真淨，江蘇華亭人。其母姚氏，夢白月墜懷而娠。有異僧路過，驚曰：「此乃海月法師再世也。」九歲出家，皈依於無極度法師。盡其所性，一心向佛。後住於下天竺。釋真淨，素有疾苦。一日，忽夢觀世音菩薩，持淨瓶水，灌其口曰：「汝病當自癒。」醒來，果如菩薩所言。||2  普門品有『悲體戒雷震，慈意妙大雲，如甘露法雨，滅除煩惱燄』。 灑水亦稱灑淨，淨瓶又稱寶瓶，內盛甘露水。觀音 手持寶瓶，以楊柳枝醮水灑向人間，或救旱災而降雨，或除病害而降魔。觀音 菩薩灑向人間的甘露水，不但是讓久旱逢甘霖，也是對惡人澆冷水，使其猛然省悟。《法華經‧藥草喻品》中所載：「為大眾說甘露淨法。」甘露亦喻佛法，觀世音菩薩不僅降雨滅災，而且還用甘露法雨滅除眾生煩惱之火焰。' },
+          { index: 34, name: '千手千眼觀世音 ', data: '2千手千眼的來歷，據《大悲心陀羅尼經》說，觀世音菩薩在過去千光王靜住如來教他受持大悲咒之後，菩薩便發了一個大願，他說：「若我當來，堪能利益安樂一切眾生者，令我即時身生千手、千眼具足。」這個大願一發，果然生了千手千眼。千眼代表透澈一切萬法的智慧，而千手則代表種種濟生利眾的方便，表示維護眾生，法力無邊。千手千眼，是用形象化的手法來顯示觀音 的大慈大悲、智慧無邊、神通廣大。 ||2千手千眼觀世音的咒，就是大名鼎鼎的「大悲咒」，由一千一百萬佛所說，功德利益難以思量。 此咒共計八十四句，內除「婆囉婆囉」句，係表示五濁惡世外，其餘八十三句，代表八十三位菩薩。雖咒內同句甚多，然所代表的菩薩則是不同的。此咒係過去九十九億恆河沙數諸佛所說，觀世音菩薩受之於千光王靜住如來佛，時觀音 菩薩始住初地，一聞此咒，立超第八地；心生歡喜，發誓弘布，安樂眾生，即時應願，身生千手千眼。' },
+        ],
+        dropdown_text: "請選擇年/月",
+        select_item: "",
+        select_all: false,
+        show_button: false,
+        predict_value: "",
+        suggest_value: "",
+        center_class: "text-center",
+        text_point: "",
+        red_bold: "font-weight-bold text-danger",
+        tab_arr: ["", "儲值", "護持三寶", "護持精舍", "共修", "聖賢祝壽", "煙供粉", "神明衣"],
+        class_arr: ["table-success", "table-danger", "table-info", "table-warning", "table-active", ""],
+        name: getUrlParameter("name"),
+        // message: 'Hello Vue!',
+        // msg: "",
+        card_loading_text: "資料處理中，感謝耐心等候，<br>請於等待時間，<br>誦念南無觀世音菩薩",
+        loading_text: "資料系統查詢中，請耐心等候10-15秒",
+        loading_text2: "資料系統查詢中，請再等候2-3秒",
+        err_text: "搜尋異常...",
+        msg_1: "", msg_2: "", msg_3: "", msg_4: "",
+        msg_5: "", msg_6: "", msg_7: "", msg_8: "", msg_all: "",
+        data1: [],
+        data2: [],
+        data3: [],
+        data4: [],
+        data5: [],
+        data6: [],
+        data7: [],
+        data_all: []
+
+      }
+    },
+    computed: {
+
+      predict_suggest() {
+        return (tag, price) => {
+          if (tag == "predict")
+            return this.predict_value != "" ? `截至本月月底餘額(預估) ${price}元` : ""
+          else if (tag == "suggest") {
+            let date1 = new Date()
+            let month1 = date1.getMonth() + 1
+            let days1 = date1.getDate()
+            // console.log(days1)
+            let next_month1 = (month1 + 1) > 12 ? 1 : (month1 + 1)
+            let full_date1 = days1 > 25 ? `${next_month1}月1日` : `${month1}月25日`
+            return this.suggest_value != "" ? `建議 ${full_date1}前 儲值金額 ${price}元` : ""
+          }
+        }
+      },
+      add_unit() {
+        return text => `${text}元`
+      },
+      year_slash() {
+        return text => text.replace(/年/g, "/")
+      }
+    },
+
+    methods: {
+      buddha_select(text, num, tag) {
+        let arr = text.split("||")
+
+        let select_text = arr[num]
+        let select_0 = select_text[0]
+        let select_else = select_text.substr(1)
+        if (tag == "title") {
+          let text = ""
+          switch (select_0) {
+            case '1': { text = "願力："; break; }
+            case '2': { text = "法像："; break; }
+            case '3': { text = "故事："; break; }
+            default: { break; }
+          }
+          return text
+        }
+        else if (tag == "content") {
+          return select_else
+        }
+        else {
+          return ""
+        }
+      },
+      pic_name_f(index) {
+        return `菩薩/${index + 1}.jpg`
+      },
+
+      random_pic_index() {
+        this.random_index = Math.floor(Math.random() * this.buddha_list.length)
+      },
+      filter_without_first(arr) {
+        return arr.filter((item, index) => index != 0);
+      },
+      change_selected_YM(text) {
+        if (!!text) {
+          this.select_all = false
+          this.select_item = text
+        } else {
+          this.select_all = true
+          this.select_item = "All"
+        }
+      },
+      return_f() {
+        let url = "https://script.google.com/macros/s/AKfycbypRmknN9RW78dER0P-x2fteydGWh9UIZDtvpnoQTOX4T9nhHfIUeQPzYDBFtennTWC/exec"
+        location.href = url
+      },
+      price_sum_all(dateString) {
+        // console.log(dateString)
+        let date_arr = dateString.split('/')
+        let year = date_arr[0]
+        let month = date_arr[1]
+        let data = this.data_all
+        let select_data = data.filter(e => e.YM == dateString)[0]
+        // console.log(select_data)
+        return `目前選擇${year}年${month}月儲值金額${select_data.data[1]}元/護持金額${select_data.data[0]}元`
+      },
+      price_sum(list, tag) {//.filter(e=>select_all||e.date.startsWith(select_item))
+        list = this.sort_date(list)
+        let all = this.select_all
+        if (list.length > 0) {
+          let arr = list.map(e => e.price)
+          let date = list[0].date
+          let tagWithText = !/^[0-9\/]+$/.test(date)
+          let date_arr = date.split('/')
+          let year = date_arr[0]
+          let month = date_arr[1]
+          // let sum=0
+          let price = arr.reduce((acc, cur) => acc + cur, 0);
+          if (tagWithText == true)
+            return `截至${date}累計 ${price} 元`
+          else if (tag == 1) {
+            if (!!all)
+              if (!!price)
+                return `截至${year}年${month}月累計儲值 ${price} 元`
+              else
+                return `( 尚無扣款紀錄 )`
+            else {
+              if (!!price)
+                return `目前選擇${this.select_item}小計${price}元`
+              else
+                return `目前選擇${this.select_item}無儲值金額`
+            }
+          } else if (tag == 2) {
+            if (!!all)
+              return `截至${year}年${month}月累計 ${price} 元`
+            else {
+              if (!!price)
+                return `目前選擇${this.select_item}小計${price}元`
+              else
+                return `目前選擇${this.select_item}無扣款金額`
+            }
+          }
+        }
+        else {
+          let select = this.select_item
+          if (tag == 1) {
+            return select == 'All' ? "" : `目前選擇${this.select_item}無儲值金額`
+          }
+          else if (tag == 2) {
+            return select == 'All' ? "" : `目前選擇${this.select_item}無扣款金額`
+          }
+        }
+      },
+      sort_YM(data) {
+        data = data.sort((a, b) => {
+          if (a.YM > b.YM) {
+            return -1;
+          }
+        });
+        return data
+      },
+      sort_date(data) {
+        data = data.sort((a, b) => {
+          if (a.date > b.date) {
+            return -1;
+          }
+        });
+        return data
+      },
+      async d_1() {
+        //儲值1
+        let url = "https://script.google.com/macros/s/AKfycbykwUXNwScBQU6ZBL-WWPipBGa-qQykIa__gbMey-DlwEoFR-9KjKAEIVcpMeiWzvEe/exec"
+        url += "?name=" + this.name
+
+        this.data1 = []
+        if (!!this.name) {
+          this.msg_1 = this.loading_text
+          axios.get(url)
+            .then((response) => {
+              // console.log(response.data)
+              this.data1 = this.sort_date(response.data).map(e => {
+                e.index = 1
+                return e
+              })
+              console.log(this.data1)
+              this.msg_1 = ""
+              // this.get_predict_suggest()
+            })
+            .catch((error) => {
+              console.log(error)
+              this.msg_1 = this.err_text
+            })
+        }
+      },
+      async d_2() {
+        //護持三寶2
+        let url = "https://script.google.com/macros/s/AKfycbyrpk4vqjgnZXbrqdpAXaC2pzv7RKnWRxa6ceNCSJgIuAUMBcBXcU1Ea5KWWnOMYQb-/exec"
+        url += "?name=" + this.name
+
+        this.data2 = []
+        if (!!this.name) {
+          this.msg_2 = this.loading_text
+          axios.get(url)
+            .then((response) => {
+              // console.log(response.data)
+              this.data2 = this.sort_date(response.data).map(e => {
+                e.index = 2
+                return e
+              })
+              this.msg_2 = ""
+            })
+            .catch((error) => {
+              console.log(error)
+              this.msg_2 = this.err_text
+            })
+        }
+      },
+      async d_3() {
+        //護持精舍3
+        let url = "https://script.google.com/macros/s/AKfycbxNrS3UWWVitdOYEbM52KwuOdVz0yUvLbZ9kmo5QywuqxwHl9eF8E7DvNs2TxIIevSr/exec"
+        url += "?name=" + this.name
+
+        this.data3 = []
+        if (!!this.name) {
+          this.msg_3 = this.loading_text
+          axios.get(url)
+            .then((response) => {
+              // console.log(response.data)
+              this.data3 = this.sort_date(response.data).map(e => {
+                e.index = 3
+                return e
+              })
+              this.msg_3 = ""
+            })
+            .catch((error) => {
+              console.log(error)
+              this.msg_3 = this.err_text
+            })
+        }
+      },
+      async d_4() {
+        //共修4
+        let url = "https://script.google.com/macros/s/AKfycbxvbzsxj3SAuWBHVEiTLb5xu4d7xAytGFrpf38JJV-1p3KG-wVUbrqMDPA_lePKSG-f4g/exec"
+        url += "?name=" + this.name
+
+        this.data4 = []
+        if (!!this.name) {
+          this.msg_4 = this.loading_text
+          await axios.get(url)
+            .then((response) => {
+              //console.log(response.data)
+              this.data4 = this.sort_date(response.data).map(e => {
+                e.index = 4
+                return e
+              })
+              // let data=this.sort_date(response.data)
+              // this.data4=data.map(e=>{
+              //     e.item=e.item.replace(/、/g,"\n")
+              //     return e
+              // })
+
+              this.msg_4 = ""
+            })
+            .catch((error) => {
+              console.log(error)
+              this.msg_4 = this.err_text
+            })
+        }
+      },
+      async d_5() {
+        //聖賢5
+        let url = "https://script.google.com/macros/s/AKfycbxFej9S4xSQoLS10SujPgpN8Z9iL7kPhm_ApTbXeLN5nHkP2FsSsG5U4VvII3n6q39cyw/exec"
+        url += "?name=" + this.name
+
+        this.data5 = []
+        if (!!this.name) {
+          this.msg_5 = this.loading_text
+          axios.get(url)
+            .then((response) => {
+              // console.log(response.data)
+              this.data5 = this.sort_date(response.data).map(e => {
+                e.index = 5
+                return e
+              })
+              this.msg_5 = ""
+            })
+            .catch((error) => {
+              console.log(error)
+              this.msg_5 = this.err_text
+            })
+        }
+      },
+      async d_6() {
+        // 煙供粉6
+        let url = "https://script.google.com/macros/s/AKfycbzVhm8TyYuvVfE4BBu71XoslNPse1lWQLfvVTCOCniqugkUmJy4K_b5rN11-WunnQSZ3Q/exec"
+        url += "?name=" + this.name
+
+        this.data6 = []
+        if (!!this.name) {
+          this.msg_6 = this.loading_text
+          axios.get(url)
+            .then((response) => {
+              // console.log(response.data)
+              this.data6 = this.sort_date(response.data).map(e => {
+                e.index = 6
+                return e
+              })
+              this.msg_6 = ""
+            })
+            .catch((error) => {
+              console.log(error)
+              this.msg_6 = this.err_text
+            })
+        }
+      },
+      async d_7() {
+        //神明衣7
+        let url = "https://script.google.com/macros/s/AKfycbwcJ4vys-EZWvRpd6Cu0yO9OrAhuB37eIftOERtYe6QMGmMmTuAyR1xxXSBX6GrIWUp/exec"
+        url += "?name=" + this.name
+
+        this.data7 = []
+        if (!!this.name) {
+          this.msg_7 = this.loading_text
+          axios.get(url)
+            .then((response) => {
+              // console.log(response.data)
+              this.data7 = this.sort_date(response.data).map(e => {
+                e.index = 7
+                return e
+              })
+              this.msg_7 = ""
+            })
+            .catch((error) => {
+              console.log(error)
+              this.msg_7 = this.err_text
+            })
+        }
+      },
+      async get_predict_suggest() {
+        let url = "https://script.google.com/macros/s/AKfycbzZQu7K_gNrYkSLTX7P_R7g5rjw1hwwYfI18nh09ILYPog3ENZje1-7RhiPRppixwRK/exec"
+        url += "?name=" + this.name
+        if (!!this.name) {
+          this.msg_8 = this.loading_text2
+          axios.get(url)
+            .then((response) => {
+              //console.log(response.data)
+
+              if (response.data.length > 0) {
+                let data = response.data[0]
+                this.predict_value = data.predict
+                this.suggest_value = data.suggest
+                this.msg_8 = ""
+                // this.show_button = true
+              }
+              // this.data7 = this.sort_date(response.data)
+              // this.msg_7 = ""
+            })
+            .catch((error) => {
+              console.log(error)
+              // this.msg_7 = this.err_text
+            })
+        }
+      },
+      async get_data() {
+        // if (!!this.name) {
+        this.d_1()
+        this.d_2()
+        this.d_3()
+        this.d_4()
+        this.d_5()
+        this.d_6()
+        this.d_7()
+
+        // }
+        //this.d_8()
+
+      }
+    },
+    mounted() {
+
+      setInterval(() => {
+        let date = new Date()
+        let sec = date.getSeconds() % 4 + 1
+        this.text_point = "...".repeat(sec)
+      }, 1000)
+
+      // this.get_data()
+    },
+    created() {
+      this.random_pic_index()
+      let text = (this.buddha_list[this.random_index].data)
+      // console.log(text)
+      let arr = text.split("||")
+      this.random_text_index = Math.floor(Math.random() * arr.length)
+
+
+      if (!!this.name) {
+        this.msg_all = this.loading_text
+        Promise.all([this.d_1(), this.d_2(), this.d_3(), this.d_4(), this.d_5(), this.d_6(), this.d_7(), this.get_predict_suggest()])
+          .then(() => {
+            console.log("OK")
+            // let all_data = [...JSON.parse(JSON.stringify(this.data1)), ...JSON.parse(JSON.stringify(this.data2)),
+            // ...JSON.parse(JSON.stringify(this.data3)), ...JSON.parse(JSON.stringify(this.data4)),
+            // ...JSON.parse(JSON.stringify(this.data5)), ...JSON.parse(JSON.stringify(this.data6)), ...JSON.parse(JSON.stringify(this.data7))]
+            let all_data = [...this.data1, ...this.data2, ...this.data3,
+            ...this.data4, ...this.data5, ...this.data6, ...this.data7,]
+            // console.log(all_data)
+            // alert(123)
+            let a = all_data.groupByDate()
+            // while (a.reduce((sum, item) => sum + item.data[1], 0) == 0)
+            //   a = all_data.groupByDate()
+
+
+            let bb = a.sort((a1, a2) => (a1.YM.replace('/', "") > a2.YM.replace('/', "") ? -1 : 1))
+            this.msg_all = ""
+            this.card_show = false
+            this.show_button = true
+            this.data_all = (bb)
+            // console.log(bb)
+            this.select_all = true
+            this.select_item = "All"
+
+
+          })
+          .catch((err) => {
+            console.log(123)
+            console.log(err)
+            // one or more promises have been rejected
+          });
+
+
+      }
+
+    }
+  }).mount('#app')
+</script>
+
+</html>

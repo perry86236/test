@@ -100,22 +100,19 @@
                     <div class="container">
 
                       <div class="row">
-                        <h4 class="card-title font-weight-bold col-auto" v-text="buddha_list[random_index].name"
-                          ></h4>
+                        <h4 class="card-title font-weight-bold col-auto" v-text="buddha_list[random_index].name"></h4>
                         <div class="col"></div>
                       </div>
                       <div class="row">
                         <h5 class="card-text col-auto"
-                          v-text="buddha_select(buddha_list[random_index].data,random_text_index,'title')"
-                          >
+                          v-text="buddha_select(buddha_list[random_index].data,random_text_index,'title')">
                         </h5>
                         <div class="col"></div>
                       </div>
                       <div class="row">
                         <div class="col-1"></div>
                         <h6 class="card-text col"
-                          v-text="buddha_select(buddha_list[random_index].data,random_text_index,'content')"
-                          ></h6>
+                          v-text="buddha_select(buddha_list[random_index].data,random_text_index,'content')"></h6>
                       </div>
 
                     </div>
@@ -125,8 +122,8 @@
                 <div class="container">
                   <div class="row align-items-center">
                     <div class="col"></div>
-                    <a href="https://liff.line.me/2000246064-5Q9EnNYD"
-                      class="btn btn-outline-primary col-auto btn-sm" target="_blank">詳看更多介紹：請至 太平般若精舍-觀音百圖 介紹</a>
+                    <a href="https://liff.line.me/2000246064-5Q9EnNYD" class="btn btn-outline-primary col-auto btn-sm"
+                      target="_blank">詳看更多介紹：請至 太平般若精舍-觀音百圖 介紹</a>
                     <div class="col"></div>
                   </div>
 
@@ -153,10 +150,10 @@
             <!-- .filter(e=>select_all||e.date.startsWith(select_item)) -->
             <div v-text="price_sum(data1,1)" class="text-center" v-if="!msg_all.length && select_item=='All'">
             </div>
-            <div v-text="predict_suggest('predict',predict_value)" class="text-center" style="font-weight: 900; color:#ff330d;"
-              v-if="!msg_all.length"></div>
-            <div v-text="predict_suggest('suggest',suggest_value)" class="text-center" style="font-weight: 900; color:#ff330d;"
-              v-if="!msg_all.length"></div>
+            <div v-text="predict_suggest('predict',predict_value)" class="text-center"
+              style="font-weight: 900; color:#ff330d;" v-if="!msg_all.length"></div>
+            <div v-text="predict_suggest('suggest',suggest_value)" class="text-center"
+              style="font-weight: 900; color:#ff330d;" v-if="!msg_all.length"></div>
             <!-- <div v-text="msg_all+text_point" :class="red_bold" class="text-center" v-if="msg_all.length"></div> -->
             <!-- <div v-if="data2.length==0" class="text-center">( 尚無扣款紀錄 )</div> -->
             <table class="table table-sm table-bordered" v-if="data_all.length!=0">
@@ -192,7 +189,7 @@
               <thead>
                 <tr>
                   <th class="text-right">年/月</th>
-                  <th  class="text-right">護持金額</th>
+                  <th class="text-right">護持金額</th>
                   <th v-for="(d,i) in filter_without_2(tab_arr)" class="text-right">{{d}}</th>
                   <!-- <th class="text-right">儲值金額</th>
                   <th class="text-right">護持金額</th> -->
@@ -201,11 +198,11 @@
               <tbody>
                 <tr v-for="(d,i) in (data_all)" :class="class_arr[i%class_arr.length]">
                   <td v-text="d.YM" class="text-right"></td>
-                  <td  v-text="d.data[0]" class="text-right"></td>
+                  <td v-text="d.data[0]" class="text-right"></td>
                   <td v-for="j in 6" class="text-right">
                     <div v-if="i==0&&(j==3||j==4)&&d.data[j+1]==0">尚未更新</div>
                     <div v-else>{{d.data[j+1]}}</div>
-                    
+
                   </td>
                   <!-- <td v-text="d.data[2]"></td>
                   <td v-text="d.data[3]"></td>
@@ -620,7 +617,7 @@
         return arr.filter((item, index) => index != 0);
       },
       filter_without_2(arr) {
-        return arr.filter((item, index) => index >1);
+        return arr.filter((item, index) => index > 1);
       },
       change_selected_YM(text) {
         if (!!text) {
@@ -710,7 +707,7 @@
       },
       async d_1() {
         //儲值1
-        let url = "https://script.google.com/macros/s/AKfycbykwUXNwScBQU6ZBL-WWPipBGa-qQykIa__gbMey-DlwEoFR-9KjKAEIVcpMeiWzvEe/exec"
+        let url = "https://script.google.com/macros/s/AKfycbzISvqCmP8K3hS3tX9JlIORTBZ9oorkHeDyv4xdUL-gPfNL3_-_xg4MM3e1R_tNxXqD/exec"
         url += "?name=" + this.name
 
         this.data1 = []
@@ -735,7 +732,7 @@
       },
       async d_2() {
         //護持三寶2
-        let url = "https://script.google.com/macros/s/AKfycbyrpk4vqjgnZXbrqdpAXaC2pzv7RKnWRxa6ceNCSJgIuAUMBcBXcU1Ea5KWWnOMYQb-/exec"
+        let url = "https://script.google.com/macros/s/AKfycbyJje4AhR65FNbqo2D8GOOhvkHyE8hzMy5tURQh7uwJg2r21LwY9DeOhFakkofoTWc/exec"
         url += "?name=" + this.name
 
         this.data2 = []
@@ -758,7 +755,7 @@
       },
       async d_3() {
         //護持精舍3
-        let url = "https://script.google.com/macros/s/AKfycbxNrS3UWWVitdOYEbM52KwuOdVz0yUvLbZ9kmo5QywuqxwHl9eF8E7DvNs2TxIIevSr/exec"
+        let url = "https://script.google.com/macros/s/AKfycbzmJ3qnGy2yGff2UV0OWTsLQIIUNqBrxHaVxsbhY_TSJvGeNAuZXHtkdsXdZCaUk5pw/exec"
         url += "?name=" + this.name
 
         this.data3 = []
@@ -781,7 +778,7 @@
       },
       async d_4() {
         //共修4
-        let url = "https://script.google.com/macros/s/AKfycbxvbzsxj3SAuWBHVEiTLb5xu4d7xAytGFrpf38JJV-1p3KG-wVUbrqMDPA_lePKSG-f4g/exec"
+        let url = "https://script.google.com/macros/s/AKfycbxtYOXzveuBY951XdZbrw5ef8zXhBBBbJaEKRzGafYRs_IQBg71QsSPLVjKQzCryHnQ2A/exec"
         url += "?name=" + this.name
 
         this.data4 = []
@@ -810,7 +807,7 @@
       },
       async d_5() {
         //聖賢5
-        let url = "https://script.google.com/macros/s/AKfycbxFej9S4xSQoLS10SujPgpN8Z9iL7kPhm_ApTbXeLN5nHkP2FsSsG5U4VvII3n6q39cyw/exec"
+        let url = "https://script.google.com/macros/s/AKfycbzX0JwvL4WXaXAQdMLpxMt6sD5hdknFC2Xygmyz8F6MM4W2jKYfYVuk99Uut2EUhgawSA/exec"
         url += "?name=" + this.name
 
         this.data5 = []
@@ -833,7 +830,7 @@
       },
       async d_6() {
         // 煙供粉6
-        let url = "https://script.google.com/macros/s/AKfycbzVhm8TyYuvVfE4BBu71XoslNPse1lWQLfvVTCOCniqugkUmJy4K_b5rN11-WunnQSZ3Q/exec"
+        let url = "https://script.google.com/macros/s/AKfycbzq5PIS1nKT8daC2WyAH4-evzN5nY4RbT0FAFPzJC2ycxlMXhuWH6D9RgMDRpQ2xEWyyw/exec"
         url += "?name=" + this.name
 
         this.data6 = []
@@ -856,7 +853,7 @@
       },
       async d_7() {
         //神明衣7
-        let url = "https://script.google.com/macros/s/AKfycbwcJ4vys-EZWvRpd6Cu0yO9OrAhuB37eIftOERtYe6QMGmMmTuAyR1xxXSBX6GrIWUp/exec"
+        let url = "https://script.google.com/macros/s/AKfycbzmmekCoZa9lq2z8EKChShEkq8mz3o7L95cAc5o-1wDe-w_r1awQ40u9AI3MObw7Eiu/exec"
         url += "?name=" + this.name
 
         this.data7 = []

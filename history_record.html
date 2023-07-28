@@ -934,7 +934,7 @@
 
       if (!!this.name) {
         this.msg_all = this.loading_text
-        Promise.all([this.d_1(), this.d_2(), this.d_3(), this.d_4(), this.d_5(), this.d_6(), this.d_7(), this.get_predict_suggest()])
+        Promise.allSettled([this.d_1(), this.d_2(), this.d_3(), this.d_4(), this.d_5(), this.d_6(), this.d_7(), this.get_predict_suggest()])
           .then(() => {
             console.log("OK")
             // let all_data = [...JSON.parse(JSON.stringify(this.data1)), ...JSON.parse(JSON.stringify(this.data2)),

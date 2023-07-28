@@ -153,9 +153,9 @@
             <!-- .filter(e=>select_all||e.date.startsWith(select_item)) -->
             <div v-text="price_sum(data1,1)" class="text-center" v-if="!msg_all.length && select_item=='All'">
             </div>
-            <div v-text="predict_suggest('predict',predict_value)" class="text-center" style="font-weight: 900;"
+            <div v-text="predict_suggest('predict',predict_value)" class="text-center" style="font-weight: 900; color:'#ff330d';"
               v-if="!msg_all.length"></div>
-            <div v-text="predict_suggest('suggest',suggest_value)" class="text-center" style="font-weight: 900;"
+            <div v-text="predict_suggest('suggest',suggest_value)" class="text-center" style="font-weight: 900; color:'#ff330d';"
               v-if="!msg_all.length"></div>
             <!-- <div v-text="msg_all+text_point" :class="red_bold" class="text-center" v-if="msg_all.length"></div> -->
             <!-- <div v-if="data2.length==0" class="text-center">( 尚無扣款紀錄 )</div> -->

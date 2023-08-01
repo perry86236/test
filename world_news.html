@@ -1,1 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>世界災難</title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+
+  <div id="app">
+
+    
+    <div class="container" >
+      <div class="row">
+        <div class="text-danger font-weight-bold" v-text="loading_text+text_point" v-if="data.length==0"></div>
+        <div class="col-12" v-else>
+          <div v-for="item in data">
+            <div v-text="item.YMD"></div>
+            <table>
+              <tr v-for="sub_item in item.data">
+                <td><a  v-text="sub_item.text" :href="sub_item.link"></a></td>
+              </tr>
+            </table>
+            
+            <hr style="filter: progid:dximagetransform.microsoft.shadow(color:#987cb9,direction:145,strength:15)" width="90%"
+              color="#987cb9" size=1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+
+
+
+    <!-- <div>{{msg}}</div> -->
+  </div>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/scripts.js"></script>
+</body>
+
+
+<script type="module">
+
+
+  import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+
+  createApp({
+    data() {
+      return {
+        data: [], msg: "", loading_text: "資料系統查詢中",text_point:""
+      }
+    },
+    computed: {
+
+
+    },
+
+    methods: {
+      sort_date(data) {
+        data = data.sort((a, b) => {
+          if (a.YMD > b.YMD) {
+            return -1;
+          }
+        });
+        return data
+      },
+      async get_data() {
+        //共修4
+        let url = "https://script.google.com/macros/s/AKfycbzBfgEwsTCnJ5JOnNlVQ7zm0KxIcxXy4ZGE5O07kjYxbXsLpXB1bbnvsfBMfzu0_0Ju/exec"
+        this.data = []
+        //if (!!this.name) {
+          this.msg = this.loading_text
+          await axios.get(url)
+            .then((response) => {
+              //console.log(response.data)
+              this.data = this.sort_date(response.data).map(e => {
+                return e
+              })
+              // let data=this.sort_date(response.data)
+              // this.data4=data.map(e=>{
+              //     e.item=e.item.replace(/、/g,"\n")
+              //     return e
+              // })
+
+              this.msg = ""
+            })
+            .catch((error) => {
+              console.log(error)
+              this.msg = this.err_text
+            })
+        //}
+      },
+    },
+    mounted() {
+      setInterval(() => {
+        let date = new Date()
+        let sec = date.getSeconds() % 4 + 1
+        this.text_point = "...".repeat(sec)
+      }, 1000)
+      
+
+    },
+    async created() {
+      //this.get_data()
+      await this.get_data()
+
+
+
+    }
+  }).mount('#app')
+</script>
+
+</html>

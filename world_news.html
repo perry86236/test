@@ -23,10 +23,12 @@
         <div class="col-12" v-else>
           <div v-for="item in data">
             <div v-text="item.YMD"></div>
-            <table>
-              <tr v-for="sub_item in item.data">
-                <td><a  v-text="sub_item.text" :href="sub_item.link"></a></td>
-              </tr>
+            <table class="table table-sm table-striped">
+              <tbody>
+                <tr v-for="sub_item in item.data" >
+                  <td><a  v-text="sub_item.text" :href="sub_item.link"></a></td>
+                </tr>
+              </tbody>
             </table>
             
             <hr style="filter: progid:dximagetransform.microsoft.shadow(color:#987cb9,direction:145,strength:15)" width="90%"

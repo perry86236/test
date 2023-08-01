@@ -713,7 +713,7 @@
         this.data1 = []
         if (!!this.name) {
           this.msg_1 = this.loading_text
-          axios.get(url)
+          await axios.get(url)
             .then((response) => {
               // console.log(response.data)
               this.data1 = this.sort_date(response.data).map(e => {
@@ -738,7 +738,7 @@
         this.data2 = []
         if (!!this.name) {
           this.msg_2 = this.loading_text
-          axios.get(url)
+          await axios.get(url)
             .then((response) => {
               // console.log(response.data)
               this.data2 = this.sort_date(response.data).map(e => {
@@ -761,7 +761,7 @@
         this.data3 = []
         if (!!this.name) {
           this.msg_3 = this.loading_text
-          axios.get(url)
+          await axios.get(url)
             .then((response) => {
               // console.log(response.data)
               this.data3 = this.sort_date(response.data).map(e => {
@@ -813,7 +813,7 @@
         this.data5 = []
         if (!!this.name) {
           this.msg_5 = this.loading_text
-          axios.get(url)
+          await axios.get(url)
             .then((response) => {
               // console.log(response.data)
               this.data5 = this.sort_date(response.data).map(e => {
@@ -836,7 +836,7 @@
         this.data6 = []
         if (!!this.name) {
           this.msg_6 = this.loading_text
-          axios.get(url)
+          await axios.get(url)
             .then((response) => {
               // console.log(response.data)
               this.data6 = this.sort_date(response.data).map(e => {
@@ -859,7 +859,7 @@
         this.data7 = []
         if (!!this.name) {
           this.msg_7 = this.loading_text
-          axios.get(url)
+          await axios.get(url)
             .then((response) => {
               // console.log(response.data)
               this.data7 = this.sort_date(response.data).map(e => {
@@ -879,7 +879,7 @@
         url += "?name=" + this.name
         if (!!this.name) {
           this.msg_8 = this.loading_text2
-          axios.get(url)
+          await axios.get(url)
             .then((response) => {
               //console.log(response.data)
 

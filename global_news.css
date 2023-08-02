@@ -540,8 +540,17 @@ video {
   height: auto
 }
 
+.w-auto {
+  width: auto
+}
+
 .w-full {
   width: 100%
+}
+
+.bg-slate-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(226 232 240 / var(--tw-bg-opacity))
 }
 
 .object-cover {

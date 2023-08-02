@@ -603,8 +603,8 @@ video {
   text-align: center
 }
 
-.text-8xl {
-  font-size: 6rem;
+.text-5xl {
+  font-size: 3rem;
   line-height: 1
 }
 
@@ -664,5 +664,10 @@ video {
 
   .md\:pl-20 {
     padding-left: 5rem
+  }
+
+  .md\:text-8xl {
+    font-size: 6rem;
+    line-height: 1
   }
 }

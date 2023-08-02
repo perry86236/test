@@ -10,6 +10,7 @@
   <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
   <link href="css/style.css" rel="stylesheet">
   <link href="global_news.css" rel="stylesheet">
+  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
 </head>
 
 <body>
@@ -24,7 +25,7 @@
   <div id="app">
     <div class="md:px-20 text-red-600 font-bold" v-text="loading_text+text_point" v-if="data.length==0"></div>
     <div v-for="item in data">
-      <div class="ps-2 pt-3 text-left font-semibold md:px-20">搜尋日期：<span v-text=" item.YMD"></span></div>
+      <div class="ps-2 pt-3 text-left font-semibold md:px-20">搜尋日期：<span class="pl-3" v-text=" item.YMD"></span></div>
       <div class="md:flex">
         <div class="md:shrink-0">
           <div class="h-auto w-full object-cover pr-5 ps-2 pt-3 font-semibold md:h-auto md:w-auto md:pl-20">新聞標題</div>

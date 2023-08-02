@@ -21,9 +21,9 @@
     <div class="pt-5 pb-14 text-white">關心了解週邊的眾生，以慈悲心設想如何幫助眾生。</div>
   </div>
 
-  <div class="pb-3 pt-5 md:px-20">固定每週更新一次。</div>
+  <div class="pb-3 pt-3 ps-2 md:px-20">固定每週更新一次。</div>
   <div id="app">
-    <div class="md:px-20 text-red-600 font-bold" v-text="loading_text+text_point" v-if="data.length==0"></div>
+    <div class="pt-3 ps-2 md:px-20 text-red-600 font-bold" v-text="loading_text+text_point" v-if="data.length==0"></div>
     <div v-for="item in data">
       <div class="ps-2 pt-3 text-left font-semibold md:px-20">搜尋日期：<span class="pl-3" v-text=" item.YMD"></span></div>
       <div class="md:flex">

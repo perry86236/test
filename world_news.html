@@ -16,19 +16,21 @@
   <div class="text-center"
     style="background-position: center center; background-image: url(http://perry86236.github.io/test/pic.jpg); background-size: cover;">
     <div class="pt-10 text-5xl font-semibold text-white">世界災難新聞</div>
-    <div class="text-white pb-10 ">關心了解週邊的眾生，以慈悲心設想如何幫助眾生。</div>
+    <div class="pb-10 text-white">關心了解週邊的眾生，以慈悲心設想如何幫助眾生。</div>
   </div>
+  <div class="pb-3 pt-5 md:px-20">固定每週更新一次。</div>
   <div id="app">
+
     <div v-for="item in data">
-      <div class="ps-2 pt-3 text-left font-semibold">搜尋日期：<span v-text="item.YMD"></span></div>
+      <div class="ps-2 pt-3 text-left font-semibold md:px-20">搜尋日期：<span v-text=" item.YMD"></span></div>
       <div class="md:flex">
         <div class="md:shrink-0">
-          <div class="h-auto w-full object-cover ps-2 pt-3 font-semibold md:h-auto md:w-auto md:px-2">新聞標題</div>
+          <div class="h-auto w-full object-cover pr-5 ps-2 pt-3 font-semibold md:h-auto md:w-auto md:pl-20">新聞標題</div>
         </div>
-        <div class="p-2">
-
-          <a v-for="sub_item in item.data" v-text="sub_item.text" :href="sub_item.link"
-            class="py-1 mt-1 block text-lg font-medium leading-tight text-blue-700 hover:underline"></a>
+        <div class="p-2 w-auto">
+          <a v-text="sub_item.text" :href="sub_item.link" v-for="(sub_item,i) in item.data"
+            class="w-full mt-1 block py-1 text-lg font-medium leading-tight text-blue-700 hover:underline"
+            :class="i%2==0?'bg-slate-200':''"></a>
         </div>
       </div>
     </div>
@@ -96,7 +98,7 @@
   createApp({
     data() {
       return {
-        input: "",
+        // input: "",
         data: [], msg: "", loading_text: "資料系統查詢中", text_point: ""
       }
     },

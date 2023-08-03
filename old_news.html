@@ -207,19 +207,22 @@ axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
     methods: {
       change_year(){
         if(this.select_year!=""){
-          alert(this.select_year)
+          // alert(this.select_year)
           this.get_year_data(this.select_year)
         }
       },
       async get_year_data(year){
+        let corsURL = 'https://cors-anywhere.herokuapp.com/';
         let url = `https://den.ncdr.nat.gov.tw//umbraco/api/EventInfo/EventData?year=${year}`
         this.data = []
         this.msg = this.loading_text
-        await axios.get(url)
+        axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+        await axios.get(`${corsURL}${url}`)
           .then((response) => {
             let res=response.data
-            let data=res.data
-            let output=data.filter(e=>e.info_2.includes('死')).map(e=>{return {name:e.name,content:e.info_2}})
+            console.log(res)
+            let data=res.datas
+            let output=data.filter(e=>e.info_2.includes('死')).map(e=>{return {id:e.id,name:e.name,content:e.info_2}}).sort((a,b)=>a.id - b.id)
             this.msg = ""
             this.data=output
             })

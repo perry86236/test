@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>世界災難回顧</title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
+  <link href="css/style.css" rel="stylesheet">
+  <!-- <link href="global_news.css" rel="stylesheet"> -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Roboto font -->
+  <link
+  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap"
+  rel="stylesheet" />
+
+  <!-- Tailwind Elements styles-->
+  <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
+
+
+<!-- Tailwind CSS config -->
+<script src="https://cdn.tailwindcss.com/3.3.0"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      fontFamily: {
+        sans: ["Roboto", "sans-serif"],
+        body: ["Roboto", "sans-serif"],
+        mono: ["ui-monospace", "monospace"],
+      },
+    },
+    corePlugins: {
+      preflight: false,
+    },
+  };
+</script>
+</head>
+
+<body>
+  <div class="text-center"
+    style="background-position: center center; background-image: url(http://perry86236.github.io/test/pic.jpg); background-size: cover;">
+    <div class="text-5xl pt-14 md:text-8xl font-medium text-white">世界災難<br>新聞回顧</div>
+
+    <div class="pt-5 pb-14 text-white">關心了解週邊的眾生，以慈悲心設想如何幫助眾生。</div>
+  </div>
+
+  <!-- <div class="pb-3 pt-5 md:px-20">固定每週更新一次。</div> -->
+  <div id="app">
+    <label for="countries" class="block mb-2 text-sm font-medium text-gray-900">請選擇年分</label>
+    <select id="countries" v-model="select_year" @change="change_year"
+    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+      <option selected value="">請選擇年分</option>
+      <option v-for="year in year_list" :value="year" v-text="year"></option>
+    </select>
+    <div class="md:px-20 text-red-600 font-bold" v-text="loading_text+text_point" v-if="data.length==0"></div>
+
+    <div id="accordionExample">
+
+      <div v-for="(item,index) in data"
+        class="border border-t-0 border-neutral-200 bg-white dark:border-neutral-600 dark:bg-neutral-800">
+        <h2 class="mb-0" id="headingTwo">
+          <button
+            class="group relative flex w-full items-center rounded-none border-0 bg-white px-5 py-4 text-left text-base text-neutral-800 transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none dark:bg-neutral-800 dark:text-white [&:not([data-te-collapse-collapsed])]:bg-white [&:not([data-te-collapse-collapsed])]:text-primary [&:not([data-te-collapse-collapsed])]:[box-shadow:inset_0_-1px_0_rgba(229,231,235)] dark:[&:not([data-te-collapse-collapsed])]:bg-neutral-800 dark:[&:not([data-te-collapse-collapsed])]:text-primary-400 dark:[&:not([data-te-collapse-collapsed])]:[box-shadow:inset_0_-1px_0_rgba(75,85,99)]"
+            type="button"
+            data-te-collapse-init
+            data-te-collapse-collapsed
+            :data-te-target="'#collapse_'+index"
+            aria-expanded="false"
+            aria-controls="collapseTwo"
+            v-text="item.name"
+            >
+            
+            <span
+              class="-mr-1 ml-auto h-5 w-5 shrink-0 rotate-[-180deg] fill-[#336dec] transition-transform duration-200 ease-in-out group-[[data-te-collapse-collapsed]]:mr-0 group-[[data-te-collapse-collapsed]]:rotate-0 group-[[data-te-collapse-collapsed]]:fill-[#212529] motion-reduce:transition-none dark:fill-blue-300 dark:group-[[data-te-collapse-collapsed]]:fill-white">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="h-6 w-6">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
+            </span>
+          </button>
+        </h2>
+        <div
+          :id="'collapse_'+index"
+          class="!visible hidden"
+          data-te-collapse-item
+          aria-labelledby="headingTwo"
+          data-te-parent="#accordionExample">
+          <div class="px-5 py-4" v-text="item.content">
+            <!-- <strong>This is the second item's accordion body.</strong> It is
+            hidden by default, until the collapse plugin adds the appropriate
+            classes that we use to style each element. These classes control
+            the overall appearance, as well as the showing and hiding via CSS
+            transitions. You can modify any of this with custom CSS or
+            overriding our default variables. It's also worth noting that just
+            about any HTML can go within the <code>.accordion-body</code>,
+            though the transition does limit overflow. -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div v-for="item in data">
+      <div class="ps-2 pt-3 text-left font-semibold md:px-20">搜尋日期：<span class="pl-3" v-text=" item.YMD"></span></div>
+      <div class="md:flex">
+        <div class="md:shrink-0">
+          <div class="h-auto w-full object-cover pr-5 ps-2 pt-3 font-semibold md:h-auto md:w-auto md:pl-20">新聞標題</div>
+        </div>
+        <div class="p-2 w-auto">
+          <a v-text="sub_item.text" :href="sub_item.link" target="_blank" v-for="(sub_item,i) in item.data"
+            class="w-full mt-1 block py-1 text-lg font-medium leading-tight text-blue-700 hover:underline"
+            :class="i%2==0?'bg-slate-200':''" ></a>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <!-- <div class="jumbotron text-center"
+    style="background-position: center center; background-image: url(http://perry86236.github.io/test/pic.jpg); background-size: cover;">
+    <h1 class="text-white">世界災難<br>新聞</h1>
+    <p class="text-white">關心了解週邊的眾生，<br>以慈悲心設想如何幫助眾生。</p>
+
+  </div>
+  <div id="app">
+    <div v-for="item in data">
+      <div class="font-semibold text-left pt-3 ps-2">搜尋日期：<span v-text="item.YMD"></span></div>
+      <div class="md:flex">
+        <div class="md:shrink-0">
+          <div class="h-auto w-full object-cover md:h-auto md:w-auto font-semibold pt-3 ps-2">新聞標題</div>
+        </div>
+        <div class="p-2">
+          
+          <a v-text="sub_item.text" :href="sub_item.link"
+            class="block mt-1 text-lg leading-tight font-medium text-blue-700 hover:underline"></a>
+
+        </div>
+      </div>
+    </div> -->
+  <!-- <div class="container">
+      <div class="row">
+        <div class="text-danger font-weight-bold" v-text="loading_text+text_point" v-if="data.length==0"></div>
+        <div class="col-12" v-else>
+          <div v-for="item in data">
+            <div v-text="item.YMD"></div>
+            <table class="table table-sm table-striped">
+              <tbody>
+                <tr v-for="sub_item in item.data">
+                  <td><a v-text="sub_item.text" :href="sub_item.link"></a></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <hr style="filter: progid:dximagetransform.microsoft.shadow(color:#987cb9,direction:145,strength:15)"
+              width="90%" color="#987cb9" size=1>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+
+
+
+
+  <!-- <div>{{msg}}</div> -->
+  </div>
+  <!-- <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script> -->
+  <!-- <script src="js/scripts.js"></script> -->
+  
+  <!-- Tailwind Elements JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+  
+</body>
+
+
+<script type="module">
+
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+  import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+
+  createApp({
+    data() {
+      return {
+        year_list:[2022,2021,2020,2019,2018],
+        select_year:[],
+        data: [], msg: "", loading_text: "資料系統查詢中", text_point: ""
+      }
+    },
+    computed: {
+
+
+    },
+
+    methods: {
+      change_year(){
+        if(this.select_year!=""){
+          alert(this.select_year)
+          this.get_year_data(this.select_year)
+        }
+      },
+      async get_year_data(year){
+        let url = `https://den.ncdr.nat.gov.tw//umbraco/api/EventInfo/EventData?year=${year}`
+        this.data = []
+        this.msg = this.loading_text
+        await axios.get(url)
+          .then((response) => {
+            let res=response.data
+            let data=res.data
+            let output=data.filter(e=>e.info_2.includes('死')).map(e=>{return {name:e.name,content:e.info_2}})
+            this.msg = ""
+            this.data=output
+            })
+          .catch((error) => {
+            console.log(error)
+            this.msg = this.err_text
+          })
+      },
+      sort_date(data) {
+        data = data.sort((a, b) => {
+          if (a.YMD > b.YMD) {
+            return -1;
+          }
+        });
+        return data
+      },
+      async get_data() {
+        
+        let url = "https://script.google.com/macros/s/AKfycbzQkLD390RC_2jR_bW_5PYeyaznoP4mg7N3s4E0Kkzyfds0yxDY_7Ru-9lwSccZodmJ/exec"
+        this.data = []
+        //if (!!this.name) {
+        this.msg = this.loading_text
+        await axios.get(url)
+          .then((response) => {
+            //console.log(response.data)
+            this.data = this.sort_date(response.data).map(e => {
+              return e
+            })
+            // let data=this.sort_date(response.data)
+            // this.data4=data.map(e=>{
+            //     e.item=e.item.replace(/、/g,"\n")
+            //     return e
+            // })
+
+            this.msg = ""
+          })
+          .catch((error) => {
+            console.log(error)
+            this.msg = this.err_text
+          })
+        //}
+      },
+    },
+    mounted() {
+      setInterval(() => {
+        let date = new Date()
+        let sec = date.getSeconds() % 4 + 1
+        this.text_point = "...".repeat(sec)
+      }, 1000)
+
+
+    },
+    async created() {
+      //this.get_data()
+      //await this.get_data()
+
+
+
+    }
+  }).mount('#app')
+</script>
+
+</html>

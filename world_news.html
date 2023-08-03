@@ -65,7 +65,8 @@
 
     methods: {
       go_url(url) {
-        top.location.href = url
+        //console.log(top.location, self.location)
+        window.top.location.href = url
       },
 
       sort_date(data) {

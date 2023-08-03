@@ -31,61 +31,14 @@
           <div class="h-auto w-full object-cover pr-5 ps-2 pt-3 font-semibold md:h-auto md:w-auto md:pl-20">新聞標題</div>
         </div>
         <div class="p-2 w-auto">
-          <a v-text="sub_item.text" :href="sub_item.link" target="_blank" v-for="(sub_item,i) in item.data"
+          <a v-text="sub_item.text" @click="go_url(sub_item.link)" target="_blank" v-for="(sub_item,i) in item.data"
             class="w-full mt-1 block py-1 text-lg font-medium leading-tight text-blue-700 hover:underline"
-            :class="i%2==0?'bg-slate-200':''" ></a>
+            :class="i%2==0?'bg-slate-200':''"></a>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- <div class="jumbotron text-center"
-    style="background-position: center center; background-image: url(http://perry86236.github.io/test/pic.jpg); background-size: cover;">
-    <h1 class="text-white">世界災難<br>新聞</h1>
-    <p class="text-white">關心了解週邊的眾生，<br>以慈悲心設想如何幫助眾生。</p>
-
-  </div>
-  <div id="app">
-    <div v-for="item in data">
-      <div class="font-semibold text-left pt-3 ps-2">搜尋日期：<span v-text="item.YMD"></span></div>
-      <div class="md:flex">
-        <div class="md:shrink-0">
-          <div class="h-auto w-full object-cover md:h-auto md:w-auto font-semibold pt-3 ps-2">新聞標題</div>
-        </div>
-        <div class="p-2">
-          
-          <a v-text="sub_item.text" :href="sub_item.link"
-            class="block mt-1 text-lg leading-tight font-medium text-blue-700 hover:underline"></a>
-
-        </div>
-      </div>
-    </div> -->
-  <!-- <div class="container">
-      <div class="row">
-        <div class="text-danger font-weight-bold" v-text="loading_text+text_point" v-if="data.length==0"></div>
-        <div class="col-12" v-else>
-          <div v-for="item in data">
-            <div v-text="item.YMD"></div>
-            <table class="table table-sm table-striped">
-              <tbody>
-                <tr v-for="sub_item in item.data">
-                  <td><a v-text="sub_item.text" :href="sub_item.link"></a></td>
-                </tr>
-              </tbody>
-            </table>
-
-            <hr style="filter: progid:dximagetransform.microsoft.shadow(color:#987cb9,direction:145,strength:15)"
-              width="90%" color="#987cb9" size=1>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-
-
-
-
-  <!-- <div>{{msg}}</div> -->
   </div>
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
@@ -111,6 +64,9 @@
     },
 
     methods: {
+      go_url(url) {
+        top.location.href = url
+      },
 
       sort_date(data) {
         data = data.sort((a, b) => {

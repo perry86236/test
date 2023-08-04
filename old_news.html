@@ -188,6 +188,7 @@
 
 <script type="module">
 (function() {
+    alert('test')
     var cors_api_host = 'cors-anywhere.herokuapp.com';
     var cors_api_url = 'https://' + cors_api_host + '/';
     var slice = [].slice;
@@ -201,6 +202,7 @@
             args[1] = cors_api_url + args[1];
         }
         return open.apply(this, args);
+        alert('ok')
     };
 })();
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';

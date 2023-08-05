@@ -158,7 +158,7 @@
         let url = `https://den.ncdr.nat.gov.tw/umbraco/api/EventInfo/EventData?year=${year}`
         this.data = []
         this.msg = this.loading_text
-        axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+        // axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
         await axios.get(`${corsURL}${url}`)
           .then((response) => {
             let res=response.data

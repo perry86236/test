@@ -44,7 +44,7 @@
     <div class="md:px-20 text-red-600 font-bold" v-text="loading_text+text_point" v-if="msg!=''"></div>
 
         <!-- 分頁 -->
-<div class="place-content-center w-full flex justify-evenly items-center">
+<div class="place-content-center w-full flex justify-evenly items-center" v-if="msg==''&&data.length!=0">
   <nav aria-label="Page navigation example">
     <ul class="inline-flex -space-x-px text-base h-10">
       <li @click="previos_page()">

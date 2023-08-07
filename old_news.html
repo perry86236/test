@@ -16,8 +16,8 @@
   <!-- Tailwind Elements styles-->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
 
-  <link href="css/old_news.css?ver=2023080701" rel="stylesheet">
-<!--   <script src="https://cdn.tailwindcss.com"></script> -->
+  <link href="css/old_news.css?ver=2023080504" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
 
 </head>
 
@@ -50,7 +50,7 @@
           </li>
           <template v-for="p in range_page">
             <li v-if="p=='...'">
-              <a :class="unselect_class">...</a>
+              <a :class="omit_class">...</a>
             </li>
             <li v-else @click="click_page(p)">
               <a v-text="p" :aria-current="select_page==p?'page':''"
@@ -110,6 +110,7 @@
   createApp({
     data() {
       return {
+        omit_class: "flex items-center justify-center px-3 h-8 md:px-4 md:h-10 leading-tight text-gray-500 bg-white border border-gray-300",
         previous_class: "flex items-center justify-center px-3 h-8 md:px-4 md:h-10 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700",
         next_class: "flex items-center justify-center px-3 h-8 md:px-4 md:h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 ",
         unselect_class: 'flex items-center justify-center px-3 h-8 md:px-4 md:h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ',
@@ -207,28 +208,38 @@
       select_page(newValue, oldValue) {
         let current = this.select_page
         let all_page = this.all_page
-        let arr = Array.from({ length: all_page }, (_, index) => index + 1).filter((e, index, arr) => index == 0 || index == arr.length - 1 || (e <= current + 1) && (e >= current - 1))
-        let b_arr = [arr[0]]
-        for (let i = 1; i < arr.length; i++) {
-          if (arr[i] - arr[i - 1] > 1)
-            b_arr.push('...')
-          b_arr.push(arr[i])
-        }
-        this.range_page = b_arr
-        console.log(b_arr)
+        let arr = Array
+          .from({ length: all_page }, (_, index) => index + 1)
+          .filter((e, index, arr) => index == 0 || index == arr.length - 1 || (e <= current + 1) && (e >= current - 1))
+          .reduce((all, item) => {
+            let all_l = all.length
+            all_l > 0 && item - all[all_l - 1] > 1 && all.push('...')
+            all = [...all, item]
+            return all
+          }, [])
+        this.range_page = arr
       },
       all_page(newValue, oldValue) {
         let current = this.select_page
         let all_page = this.all_page
-        let arr = Array.from({ length: all_page }, (_, index) => index + 1).filter((e, index, arr) => index == 0 || index == arr.length - 1 || (e <= current + 1) && (e >= current - 1))
-        let b_arr = [arr[0]]
-        for (let i = 1; i < arr.length; i++) {
-          if (arr[i] - arr[i - 1] > 1)
-            b_arr.push('...')
-          b_arr.push(arr[i])
-        }
-        this.range_page = b_arr
-        console.log(b_arr)
+        let arr = Array
+          .from({ length: all_page }, (_, index) => index + 1)
+          .filter((e, index, arr) => index == 0 || index == arr.length - 1 || (e <= current + 1) && (e >= current - 1))
+          .reduce((all, item) => {
+            let all_l = all.length
+            all_l > 0 && item - all[all_l - 1] > 1 && all.push('...')
+            all = [...all, item]
+            return all
+          }, [])
+        this.range_page = arr
+        // let b_arr = [arr[0]]
+        // for (let i = 1; i < arr.length; i++) {
+        //   if (arr[i] - arr[i - 1] > 1)
+        //     b_arr.push('...')
+        //   b_arr.push(arr[i])
+        // }
+        // this.range_page = b_arr
+        // console.log(b_arr)
       }
     }
   }).mount('#app')

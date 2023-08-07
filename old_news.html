@@ -16,8 +16,8 @@
   <!-- Tailwind Elements styles-->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
 
-  <link href="css/old_news.css?ver=2023080504" rel="stylesheet">
-  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+  <link href="css/old_news.css?ver=2023080701" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
 
 </head>
 
@@ -46,8 +46,7 @@
       <nav aria-label="Page navigation example">
         <ul class="inline-flex -space-x-px text-base h-10">
           <li @click="previous_page()">
-            <a
-              class="flex items-center justify-center px-4 h-10 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">←</a>
+            <a :class="previous_class">←</a>
           </li>
           <template v-for="p in range_page">
             <li v-if="p=='...'">
@@ -62,8 +61,7 @@
             <a v-text="select_page+'/'+all_page" :class="unselect_class"></a>
           </li> -->
           <li @click="next_page()">
-            <a
-              class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 ">→</a>
+            <a :class="next_class">→</a>
           </li>
         </ul>
       </nav>
@@ -112,8 +110,10 @@
   createApp({
     data() {
       return {
-        unselect_class: 'flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ',
-        select_class: 'flex items-center justify-center px-4 h-10 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 ',
+        previous_class: "flex items-center justify-center px-3 h-8 md:px-4 md:h-10 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700",
+        next_class: "flex items-center justify-center px-3 h-8 md:px-4 md:h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 ",
+        unselect_class: 'flex items-center justify-center px-3 h-8 md:px-4 md:h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ',
+        select_class: 'flex items-center justify-center px-3 h-8 md:px-4 md:h-10 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 ',
         year_list: [],
         select_year: "",
         data: [], msg: "", loading_text: "資料系統查詢中", text_point: "",

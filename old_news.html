@@ -3,24 +3,21 @@
 
 <head>
   <meta charset="UTF-8">
-<!--   <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+  <!--   <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
   <meta http-equiv="Permissions-Policy" content="interest-cohort=(), user-id=()" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>世界災難回顧</title>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
   <!-- <link href="css/style.css" rel="stylesheet"> -->
-    <!-- Roboto font -->
-    <link
-    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap"
-    rel="stylesheet" />
-  
-    <!-- Tailwind Elements styles-->
-    <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
-    
+  <!-- Roboto font -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind Elements styles-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
+
   <link href="css/old_news.css?ver=2023080504" rel="stylesheet">
+  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
 
 </head>
 
@@ -37,55 +34,54 @@
     <label for="countries" class="text-xl md:px-20  block mb-2 ont-medium text-gray-900">請選擇年分</label>
     <div class="md:px-20">
       <select id="countries" v-model="select_year" @change="change_year"
-      class="text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+        class="text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
         <option disabled value="">請選擇年分</option>
         <option v-for="year in year_list" :value="year" v-text="year"></option>
       </select>
     </div>
     <div class="md:px-20 text-red-600 font-bold" v-text="loading_text+text_point" v-if="msg!=''"></div>
 
-        <!-- 分頁 -->
-<div class="place-content-center w-full flex justify-evenly items-center" v-if="msg==''&&data.length!=0">
-  <nav aria-label="Page navigation example">
-    <ul class="inline-flex -space-x-px text-base h-10">
-      <li @click="previos_page()">
-        <a class="flex items-center justify-center px-4 h-10 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700" >Previous</a>
-      </li>
-      <!-- <li  v-for="p in all_page" @click="click_page(p)">
-        <a  v-text="p" :aria-current="select_page==p?'page':''"   :class="select_page==p?select_class:unselect_class"></a>
-      </li> -->
-      <li>
-        <a  v-text="select_page+'/'+all_page" :class="unselect_class"></a>
-      </li>
-      <li @click="next_page()">
-        <a class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 ">Next</a>
-      </li>
-    </ul>
-  </nav>
-</div>
+    <!-- 分頁 -->
+    <div class="place-content-center w-full flex justify-evenly items-center" v-if="msg==''&&data.length!=0">
+      <nav aria-label="Page navigation example">
+        <ul class="inline-flex -space-x-px text-base h-10">
+          <li @click="previous_page()">
+            <a
+              class="flex items-center justify-center px-4 h-10 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">←</a>
+          </li>
+          <template v-for="p in range_page">
+            <li v-if="p=='...'">
+              <a :class="unselect_class">...</a>
+            </li>
+            <li v-else @click="click_page(p)">
+              <a v-text="p" :aria-current="select_page==p?'page':''"
+                :class="select_page==p?select_class:unselect_class"></a>
+            </li>
+          </template>
+          <!-- <li>
+            <a v-text="select_page+'/'+all_page" :class="unselect_class"></a>
+          </li> -->
+          <li @click="next_page()">
+            <a
+              class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 ">→</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
 
     <div id="accordionExample">
 
-      <div v-for="(item,index) in data.filter((e,index)=>index>=page_number*(select_page-1)&&index<page_number*select_page)"
+      <div
+        v-for="(item,index) in data.filter((e,index)=>index>=page_number*(select_page-1)&&index<page_number*select_page)"
         class="md:px-20 border border-t-0 border-neutral-200 bg-white">
         <h2 class="mb-0" id="headingTwo">
           <button
             class="group relative flex w-full items-center rounded-none border-0 bg-white px-5 py-4 text-left text-base text-neutral-800 transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none"
-            type="button"
-            data-te-collapse-init
-            data-te-collapse-collapsed
-            :data-te-target="'#collapse_'+index"
-            aria-expanded="false"
-            aria-controls="collapseTwo"
-            v-text="item.name"
-            ></button>
+            type="button" data-te-collapse-init data-te-collapse-collapsed :data-te-target="'#collapse_'+index"
+            aria-expanded="false" aria-controls="collapseTwo" v-text="item.name"></button>
           <!-- </button> -->
         </h2>
-        <div
-          :id="'collapse_'+index"
-          class="!visible hidden"
-          data-te-collapse-item
-          aria-labelledby="headingTwo"
+        <div :id="'collapse_'+index" class="!visible hidden" data-te-collapse-item aria-labelledby="headingTwo"
           data-te-parent="#accordionExample">
           <div class="px-5 py-4 bg-blue-200" v-text="item.content">
 
@@ -104,24 +100,25 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
-  
+
 </body>
 
 
 <script type="module">
 
-// axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+  // axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
   import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js'
 
   createApp({
     data() {
       return {
-        unselect_class:'flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ',
-        select_class:'flex items-center justify-center px-4 h-10 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 ',
-        year_list:[],
-        select_year:"",
+        unselect_class: 'flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ',
+        select_class: 'flex items-center justify-center px-4 h-10 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 ',
+        year_list: [],
+        select_year: "",
         data: [], msg: "", loading_text: "資料系統查詢中", text_point: "",
-        select_page:1,page_number:10,all_page:1
+        select_page: 1, page_number: 10, all_page: 1
+        , range_page: []
       }
     },
     computed: {
@@ -130,31 +127,32 @@
     },
 
     methods: {
-      previos_page(){
-        let select=this.select_page
+      previous_page() {
+        let select = this.select_page
         select--;
-        this.select_page=select<1?1:select
+        this.select_page = select < 1 ? 1 : select
       },
-      next_page(){
-        let select=this.select_page
+      next_page() {
+        let select = this.select_page
         select++;
-        this.select_page=select>this.all_page?this.all_page:select
+        this.select_page = select > this.all_page ? this.all_page : select
       },
-      click_page(page){
-        this.select_page=page
+      click_page(page) {
+        this.select_page = page
       },
       range(start) {
-          return Array.from({ length: 10 }, (_, index) => start-index-1);
-      },                                                            
-      change_year(){
-        if(this.select_year!=""){
+        return Array.from({ length: 10 }, (_, index) => start - index - 1);
+      },
+
+      change_year() {
+        if (this.select_year != "") {
           // alert(this.select_year)
           this.get_year_data(this.select_year)
         }
       },
-      async get_year_data(year){
+      async get_year_data(year) {
         // let corsURL = 'https://cors-anywhere.herokuapp.com/';
-        let corsURL=' https://corstest-82783c5223dc.herokuapp.com/'
+        let corsURL = ' https://corstest-82783c5223dc.herokuapp.com/'
         //let corsURL="http://127.0.0.1:3000/"
         let url = `https://den.ncdr.nat.gov.tw/umbraco/api/EventInfo/EventData?year=${year}`
         this.data = []
@@ -162,16 +160,17 @@
         // axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
         await axios.get(`${corsURL}${url}`)
           .then((response) => {
-            let res=response.data
+            let res = response.data
             // console.log(res)
-            let data=res.datas
-            let output=data.filter(e=>e.info_2.includes('死')).map(e=>{return {id:e.id,name:e.name,content:e.info_2}}).sort((a,b)=>a.id - b.id)
+            let data = res.datas
+            let output = data.filter(e => e.info_2.includes('死')).map(e => { return { id: e.id, name: e.name, content: e.info_2 } }).sort((a, b) => a.id - b.id)
             this.msg = ""
-            this.data=output
-            let dataNum=output.length
-            this.select_page=1
-            this.all_page=Math.ceil(dataNum/this.page_number)
-            })
+            this.data = output
+            let dataNum = output.length
+            this.range_page = []
+            this.select_page = 1
+            this.all_page = Math.ceil(dataNum / this.page_number)
+          })
           .catch((error) => {
             console.log(error)
             this.msg = this.err_text
@@ -187,8 +186,8 @@
       },
     },
     mounted() {
-      let this_year=new Date().getFullYear()
-      this.year_list=this.range(this_year)
+      let this_year = new Date().getFullYear()
+      this.year_list = this.range(this_year)
       setInterval(() => {
         let date = new Date()
         let sec = date.getSeconds() % 4 + 1
@@ -203,6 +202,34 @@
 
 
 
+    },
+    watch: {
+      select_page(newValue, oldValue) {
+        let current = this.select_page
+        let all_page = this.all_page
+        let arr = Array.from({ length: all_page }, (_, index) => index + 1).filter((e, index, arr) => index == 0 || index == arr.length - 1 || (e <= current + 1) && (e >= current - 1))
+        let b_arr = [arr[0]]
+        for (let i = 1; i < arr.length; i++) {
+          if (arr[i] - arr[i - 1] > 1)
+            b_arr.push('...')
+          b_arr.push(arr[i])
+        }
+        this.range_page = b_arr
+        console.log(b_arr)
+      },
+      all_page(newValue, oldValue) {
+        let current = this.select_page
+        let all_page = this.all_page
+        let arr = Array.from({ length: all_page }, (_, index) => index + 1).filter((e, index, arr) => index == 0 || index == arr.length - 1 || (e <= current + 1) && (e >= current - 1))
+        let b_arr = [arr[0]]
+        for (let i = 1; i < arr.length; i++) {
+          if (arr[i] - arr[i - 1] > 1)
+            b_arr.push('...')
+          b_arr.push(arr[i])
+        }
+        this.range_page = b_arr
+        console.log(b_arr)
+      }
     }
   }).mount('#app')
 </script>

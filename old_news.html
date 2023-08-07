@@ -39,12 +39,11 @@
         <option v-for="year in year_list" :value="year" v-text="year"></option>
       </select>
     </div>
-     <hr style="filter: progid:dximagetransform.microsoft.shadow(color:#987cb9,direction:145,strength:15)"
-          width="90%" color="#987cb9" size=1>
+
     <div class="md:px-20 text-red-600 font-bold" v-text="loading_text+text_point" v-if="msg!=''"></div>
 
     <!-- 分頁 -->
-    <div class="place-content-center w-full flex justify-evenly items-center" v-if="msg==''&&data.length!=0">
+    <div class="pt-5 place-content-center w-full flex justify-evenly items-center" v-if="msg==''&&data.length!=0">
       <nav aria-label="Page navigation example">
         <ul class="inline-flex -space-x-px text-base h-10">
           <li @click="previous_page()">

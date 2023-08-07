@@ -566,6 +566,10 @@ video {
   height: 2.5rem
 }
 
+.h-8{
+  height: 2rem
+}
+
 .w-full{
   width: 100%
 }
@@ -660,9 +664,9 @@ video {
   padding: 0.625rem
 }
 
-.px-4{
-  padding-left: 1rem;
-  padding-right: 1rem
+.px-3{
+  padding-left: 0.75rem;
+  padding-right: 0.75rem
 }
 
 .px-5{
@@ -816,9 +820,18 @@ video {
 }
 
 @media (min-width: 768px){
+  .md\:h-10{
+    height: 2.5rem
+  }
+
   .md\:px-20{
     padding-left: 5rem;
     padding-right: 5rem
+  }
+
+  .md\:px-4{
+    padding-left: 1rem;
+    padding-right: 1rem
   }
 
   .md\:text-8xl{

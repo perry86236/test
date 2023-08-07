@@ -776,30 +776,6 @@ video {
   overflow-anchor: none
 }
 
-.hover\:z-\[2\]:hover{
-  z-index: 2
-}
-
-.hover\:bg-blue-100:hover{
-  --tw-bg-opacity: 1;
-  background-color: rgb(219 234 254 / var(--tw-bg-opacity))
-}
-
-.hover\:bg-gray-100:hover{
-  --tw-bg-opacity: 1;
-  background-color: rgb(243 244 246 / var(--tw-bg-opacity))
-}
-
-.hover\:text-blue-700:hover{
-  --tw-text-opacity: 1;
-  color: rgb(29 78 216 / var(--tw-text-opacity))
-}
-
-.hover\:text-gray-700:hover{
-  --tw-text-opacity: 1;
-  color: rgb(55 65 81 / var(--tw-text-opacity))
-}
-
 .focus\:z-\[3\]:focus{
   z-index: 3
 }
@@ -837,5 +813,29 @@ video {
   .md\:text-8xl{
     font-size: 6rem;
     line-height: 1
+  }
+
+  .md\:hover\:z-\[2\]:hover{
+    z-index: 2
+  }
+
+  .md\:hover\:bg-blue-100:hover{
+    --tw-bg-opacity: 1;
+    background-color: rgb(219 234 254 / var(--tw-bg-opacity))
+  }
+
+  .md\:hover\:bg-gray-100:hover{
+    --tw-bg-opacity: 1;
+    background-color: rgb(243 244 246 / var(--tw-bg-opacity))
+  }
+
+  .md\:hover\:text-blue-700:hover{
+    --tw-text-opacity: 1;
+    color: rgb(29 78 216 / var(--tw-text-opacity))
+  }
+
+  .md\:hover\:text-gray-700:hover{
+    --tw-text-opacity: 1;
+    color: rgb(55 65 81 / var(--tw-text-opacity))
   }
 }

@@ -129,18 +129,28 @@
     },
 
     methods: {
+      close_all_collapse(){
+        div=document.querySelectorAll("div[id^=collapse_]")
+        div.forEach(e=>{
+          e.classList.remove('hidden')
+          e.classList.add('hidden');
+        })
+      },
       previous_page() {
         let select = this.select_page
         select--;
         this.select_page = select < 1 ? 1 : select
+        this.close_all_collapse();
       },
       next_page() {
         let select = this.select_page
         select++;
         this.select_page = select > this.all_page ? this.all_page : select
+        this.close_all_collapse();
       },
       click_page(page) {
         this.select_page = page
+        this.close_all_collapse();
       },
       range(start) {
         return Array.from({ length: 10 }, (_, index) => start - index - 1);

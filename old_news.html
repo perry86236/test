@@ -134,6 +134,7 @@
         div.forEach(e=>{
           e.classList.remove('hidden')
           e.classList.add('hidden');
+          e.removeAttribute('data-te-collapse-show')
         })
       },
       previous_page() {

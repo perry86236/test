@@ -130,7 +130,7 @@
 
     methods: {
       close_all_collapse(){
-        div=document.querySelectorAll("div[id^=collapse_]")
+        let div=document.querySelectorAll("div[id^=collapse_]")
         div.forEach(e=>{
           e.classList.remove('hidden')
           e.classList.add('hidden');

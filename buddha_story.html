@@ -19,8 +19,8 @@
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
     
-  <link href="css/buddha_story.css?ver=2023082301" rel="stylesheet">
-  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+  <!--<link href="css/buddha_story.css?ver=2023082301" rel="stylesheet">-->
+   <script src="https://cdn.tailwindcss.com"></script>
 
 </head>
 
@@ -42,16 +42,37 @@
         class="md:px-20 border border-t-0 border-neutral-200 bg-white">
         <h2 class="mb-0" id="headingTwo">
           <button
-            class="group relative flex w-full items-center rounded-none border-0 bg-white px-5 py-4 text-left text-base text-neutral-800 transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none"
+            class="group relative flex w-full items-center rounded-none border-0 bg-white px-5 py-4 text-left text-base text-yellow-800 transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none"
             type="button"
             data-te-collapse-init
             data-te-collapse-collapsed
             :data-te-target="'#collapse_'+index"
             aria-expanded="false"
             aria-controls="collapseTwo"
-            v-text="item.title"
             
-            ></button>
+            
+            >
+          <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+  <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd" />
+</svg> -->
+        <svg id="pic02" viewbox="-10 -10 20 20" class="w-6 h-6">
+          <circle cx="0" cy="0" r="2" stroke="black" fill="none"></circle>
+          <g>
+            <line x1="-4" y1="0" x2="4" y2="0" stroke="black"></line>
+            <line x1="0" y1="-4" x2="0" y2="4" stroke="black"></line>
+            <rect x="-4" y="-4" width="8" height="8" stroke="black" fill="none"></rect>
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              dur="4s"
+              values="0;360"
+              repeatCount="indefinite">
+            </animateTransform>
+          </g>
+        </svg>
+        <div v-text="item.title"></div>
+
+        </button>
           <!-- </button> -->
         </h2>
         <div
@@ -61,7 +82,11 @@
           aria-labelledby="headingTwo"
           data-te-parent="#accordionExample">
           <div class="px-5 py-4 bg-yellow-100" >
-            <div v-html="item.context.replace(/\n/g,'<br>')"></div>
+            <div  v-if="item.context.length<limit_num" v-html="item.context.replace(/\n/g,'<br>')"></div>
+            <div v-else>
+              <span v-html="item.context.substring(0,limit_num).replace(/\n/g,'<br>')"></span>
+              <span v-text="else_text"></span>
+            </div>
             <br>
             <div v-if="item.url!=''" class="px-5 text-right">
               <a class="text-right underline" :href="item.url">詳看更多</a>
@@ -94,12 +119,9 @@
   createApp({
     data() {
       return {
-        unselect_class:'flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ',
-        select_class:'flex items-center justify-center px-4 h-10 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 ',
-        year_list:[],
-        select_year:"",
+
         data: [], msg: "", loading_text: "資料系統查詢中", text_point: "",
-        select_page:1,page_number:10,all_page:1
+        limit_num:200,else_text:".........(詳細內文請點連結進入觀看)"
       }
     },
     computed: {
@@ -108,28 +130,6 @@
     },
 
     methods: {
-      previos_page(){
-        let select=this.select_page
-        select--;
-        this.select_page=select<1?1:select
-      },
-      next_page(){
-        let select=this.select_page
-        select++;
-        this.select_page=select>this.all_page?this.all_page:select
-      },
-      click_page(page){
-        this.select_page=page
-      },
-      range(start) {
-          return Array.from({ length: 10 }, (_, index) => start-index-1);
-      },                                                            
-      change_year(){
-        if(this.select_year!=""){
-          // alert(this.select_year)
-          this.get_year_data(this.select_year)
-        }
-      },
       async get_data(){
         this.msg = this.loading_text
         let url="https://script.google.com/macros/s/AKfycbxsdOwCtQQ3QmOJa26PbLB_fEAR83Nt3iL2F87-nfh6qEvZPttMGdMaF6Gq60QRABWuag/exec"
@@ -140,39 +140,7 @@
             this.msg=""
           })
       },
-      async get_year_data(year){
-        // let corsURL = 'https://cors-anywhere.herokuapp.com/';
-        let corsURL=' https://corstest-82783c5223dc.herokuapp.com/'
-        //let corsURL="http://127.0.0.1:3000/"
-        let url = `https://den.ncdr.nat.gov.tw/umbraco/api/EventInfo/EventData?year=${year}`
-        this.data = []
-        this.msg = this.loading_text
-        // axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-        await axios.get(`${corsURL}${url}`)
-          .then((response) => {
-            let res=response.data
-            // console.log(res)
-            let data=res.datas
-            let output=data.filter(e=>e.info_2.includes('死')).map(e=>{return {id:e.id,name:e.name,content:e.info_2}}).sort((a,b)=>a.id - b.id)
-            this.msg = ""
-            this.data=output
-            let dataNum=output.length
-            this.select_page=1
-            this.all_page=Math.ceil(dataNum/this.page_number)
-            })
-          .catch((error) => {
-            console.log(error)
-            this.msg = this.err_text
-          })
-      },
-      sort_date(data) {
-        data = data.sort((a, b) => {
-          if (a.YMD > b.YMD) {
-            return -1;
-          }
-        });
-        return data
-      },
+     
     },
     mounted() {
       let this_year=new Date().getFullYear()

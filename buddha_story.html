@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>佛教小故事</title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
+  <!-- <link href="css/style.css" rel="stylesheet"> -->
+    <!-- Roboto font -->
+    <link
+    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap"
+    rel="stylesheet" />
+  
+    <!-- Tailwind Elements styles-->
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
+    
+  <link href="css/buddha_story.css?ver=2023082301" rel="stylesheet">
+  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+
+</head>
+
+<body>
+  <div class="text-center"
+    style="background-position: center center; background-image: url(https://perry86236.github.io/test/buddha_story.jpg); background-size: cover;">
+    <div class="text-5xl py-20 md:text-8xl font-medium text-black">佛教小故事</div>
+
+  </div>
+
+  <div id="app">
+
+    <div class="md:px-20 text-red-600 font-bold" v-text="loading_text+text_point" v-if="msg!=''"></div>
+
+
+    <div id="accordionExample">
+
+      <div v-for="(item,index) in data"
+        class="md:px-20 border border-t-0 border-neutral-200 bg-white">
+        <h2 class="mb-0" id="headingTwo">
+          <button
+            class="group relative flex w-full items-center rounded-none border-0 bg-white px-5 py-4 text-left text-base text-neutral-800 transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none"
+            type="button"
+            data-te-collapse-init
+            data-te-collapse-collapsed
+            :data-te-target="'#collapse_'+index"
+            aria-expanded="false"
+            aria-controls="collapseTwo"
+            v-text="item.title"
+            
+            ></button>
+          <!-- </button> -->
+        </h2>
+        <div
+          :id="'collapse_'+index"
+          class="!visible hidden"
+          data-te-collapse-item
+          aria-labelledby="headingTwo"
+          data-te-parent="#accordionExample">
+          <div class="px-5 py-4 bg-yellow-100" >{{item.context}}<br>
+            <div v-if="item.url!=''" class="px-5 text-right">
+              <a class="text-right underline" :href="item.url">詳看更多</a>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+  
+</body>
+
+
+<script type="module">
+
+// axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+  import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js'
+
+  createApp({
+    data() {
+      return {
+        unselect_class:'flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ',
+        select_class:'flex items-center justify-center px-4 h-10 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 ',
+        year_list:[],
+        select_year:"",
+        data: [], msg: "", loading_text: "資料系統查詢中", text_point: "",
+        select_page:1,page_number:10,all_page:1
+      }
+    },
+    computed: {
+
+
+    },
+
+    methods: {
+      previos_page(){
+        let select=this.select_page
+        select--;
+        this.select_page=select<1?1:select
+      },
+      next_page(){
+        let select=this.select_page
+        select++;
+        this.select_page=select>this.all_page?this.all_page:select
+      },
+      click_page(page){
+        this.select_page=page
+      },
+      range(start) {
+          return Array.from({ length: 10 }, (_, index) => start-index-1);
+      },                                                            
+      change_year(){
+        if(this.select_year!=""){
+          // alert(this.select_year)
+          this.get_year_data(this.select_year)
+        }
+      },
+      async get_data(){
+        this.msg = this.loading_text
+        let url="https://script.google.com/macros/s/AKfycbxsdOwCtQQ3QmOJa26PbLB_fEAR83Nt3iL2F87-nfh6qEvZPttMGdMaF6Gq60QRABWuag/exec"
+        await axios.get(url)
+          .then((response) => {
+            let res=response.data
+            this.data=res
+            this.msg=""
+          })
+      },
+      async get_year_data(year){
+        // let corsURL = 'https://cors-anywhere.herokuapp.com/';
+        let corsURL=' https://corstest-82783c5223dc.herokuapp.com/'
+        //let corsURL="http://127.0.0.1:3000/"
+        let url = `https://den.ncdr.nat.gov.tw/umbraco/api/EventInfo/EventData?year=${year}`
+        this.data = []
+        this.msg = this.loading_text
+        // axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+        await axios.get(`${corsURL}${url}`)
+          .then((response) => {
+            let res=response.data
+            // console.log(res)
+            let data=res.datas
+            let output=data.filter(e=>e.info_2.includes('死')).map(e=>{return {id:e.id,name:e.name,content:e.info_2}}).sort((a,b)=>a.id - b.id)
+            this.msg = ""
+            this.data=output
+            let dataNum=output.length
+            this.select_page=1
+            this.all_page=Math.ceil(dataNum/this.page_number)
+            })
+          .catch((error) => {
+            console.log(error)
+            this.msg = this.err_text
+          })
+      },
+      sort_date(data) {
+        data = data.sort((a, b) => {
+          if (a.YMD > b.YMD) {
+            return -1;
+          }
+        });
+        return data
+      },
+    },
+    mounted() {
+      let this_year=new Date().getFullYear()
+      this.year_list=this.range(this_year)
+      setInterval(() => {
+        let date = new Date()
+        let sec = date.getSeconds() % 4 + 1
+        this.text_point = "...".repeat(sec)
+      }, 1000)
+
+
+    },
+    async created() {
+      await this.get_data()
+      console.log(this.data)
+      //this.get_data()
+      //await this.get_data()
+
+
+
+    }
+  }).mount('#app')
+</script>
+
+</html>

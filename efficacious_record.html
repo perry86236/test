@@ -40,9 +40,9 @@
     <div v-for="(item,index) in data" class="md:px-20 border border-t-0 border-neutral-100 bg-white">
       <div v-if="item.className==''">
         <div class="text-2xl md:text-4xl font-bold" v-text="item.className"></div>
-        <div id="accordionExample">
+        <div :id="'accordionExample_'+index">
           <div v-for="(sub_item,sub_index) in item.data" class="border border-t-0 border-neutral-100 bg-white">
-            <h2 class="mb-0" id="headingTwo">
+            <h2 class="mb-0" :id="'headingTwo_'+index+'_'+sub_index">
               <button
                 class="group relative flex w-full items-center rounded-none border-0 bg-white px-5 py-4 text-left text-base text-yellow-800 transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none"
                 type="button" data-te-collapse-init data-te-collapse-collapsed
@@ -63,7 +63,7 @@
               </button>
             </h2>
             <div :id="'collapse_'+index+'_'+sub_index" class="!visible hidden" data-te-collapse-item
-              aria-labelledby="headingTwo" data-te-parent="#accordionExample">
+              :aria-labelledby="'headingTwo_'+index+'_'+sub_index" :data-te-parent="'#accordionExample_'+index">
               <div class="px-5 py-4 bg-yellow-100">
                 <figure class="md:flex bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800">
                   <img class="w-24 h-24 md:w-96 md:h-96  md:rounded-none rounded-full mx-auto" :src="sub_item.pic_url"
@@ -83,9 +83,9 @@
 
       <div v-else>
         <div class="text-2xl md:text-4xl font-bold" v-text="item.className"></div>
-        <div id="accordionExample">
+        <div :id="'accordionExample_'+index">
           <div v-for="(sub_item,sub_index) in item.data" class="border border-t-0 border-neutral-100 bg-white">
-            <h2 class="mb-0" id="headingTwo">
+            <h2 class="mb-0" :id="'headingTwo_'+index+'_'+sub_index">
               <button
                 class="group relative flex w-full items-center rounded-none border-0 bg-white px-5 py-4 text-left text-base text-yellow-800 transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none"
                 type="button" data-te-collapse-init data-te-collapse-collapsed
@@ -106,7 +106,7 @@
               </button>
             </h2>
             <div :id="'collapse_'+index+'_'+sub_index" class="!visible hidden" data-te-collapse-item
-              aria-labelledby="headingTwo" data-te-parent="#accordionExample">
+              :aria-labelledby="'headingTwo_'+index+'_'+sub_index" :data-te-parent="'#accordionExample_'+index">
               <div class="px-5 py-4 bg-yellow-100">
                 <div v-if="sub_item.context.length<limit_num" v-html="sub_item.context.replace(/\n/g,'<br>')"></div>
                 <div v-else>

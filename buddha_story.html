@@ -89,7 +89,7 @@
             </div>
             <br>
             <div v-if="item.url!=''" class="px-5 text-right">
-              <a class="text-right underline" :href="item.url">詳看更多</a>
+              <a class="text-right underline" :href="item.url">(點我觀看全文)</a>
             </div>
             
           </div>
@@ -121,7 +121,7 @@
       return {
 
         data: [], msg: "", loading_text: "資料系統查詢中", text_point: "",
-        limit_num:200,else_text:".........(詳細內文請點連結進入觀看)"
+        limit_num:200,else_text:"........."
       }
     },
     computed: {

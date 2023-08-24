@@ -11,8 +11,8 @@
     <!-- Roboto font -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
 
-    <link href="css/efficacious_record.css?ver=2023082503" rel="stylesheet" />
-    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <link href="css/efficacious_record.css?ver=2023082504" rel="stylesheet" />
+<!--     <script src="https://cdn.tailwindcss.com"></script> -->
 
     <!-- Tailwind Elements styles-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
@@ -29,7 +29,7 @@
       <template v-for="(item,index) in data">
         <template v-for="(sub_item,sub_index) in item.data">
           <!-- Modal -->
-          <div :id="'exampleModalFullscreen_'+index+'_'+sub_index" :aria-labelledby="'exampleModalFullscreenLabel_'+index+'_'+sub_index" data-te-modal-init class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none" tabindex="-1" aria-hidden="true">
+          <div :id="'exampleModalFullscreen_'+index+'_'+sub_index" :aria-labelledby="'exampleModalFullscreenLabel_'+index+'_'+sub_index" data-te-modal-init class="fixed left-0 top-0 z-[1055] hidden w-full h-full overflow-y-auto overflow-x-hidden outline-none" tabindex="-1" aria-hidden="true">
             <div data-te-modal-dialog-ref class="pointer-events-none relative w-auto translate-y-[-50px] opacity-0 transition-all duration-300 ease-in-out min-[0px]:m-0 min-[0px]:h-full min-[0px]:max-w-none">
               <div class="pointer-events-auto relative flex w-full flex-col rounded-md bg-white bg-clip-padding text-current shadow-lg outline-none min-[0px]:h-full min-[0px]:rounded-none min-[0px]:border-0">
                 <div class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 border-opacity-100 p-4 min-[0px]:rounded-none">

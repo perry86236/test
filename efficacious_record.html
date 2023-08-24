@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>靈驗錄</title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
+  <!-- <link href="css/style.css" rel="stylesheet"> -->
+  <!-- Roboto font -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind Elements styles-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
+
+  <link href="css/efficacious_record.css?ver=2023082401" rel="stylesheet">
+  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+
+</head>
+
+<body>
+  <!-- <div class="text-center"
+    style="background-position: center center; background-image: url(https://perry86236.github.io/test/buddha_story.jpg); background-size: cover;">
+    <div class="text-5xl py-20 md:text-8xl font-medium text-black">佛教小故事</div> -->
+  <div class="text-center"
+    style="background-position: center center; background-image: url(https://i.ibb.co/0V5RxV2/m-KGRRnn4-Uez-DRX-3-Vnh-I294a-Uz-Wh6-Al-R6-MCVQUAYnf-9g1-Auu40-Ej-XPu-MZPl8f7j-G0zyt4-ZA9-HM-s0.jpg); background-size: cover;">
+    <div class="text-5xl py-12 md:text-8xl font-medium text-black">學習中的<br>靈驗分享</div>
+
+  </div>
+
+  <div id="app">
+
+    <div class="md:px-20 text-red-600 font-bold" v-text="loading_text+text_point" v-if="msg!=''"></div>
+
+
+
+
+    <div v-for="(item,index) in data" class="md:px-20 border border-t-0 border-neutral-100 bg-white">
+      <div v-if="item.className==''">
+        <div class="text-4xl font-bold" v-text="item.className"></div>
+        <div id="accordionExample">
+          <div v-for="(sub_item,sub_index) in item.data" class="border border-t-0 border-neutral-100 bg-white">
+            <h2 class="mb-0" id="headingTwo">
+              <button
+                class="group relative flex w-full items-center rounded-none border-0 bg-white px-5 py-4 text-left text-base text-yellow-800 transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none"
+                type="button" data-te-collapse-init data-te-collapse-collapsed
+                :data-te-target="'#collapse_'+index+'_'+sub_index" aria-expanded="false" aria-controls="collapseTwo">
+                <svg id="pic02" viewbox="-10 -10 20 20" class="w-6 h-6">
+                  <circle cx="0" cy="0" r="2" stroke="black" fill="none"></circle>
+                  <g>
+                    <line x1="-4" y1="0" x2="4" y2="0" stroke="black"></line>
+                    <line x1="0" y1="-4" x2="0" y2="4" stroke="black"></line>
+                    <rect x="-4" y="-4" width="8" height="8" stroke="black" fill="none"></rect>
+                    <animateTransform attributeName="transform" type="rotate" dur="4s" values="0;360"
+                      repeatCount="indefinite">
+                    </animateTransform>
+                  </g>
+                </svg>
+                <div v-text="sub_item.title"></div>
+
+              </button>
+            </h2>
+            <div :id="'collapse_'+index+'_'+sub_index" class="!visible hidden" data-te-collapse-item
+              aria-labelledby="headingTwo" data-te-parent="#accordionExample">
+              <div class="px-5 py-4 bg-yellow-100">
+                <figure class="md:flex bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800">
+                  <img class="w-24 h-24 md:w-96 md:h-96  md:rounded-none rounded-full mx-auto" :src="sub_item.pic_url"
+                    alt="">
+                  <div class="pt-6 md:p-8 text-center md:text-left space-y-4">
+                    <blockquote>
+                      <p class="text-lg font-medium" v-text="sub_item.context"></p>
+                    </blockquote>
+                  </div>
+                </figure>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div v-else>
+        <div class="text-4xl font-bold" v-text="item.className"></div>
+        <div id="accordionExample">
+          <div v-for="(sub_item,sub_index) in item.data" class="border border-t-0 border-neutral-100 bg-white">
+            <h2 class="mb-0" id="headingTwo">
+              <button
+                class="group relative flex w-full items-center rounded-none border-0 bg-white px-5 py-4 text-left text-base text-yellow-800 transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none"
+                type="button" data-te-collapse-init data-te-collapse-collapsed
+                :data-te-target="'#collapse_'+index+'_'+sub_index" aria-expanded="false" aria-controls="collapseTwo">
+                <svg id="pic02" viewbox="-10 -10 20 20" class="w-6 h-6">
+                  <circle cx="0" cy="0" r="2" stroke="black" fill="none"></circle>
+                  <g>
+                    <line x1="-4" y1="0" x2="4" y2="0" stroke="black"></line>
+                    <line x1="0" y1="-4" x2="0" y2="4" stroke="black"></line>
+                    <rect x="-4" y="-4" width="8" height="8" stroke="black" fill="none"></rect>
+                    <animateTransform attributeName="transform" type="rotate" dur="4s" values="0;360"
+                      repeatCount="indefinite">
+                    </animateTransform>
+                  </g>
+                </svg>
+                <div v-text="sub_item.title"></div>
+
+              </button>
+            </h2>
+            <div :id="'collapse_'+index+'_'+sub_index" class="!visible hidden" data-te-collapse-item
+              aria-labelledby="headingTwo" data-te-parent="#accordionExample">
+              <div class="px-5 py-4 bg-yellow-100">
+                <div v-if="sub_item.context.length<limit_num" v-html="sub_item.context.replace(/\n/g,'<br>')"></div>
+                <div v-else>
+                  <span v-html="sub_item.context.substring(0,limit_num).replace(/\n/g,'<br>')"></span>
+                  <span v-text="else_text"></span>
+                </div>
+                <br>
+                <div v-if="sub_item.url!=''" class="px-5 text-right">
+                  →<a class="text-right underline" :href="sub_item.url">內容全文</a>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+
+</body>
+
+
+<script type="module">
+
+  // axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+  import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js'
+
+  createApp({
+    data() {
+      return {
+
+        data: [], msg: "", loading_text: "資料系統查詢中", text_point: "",
+        limit_num: 200, else_text: "........."
+      }
+    },
+    computed: {
+
+
+    },
+
+    methods: {
+      async get_data() {
+        this.msg = this.loading_text
+        let url = "https://script.google.com/macros/s/AKfycbwH9F5LcnFo5gkvrJD9kAQf_2a6PS1QnbPT2wi9E8d_ELEBVQd0FvAS94Jl5AVYc0heKw/exec"
+        await axios.get(url)
+          .then((response) => {
+            let res = response.data
+            let reduce_data = res.reduce((acc, cur) => {
+              const { className } = cur;
+
+              delete cur["className"]
+              console.log(acc)
+              if (acc.some(e => e.className == className)) {
+                let index = acc.findIndex(e => e.className == className)
+                acc[index]["data"].push(cur)// = [...acc[index]["data"], cur]
+              } else {
+                acc = [...acc, { className: className, data: [cur] }]
+
+              }
+              return acc
+            }, [])
+
+            // this.data = res
+            this.data = reduce_data
+            console.log(reduce_data)
+            this.msg = ""
+          })
+      },
+
+    },
+    mounted() {
+      // let this_year=new Date().getFullYear()
+      // this.year_list=this.range(this_year)
+      setInterval(() => {
+        let date = new Date()
+        let sec = date.getSeconds() % 4 + 1
+        this.text_point = "...".repeat(sec)
+      }, 1000)
+
+
+    },
+    async created() {
+      await this.get_data()
+      // console.log(this.data)
+      //this.get_data()
+      //await this.get_data()
+
+
+
+    }
+  }).mount('#app')
+</script>
+
+</html>

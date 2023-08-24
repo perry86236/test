@@ -45,7 +45,7 @@
 
                 <!-- Modal body -->
                 <div class="relative p-4 min-[0px]:overflow-y-auto">
-                  <p v-if="sub_item.url==''" class="px-10 text-left leading-normal" v-text="sub_item.context"></p>
+                  <div v-if="sub_item.url==''" class="px-10 text-left leading-normal" v-html="sub_item.context.replace(/。/g,'。<br>')"></div>
                   <iframe v-else class="w-full h-screen" width="100%" height="100%" :src="sub_item.url" frameborder="0"></iframe>
                 </div>
 

@@ -11,12 +11,14 @@
     <!-- Roboto font -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
 
-    <!-- Tailwind Elements styles-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
-<!--     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css" rel="stylesheet" /> -->
+    
 
     <link href="css/efficacious_record.css?ver=2023082501" rel="stylesheet" />
 <!--     <script src="https://cdn.tailwindcss.com"></script> -->
+
+    <!-- Tailwind Elements styles-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
+<!--     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css" rel="stylesheet" /> -->
   </head>
 
   <body>
@@ -47,6 +49,7 @@
                 <div class="relative p-4 min-[0px]:overflow-y-auto">
                   <p v-if="sub_item.url==''" class="px-10 text-center leading-[3rem]" v-text="sub_item.context"></p>
                   <iframe v-else class="w-full h-screen" width="100%" height="100%" :src="sub_item.url" frameborder="0"></iframe>
+                  
                 </div>
 
                 <!-- Modal footer -->
@@ -131,8 +134,8 @@
                       <span v-text="else_text"></span>
                     </div>
                     <br />
-                    <!-- <div v-if="sub_item.url!=''" class="px-5 text-right">→<a class="text-right underline" :href="sub_item.url">內容全文</a></div> -->
-                    <div :data-te-target="'#exampleModalFullscreen_'+index+'_'+sub_index" type="button" class="px-5 text-right underline" data-te-toggle="modal" data-te-ripple-init data-te-ripple-color="light">內容全文</div>
+                    <div v-if="sub_item.url!=''" class="px-5 text-right">→<a class="text-right underline" :href="sub_item.url">內容全文</a></div>
+                    <!--<div :data-te-target="'#exampleModalFullscreen_'+index+'_'+sub_index" type="button" class="px-5 text-right underline" data-te-toggle="modal" data-te-ripple-init data-te-ripple-color="light">內容全文</div>-->
                   </div>
                 </div>
               </div>

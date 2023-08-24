@@ -98,7 +98,15 @@
                         </blockquote>
                       </div>
                     </figure>
-                    <div v-else></div>
+                    <div v-else>
+                      <div v-if="sub_item.context.length<limit_num" v-html="sub_item.context.replace(/\n/g,'<br>')"></div>
+                      <div v-else>
+                        <span v-html="sub_item.context.substring(0,limit_num).replace(/\n/g,'<br>')"></span>
+                        <span v-text="else_text"></span>
+                      </div>
+                      <br />
+                      <div v-if="sub_item.url!=''" class="px-5 text-right">→<a class="text-right underline" :href="sub_item.url">內容全文</a></div>
+                    </div>
                   </div>
                 </div>
               </div>

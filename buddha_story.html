@@ -1,171 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>佛教小故事</title>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
-  <!-- <link href="css/style.css" rel="stylesheet"> -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>佛教小故事</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
+    <!-- <link href="css/style.css" rel="stylesheet"> -->
     <!-- Roboto font -->
-    <link
-    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap"
-    rel="stylesheet" />
-  
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
+
+    <link href="css/buddha_story.css?ver=2023082303" rel="stylesheet" />
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+
     <!-- Tailwind Elements styles-->
-    <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
-    
-  <link href="css/buddha_story.css?ver=2023082302" rel="stylesheet">
-<!--    <script src="https://cdn.tailwindcss.com"></script> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
+  </head>
 
-</head>
-
-<body>
-<!--   <div class="text-center"
+  <body>
+    <!--   <div class="text-center"
     style="background-position: center center; background-image: url(https://perry86236.github.io/test/buddha_story.jpg); background-size: cover;">
     <div class="text-5xl py-20 md:text-8xl font-medium text-black">佛教小故事</div> -->
-<div class="text-center"
-    style="background-position: center center; background-image: url(https://i.ibb.co/0V5RxV2/m-KGRRnn4-Uez-DRX-3-Vnh-I294a-Uz-Wh6-Al-R6-MCVQUAYnf-9g1-Auu40-Ej-XPu-MZPl8f7j-G0zyt4-ZA9-HM-s0.jpg); background-size: cover;">
-    <div class="text-5xl py-20 md:text-8xl font-medium text-black">佛教小故事</div>
+    <div class="text-center pb-5" style="background-position: center center; background-image: url(https://i.ibb.co/0V5RxV2/m-KGRRnn4-Uez-DRX-3-Vnh-I294a-Uz-Wh6-Al-R6-MCVQUAYnf-9g1-Auu40-Ej-XPu-MZPl8f7j-G0zyt4-ZA9-HM-s0.jpg); background-size: cover">
+      <div class="text-5xl py-20 md:text-8xl font-medium text-black">佛教小故事</div>
+    </div>
 
-  </div>
+    <div id="app">
+      <div class="md:px-20 text-red-600 font-bold" v-text="loading_text+text_point" v-if="msg!=''"></div>
 
-  <div id="app">
+      <template v-for="(item,index) in data">
+        <!-- Modal -->
+        <div :id="'exampleModalFullscreen_'+index" :aria-labelledby="'exampleModalFullscreenLabel_'+index" data-te-modal-init class="fixed left-0 top-0 z-[1055] hidden w-full h-full overflow-y-auto overflow-x-hidden outline-none" tabindex="-1" aria-hidden="true">
+          <div data-te-modal-dialog-ref class="pointer-events-none relative w-auto translate-y-[-50px] opacity-0 transition-all duration-300 ease-in-out min-[0px]:m-0 min-[0px]:h-full min-[0px]:max-w-none">
+            <div class="pointer-events-auto relative flex w-full flex-col rounded-md bg-white bg-clip-padding text-current shadow-lg outline-none min-[0px]:h-full min-[0px]:rounded-none min-[0px]:border-0">
+              <div class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 border-opacity-100 p-4 min-[0px]:rounded-none">
+                <!-- Modal title -->
+                <h5 :id="'exampleModalFullscreenLabel_'+index" class="text-xl font-medium leading-normal text-neutral-800" v-text="item.title"></h5>
+                <!-- Close button -->
+                <button type="button" class="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none" data-te-modal-dismiss aria-label="Close">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
 
-    <div class="md:px-20 text-red-600 font-bold" v-text="loading_text+text_point" v-if="msg!=''"></div>
+              <!-- Modal body -->
+              <div class="relative p-4 min-[0px]:overflow-y-auto">
+                <div class="px-10 text-left leading-normal" v-html="String(item.context).replace(/\n/g,'<br>')"></div>
+                <br />
+                <div class="text-right px-10" v-if="item.url!=''">參考資料來源：<span class="text-blue-500 underline" @click="url_go(item.url)" v-text="item.url"></span></div>
+                <!-- <iframe v-else class="w-full h-screen" width="100%" height="100%" :src="item.url" frameborder="0"></iframe> -->
+              </div>
 
-
-    <div id="accordionExample">
-
-      <div v-for="(item,index) in data"
-        class="md:px-20 border border-t-0 border-neutral-200 bg-white">
-        <h2 class="mb-0" id="headingTwo">
-          <button
-            class="group relative flex w-full items-center rounded-none border-0 bg-white px-5 py-4 text-left text-base text-yellow-800 transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none"
-            type="button"
-            data-te-collapse-init
-            data-te-collapse-collapsed
-            :data-te-target="'#collapse_'+index"
-            aria-expanded="false"
-            aria-controls="collapseTwo"
-            
-            
-            >
-          <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+              <!-- Modal footer -->
+              <div class="mt-auto flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 border-opacity-100 p-4 min-[0px]:rounded-none">
+                <button type="button" class="inline-block rounded bg-primary-100 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200" data-te-modal-dismiss>Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+      <div id="accordionExample">
+        <div v-for="(item,index) in data" class="md:px-20 border border-t-0 border-neutral-200 bg-white">
+          <h2 class="mb-0" id="headingTwo">
+            <button class="group relative flex w-full items-center rounded-none border-0 bg-white px-5 py-4 text-left text-base text-yellow-800 transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none" type="button" data-te-collapse-init data-te-collapse-collapsed :data-te-target="'#collapse_'+index" aria-expanded="false" aria-controls="collapseTwo">
+              <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
   <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd" />
 </svg> -->
-        <svg id="pic02" viewbox="-10 -10 20 20" class="w-6 h-6">
-          <circle cx="0" cy="0" r="2" stroke="black" fill="none"></circle>
-          <g>
-            <line x1="-4" y1="0" x2="4" y2="0" stroke="black"></line>
-            <line x1="0" y1="-4" x2="0" y2="4" stroke="black"></line>
-            <rect x="-4" y="-4" width="8" height="8" stroke="black" fill="none"></rect>
-            <animateTransform
-              attributeName="transform"
-              type="rotate"
-              dur="4s"
-              values="0;360"
-              repeatCount="indefinite">
-            </animateTransform>
-          </g>
-        </svg>
-        <div v-text="item.title"></div>
-
-        </button>
-          <!-- </button> -->
-        </h2>
-        <div
-          :id="'collapse_'+index"
-          class="!visible hidden"
-          data-te-collapse-item
-          aria-labelledby="headingTwo"
-          data-te-parent="#accordionExample">
-          <div class="px-5 py-4 bg-yellow-100" >
-            <div  v-if="item.context.length<limit_num" v-html="item.context.replace(/\n/g,'<br>')"></div>
-            <div v-else>
-              <span v-html="item.context.substring(0,limit_num).replace(/\n/g,'<br>')"></span>
-              <span v-text="else_text"></span>
+              <svg id="pic02" viewbox="-10 -10 20 20" class="w-6 h-6">
+                <circle cx="0" cy="0" r="2" stroke="black" fill="none"></circle>
+                <g>
+                  <line x1="-4" y1="0" x2="4" y2="0" stroke="black"></line>
+                  <line x1="0" y1="-4" x2="0" y2="4" stroke="black"></line>
+                  <rect x="-4" y="-4" width="8" height="8" stroke="black" fill="none"></rect>
+                  <animateTransform attributeName="transform" type="rotate" dur="4s" values="0;360" repeatCount="indefinite"></animateTransform>
+                </g>
+              </svg>
+              <div v-text="item.title"></div>
+            </button>
+            <!-- </button> -->
+          </h2>
+          <div :id="'collapse_'+index" class="!visible hidden" data-te-collapse-item aria-labelledby="headingTwo" data-te-parent="#accordionExample">
+            <div class="px-5 py-4 bg-yellow-100">
+              <div v-if="item.context.length<limit_num" v-html="item.context.replace(/\n/g,'<br>')"></div>
+              <div v-else>
+                <span v-html="item.context.substring(0,limit_num).replace(/\n/g,'<br>')"></span>
+                <span v-text="else_text"></span>
+              </div>
+              <br />
+              <!-- <div v-if="item.url!=''" class="px-5 text-right">→<a class="text-right underline" :href="item.url">內容全文</a></div> -->
+              <div v-if="item.url!=''" :data-te-target="'#exampleModalFullscreen_'+index" type="button" class="px-5 text-right underline" data-te-toggle="modal" data-te-ripple-init data-te-ripple-color="light">→內容全文</div>
             </div>
-            <br>
-            <div v-if="item.url!=''" class="px-5 text-right">
-              →<a class="text-right underline" :href="item.url">內容全文</a>
-            </div>
-            
           </div>
         </div>
       </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+  </body>
 
+  <script type="module">
+    // axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+    import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js";
 
-
-
-
-
-
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
-  
-</body>
-
-
-<script type="module">
-
-// axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-  import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js'
-
-  createApp({
-    data() {
-      return {
-
-        data: [], msg: "", loading_text: "資料系統查詢中", text_point: "",
-        limit_num:200,else_text:"........."
-      }
-    },
-    computed: {
-
-
-    },
-
-    methods: {
-      async get_data(){
-        this.msg = this.loading_text
-        let url="https://script.google.com/macros/s/AKfycbx_30M8mhOwBTYfZek0XJuKdh1HburizoFdN5n7c2Q_4r-2xTStk5vUuNjA1oIx4e3Cbw/exec"
-        await axios.get(url)
-          .then((response) => {
-            let res=response.data
-            this.data=res
-            this.msg=""
-          })
+    createApp({
+      data() {
+        return {
+          data: [],
+          msg: "",
+          loading_text: "資料系統查詢中",
+          text_point: "",
+          limit_num: 200,
+          else_text: ".........",
+        };
       },
-     
-    },
-    mounted() {
-      // let this_year=new Date().getFullYear()
-      // this.year_list=this.range(this_year)
-      setInterval(() => {
-        let date = new Date()
-        let sec = date.getSeconds() % 4 + 1
-        this.text_point = "...".repeat(sec)
-      }, 1000)
+      computed: {},
 
-
-    },
-    async created() {
-      await this.get_data()
-      console.log(this.data)
-      //this.get_data()
-      //await this.get_data()
-
-
-
-    }
-  }).mount('#app')
-</script>
-
+      methods: {
+        url_go(url) {
+          // window.top.location.href = url;
+          window.open(url);
+        },
+        async get_data() {
+          this.msg = this.loading_text;
+          let url = "https://script.google.com/macros/s/AKfycbx_30M8mhOwBTYfZek0XJuKdh1HburizoFdN5n7c2Q_4r-2xTStk5vUuNjA1oIx4e3Cbw/exec";
+          await axios.get(url).then((response) => {
+            let res = response.data;
+            this.data = res;
+            this.msg = "";
+          });
+        },
+      },
+      mounted() {
+        // let this_year=new Date().getFullYear()
+        // this.year_list=this.range(this_year)
+        setInterval(() => {
+          let date = new Date();
+          let sec = (date.getSeconds() % 4) + 1;
+          this.text_point = "...".repeat(sec);
+        }, 1000);
+      },
+      async created() {
+        await this.get_data();
+        console.log(this.data);
+        //this.get_data()
+        //await this.get_data()
+      },
+    }).mount("#app");
+  </script>
 </html>

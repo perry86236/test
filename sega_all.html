@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="google" content="notranslate" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>聖賢介紹</title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
+  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+  <link rel="stylesheet" href="css/sega_all?p=2023082801.css">
+</head>
+
+<body>
+  <div id="app">
+    <div v-for="item in data">
+      <div class="rounded-lg mx-10 bg-yellow-400 my-5 text-2xl md:text-4xl font-bold text-center"
+        v-text="month_zh(item.month)"></div>
+      <div class="bg-gradient-to-t from-white via-yellow-100 to-white">
+        <div class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-6 mx-5">
+          <div v-for="(sub_item,sub_index) in item.data">
+            <div
+              class=" bg-white p-6 mb-6 border border-gray-800 transition duration-500 group transform hover:-translate-y-2 hover:shadow-2xl rounded-2xl cursor-pointer">
+              <a href="#1" class="absolute opacity-0 top-0 end-0 start-0-0 bottom-0"></a>
+              <div class="relative mb-4 rounded-lg justify-center flex">
+                <img
+                  class="object-center  h-96 rounded-lg w-auto object-cover transition-transform duration-500 transform"
+                  :src="sub_item.pic_url" alt="" />
+                <!-- <a class="flex justify-center items-center bg-purple-500 bg-opacity-80 z-10 absolute top-0 start-0-0 w-full h-full text-white rounded-lg opacity-0 transition-all duration-300 transform group-hover:scale-105 text-xl group-hover:opacity-100" href="#" target="_blank" rel="noopener noreferrer">
+                    Read article
+                    <svg class="ml-2 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>
+                    </svg>
+                  </a> -->
+              </div>
+              <div class="flex justify-between items-center w-full pb-4 mb-auto">
+                <div class="flex items-center">
+                  <!-- <div class="pr-3">
+                  <img class="h-12 w-12 rounded-full object-cover" src="assets/images/img-22.png" alt="" />
+                </div> -->
+                  <div class="flex flex-1">
+                    <!-- <div class=""> -->
+                    <div class="font-semibold" v-html="name_html(sub_item.name)"></div>
+                    <!-- <p class="text-sm text-gray-500">Published 53 minutes ago</p> -->
+                    <!-- </div> -->
+                  </div>
+                </div>
+                <div class="flex justify-end">
+                  <div class="text-sm flex items-center text-gray-500" v-text="sub_item.date"></div>
+                  <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                </div>
+              </div>
+              <h3 class="font-sm text-sm leading-8">
+                <a href="#2" class="block relative group-hover:text-blue-500 transition-colors duration-200"
+                  v-text="sub_item.context"></a>
+              </h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script type="module">
+  // axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+  import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js";
+
+  createApp({
+    data() {
+      return {
+        data: [],
+        msg: "",
+        loading_text: "資料系統查詢中",
+        text_point: "",
+        limit_num: 200,
+        else_text: ".........",
+      };
+    },
+    computed: {},
+
+    methods: {
+      month_zh(month) {
+        let arr = ["", "農曆一月份", "農曆二月份", "農曆三月份", "農曆四月份", "農曆五月份", "農曆六月份", "農曆七月份", "農曆八月份", "農曆九月份", "農曆十月份", "農曆十一月份", "農曆十一月份"];
+        return arr[month];
+      },
+      name_html(text) {
+        let arr = text.split("、");
+        let arr_p = arr.map((e) => `<p class="text-xl">${e}</p>`);
+        return arr_p.join("");
+        //   if (arr_p.length == 0) return "";
+        //   else if (arr_p.length == 1) return arr_p[0];
+        //   else {
+        //     return arr_p
+        //       .map((e) => [e])
+        //       .flat()
+        //       .filter((e, i, arr) => i != arr.length - 1)
+        //       .join("");
+        //   }
+      },
+      url_go(url) {
+        // window.top.location.href = url;
+        window.open(url);
+      },
+      async get_data() {
+        this.msg = this.loading_text;
+        let url = "https://script.google.com/macros/s/AKfycbwIjkMj81VlXRMZDpbKRBucd3PWP-rDNLrZJ3DOT9Ui8YPO5YaCrC3MSDFiTkQu5Rh8cQ/exec";
+        await axios.get(url).then((response) => {
+          let res = response.data;
+          //console.log(res);
+          let data = res.reduce((group, item) => {
+            const { month } = item;
+            delete item["month"];
+            if (group.some((e) => e.month == month)) {
+              let index = group.findIndex((e) => e.month == month);
+              group[index]["data"].push(item); // = [...acc[index]["data"], cur]
+            } else {
+              group = [...group, { month: month, data: [item] }];
+            }
+            return group;
+          }, []);
+          data = data.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+          console.log(data);
+          this.data = data;
+          this.msg = "";
+        });
+      },
+    },
+    mounted() {
+      // let this_year=new Date().getFullYear()
+      // this.year_list=this.range(this_year)
+      setInterval(() => {
+        let date = new Date();
+        let sec = (date.getSeconds() % 4) + 1;
+        this.text_point = "...".repeat(sec);
+      }, 1000);
+    },
+    async created() {
+      await this.get_data();
+      console.log(this.data);
+      //this.get_data()
+      //await this.get_data()
+    },
+  }).mount("#app");
+</script>
+
+</html>

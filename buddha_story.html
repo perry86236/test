@@ -47,7 +47,7 @@
 
               <!-- Modal body -->
               <div class="relative p-4 min-[0px]:overflow-y-auto">
-                <div class="px-10 text-left leading-normal" v-html="String(item.context).replace(/\n/g,'<br>')"></div>
+                <div class="px-10 text-left leading-normal" v-html="String(item.all_context).replace(/\n/g,'<br>')"></div>
                 <br />
                 <div class="text-right px-10" v-if="item.url!=''">參考資料來源：<span class="text-blue-500 underline" @click="url_go(item.url)" v-text="item.url"></span></div>
                 <!-- <iframe v-else class="w-full h-screen" width="100%" height="100%" :src="item.url" frameborder="0"></iframe> -->
@@ -83,9 +83,11 @@
           </h2>
           <div :id="'collapse_'+index" class="!visible hidden" data-te-collapse-item aria-labelledby="headingTwo" data-te-parent="#accordionExample">
             <div class="px-5 py-4 bg-yellow-100">
-              <div v-if="item.context.length<limit_num" v-html="item.context.replace(/\n/g,'<br>')"></div>
+<!--               .replace(/\n/g,'<br>') -->
+              <div v-if="item.context.length<limit_num" v-html="item.context"></div>
               <div v-else>
-                <span v-html="item.context.substring(0,limit_num).replace(/\n/g,'<br>')"></span>
+<!--                 .substring(0,limit_num).replace(/\n/g,'<br>') -->
+                <span v-html="item.context"></span>
                 <span v-text="else_text"></span>
               </div>
               <br />

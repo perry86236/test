@@ -126,7 +126,7 @@
         },
         async get_data() {
           this.msg = this.loading_text;
-          let url = "https://script.google.com/macros/s/AKfycbyV8kDurZDkL0PXmOzRcsgOz9BaxHfuqNOfsb4C70zrepwwg1iC9Q_5QXqA0YiO5OpSZQ/exec";
+          let url = "https://script.google.com/macros/s/AKfycbxWpGiUMCMpFP2LNNeMCz_Pw8ZLijngn90Uu-64qOVIfH5CL6hNS4Nos1JmvVx1SfeN/exec";
           await axios.get(url).then((response) => {
             let res = response.data;
             this.data = res;

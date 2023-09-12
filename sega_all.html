@@ -1,155 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="google" content="notranslate" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>聖賢介紹</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" /> -->
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="google" content="notranslate" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>聖賢介紹</title>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
-  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
-  <link rel="stylesheet" href="css/sega_all.css??ver=2023082801.css">
-</head>
+    <!-- Tailwind Elements styles-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <link rel="stylesheet" href="css/sega_all.css??ver=2023091301.css" />
+  </head>
 
-<body>
-  <div id="app">
-    <div v-for="item in data">
-      <div class="rounded-lg mx-10 bg-yellow-400 my-5 text-2xl md:text-4xl font-bold text-center"
-        v-text="month_zh(item.month)"></div>
-      <div class="bg-gradient-to-t from-white via-yellow-100 to-white">
-        <div class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-6 mx-5">
-          <div v-for="(sub_item,sub_index) in item.data">
-            <div
-              class=" bg-white p-6 mb-6 border border-gray-800 transition duration-500 group transform hover:-translate-y-2 hover:shadow-2xl rounded-2xl cursor-pointer">
-              <a href="#1" class="absolute opacity-0 top-0 end-0 start-0-0 bottom-0"></a>
-              <div class="relative mb-4 rounded-lg justify-center flex">
-                <img
-                  class="object-center  h-96 rounded-lg w-auto object-cover transition-transform duration-500 transform"
-                  :src="sub_item.pic_url" alt="" />
-                <!-- <a class="flex justify-center items-center bg-purple-500 bg-opacity-80 z-10 absolute top-0 start-0-0 w-full h-full text-white rounded-lg opacity-0 transition-all duration-300 transform group-hover:scale-105 text-xl group-hover:opacity-100" href="#" target="_blank" rel="noopener noreferrer">
-                    Read article
-                    <svg class="ml-2 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>
-                
-                      
+  <body>
+    <div id="app">
+      <template v-for="(item,index) in data">
+        <template v-for="(sub_item,sub_index) in item.data">
+          <!-- Modal -->
+          <div data-te-modal-init class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none" :id="'Modal_'+index+'_'+sub_index" tabindex="-1" :aria-labelledby="'ModalLabel_'+index+'_'+sub_index" aria-hidden="true">
+            <div data-te-modal-dialog-ref class="pointer-events-none relative w-auto translate-y-[-50px] opacity-0 transition-all duration-300 ease-in-out min-[0px]:m-0 min-[0px]:h-full min-[0px]:max-w-none">
+              <div class="pointer-events-auto relative flex w-full flex-col rounded-md bg-white bg-clip-padding text-current shadow-lg outline-none min-[0px]:h-full min-[0px]:rounded-none min-[0px]:border-0">
+                <div class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 border-opacity-100 p-4 min-[0px]:rounded-none">
+                  <!-- Modal title -->
+                  <h5 class="text-xl font-medium leading-normal text-neutral-800" :id="'ModalLabel_'+index+'_'+sub_index" v-text="sub_item.name"></h5>
+                  <!-- Close button -->
+                  <button type="button" class="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none" data-te-modal-dismiss aria-label="Close">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg>
-                  </a> -->
+                  </button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="relative p-4 min-[0px]:overflow-y-auto flex flex-col gap-2 sm:flex-row sm:w-full">
+                  <img class="px-10 object-center h-96 rounded-lg w-auto object-cover transition-transform duration-500 transform" :src="sub_item.pic_url" alt="" />
+                  <p class="px-10 text-left leading-[3rem]" v-text="sub_item.context_all"></p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="mt-auto flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 border-opacity-100 p-4 min-[0px]:rounded-none">
+                  <button type="button" class="inline-block rounded bg-primary-100 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200" data-te-modal-dismiss>Close</button>
+                </div>
               </div>
-              <div class="flex justify-between items-center w-full pb-4 mb-auto">
-                <div class="flex items-center">
-                  <!-- <div class="pr-3">
-                  <img class="h-12 w-12 rounded-full object-cover" src="assets/images/img-22.png" alt="" />
-                </div> -->
-                  <div class="flex flex-1">
-                    <!-- <div class=""> -->
-                    <div class="font-semibold" v-html="name_html(sub_item.name)"></div>
-                    <!-- <p class="text-sm text-gray-500">Published 53 minutes ago</p> -->
-                    <!-- </div> -->
+            </div>
+          </div>
+        </template>
+      </template>
+      <div v-for="(item,index) in data">
+        <div class="rounded-lg mx-10 bg-yellow-400 my-5 text-2xl md:text-4xl font-bold text-center" v-text="item.class_name"></div>
+        <div class="bg-gradient-to-t from-white via-yellow-100 to-white">
+          <div class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-6 mx-5">
+            <div v-for="(sub_item,sub_index) in item.data">
+              <div
+                class="bg-white p-6 mb-6 border border-gray-800 transition duration-500 group transform hover:-translate-y-2 hover:shadow-2xl rounded-2xl"
+                type="button"
+                class="ring-2 ring-blue-500 inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black active:bg-primary-700 active:text-white transition duration-150 ease-in-out"
+                data-te-toggle="modal"
+                :data-te-target="'#Modal_'+index+'_'+sub_index"
+                data-te-ripple-init
+                data-te-ripple-color="light">
+                <div class="relative mb-4 rounded-lg justify-center flex">
+                  <img class="object-center h-96 rounded-lg w-auto object-cover transition-transform duration-500 transform" :src="sub_item.pic_url" alt="" />
+                </div>
+                <div class="flex justify-between items-center w-full pb-4 mb-auto">
+                  <div class="flex items-center">
+                    <div class="flex flex-1">
+                      <div class="font-semibold" v-html="name_html(sub_item.name)"></div>
+                    </div>
+                  </div>
+                  <div class="flex justify-end">
+                    <div class="text-sm flex items-center text-gray-500" v-text="format_date(sub_item.date)"></div>
+                    <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                      <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" begin="0s" dur="1s" repeatCount="indefinite" />
+                    </svg>
                   </div>
                 </div>
-                <div class="flex justify-end">
-                  <div class="text-sm flex items-center text-gray-500" v-text="sub_item.date"></div>
-                  <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
-                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" begin="0s"
-                      dur="1s" repeatCount="indefinite" />
-                  </svg>
-                </div>
+                <h3 class="font-sm text-sm leading-8">
+                  <a class="block relative group-hover:text-blue-500 transition-colors duration-200" v-text="sub_item.context"></a>
+                </h3>
               </div>
-              <h3 class="font-sm text-sm leading-8">
-                <a href="#2" class="block relative group-hover:text-blue-500 transition-colors duration-200"
-                  v-text="sub_item.context"></a>
-              </h3>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</body>
-<script type="module">
-  // axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-  import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js";
+    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+  </body>
+  <script type="module">
+    // axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+    import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js";
 
-  createApp({
-    data() {
-      return {
-        data: [],
-        msg: "",
-        loading_text: "資料系統查詢中",
-        text_point: "",
-        limit_num: 200,
-        else_text: ".........",
-      };
-    },
-    computed: {},
+    createApp({
+      data() {
+        return {
+          data: [],
+          msg: "",
+          loading_text: "資料系統查詢中",
+          text_point: "",
+          limit_num: 200,
+          else_text: ".........",
+        };
+      },
+      computed: {},
 
-    methods: {
-      month_zh(month) {
-        let arr = ["", "農曆一月份", "農曆二月份", "農曆三月份", "農曆四月份", "農曆五月份", "農曆六月份", "農曆七月份", "農曆八月份", "農曆九月份", "農曆十月份", "農曆十一月份", "農曆十一月份"];
-        return arr[month];
+      methods: {
+        month_zh(month) {
+          let arr = ["", "農曆一月份", "農曆二月份", "農曆三月份", "農曆四月份", "農曆五月份", "農曆六月份", "農曆七月份", "農曆八月份", "農曆九月份", "農曆十月份", "農曆十一月份", "農曆十一月份"];
+          return arr[month];
+        },
+        format_date(date) {
+          // console.log(date);
+          // let date_1 = date.split("T")[0];
+          let reg = /^[0-9]+\/[0-9]+$/;
+          if (reg.test(date)) return "農曆 " + date;
+          else return date;
+        },
+        name_html(text) {
+          let arr = text.split("、");
+          let arr_p = arr.map((e) => `<p class="text-xl">${e}</p>`);
+          return arr_p.join("");
+          //   if (arr_p.length == 0) return "";
+          //   else if (arr_p.length == 1) return arr_p[0];
+          //   else {
+          //     return arr_p
+          //       .map((e) => [e])
+          //       .flat()
+          //       .filter((e, i, arr) => i != arr.length - 1)
+          //       .join("");
+          //   }
+        },
+        url_go(url) {
+          // window.top.location.href = url;
+          window.open(url);
+        },
+        async get_data() {
+          this.msg = this.loading_text;
+          let url = "https://script.google.com/macros/s/AKfycbwoSZx0gSt9d_Pskyfd9YkYeX-7w0OiyTv8-VF-oULlvCmhAayG4jtUET6FuP9tGJFzaQ/exec";
+          await axios.get(url).then((response) => {
+            let res = response.data;
+            console.log(res);
+            let data = res.reduce((group, item) => {
+              // const { month } = item;
+              // delete item["month"];
+              // if (group.some((e) => e.month == month)) {
+              //   let index = group.findIndex((e) => e.month == month);
+              //   group[index]["data"].push(item); // = [...acc[index]["data"], cur]
+              // } else {
+              //   group = [...group, { month: month, data: [item] }];
+              // }
+              // return group;
+              const { class_name, class_num } = item;
+              delete item["class_name"];
+              delete item["class_num"];
+              if (group.some((e) => e.class_name == class_name)) {
+                let index = group.findIndex((e) => e.class_name == class_name);
+                group[index]["data"].push(item); // = [...acc[index]["data"], cur]
+              } else {
+                group = [...group, { class_name: class_name, class_num: class_num, data: [item] }];
+              }
+              return group;
+            }, []);
+            data = data.sort((a, b) => a.class_num - b.class_num);
+            data.forEach(
+              (e) =>
+                (e.data = e.data.sort((a, b) => {
+                  let aa = a.class_order;
+                  let bb = b.class_order;
+                  return !!!aa - !!!bb || +(aa > bb) || -(aa < bb);
+                }))
+            );
+            console.log(data);
+            this.data = data;
+            this.msg = "";
+          });
+        },
       },
-      name_html(text) {
-        let arr = text.split("、");
-        let arr_p = arr.map((e) => `<p class="text-xl">${e}</p>`);
-        return arr_p.join("");
-        //   if (arr_p.length == 0) return "";
-        //   else if (arr_p.length == 1) return arr_p[0];
-        //   else {
-        //     return arr_p
-        //       .map((e) => [e])
-        //       .flat()
-        //       .filter((e, i, arr) => i != arr.length - 1)
-        //       .join("");
-        //   }
+      mounted() {
+        // let this_year=new Date().getFullYear()
+        // this.year_list=this.range(this_year)
+        setInterval(() => {
+          let date = new Date();
+          let sec = (date.getSeconds() % 4) + 1;
+          this.text_point = "...".repeat(sec);
+        }, 1000);
       },
-      url_go(url) {
-        // window.top.location.href = url;
-        window.open(url);
+      async created() {
+        await this.get_data();
+        console.log(this.data);
+        //this.get_data()
+        //await this.get_data()
       },
-      async get_data() {
-        this.msg = this.loading_text;
-        let url = "https://script.google.com/macros/s/AKfycbwIjkMj81VlXRMZDpbKRBucd3PWP-rDNLrZJ3DOT9Ui8YPO5YaCrC3MSDFiTkQu5Rh8cQ/exec";
-        await axios.get(url).then((response) => {
-          let res = response.data;
-          //console.log(res);
-          let data = res.reduce((group, item) => {
-            const { month } = item;
-            delete item["month"];
-            if (group.some((e) => e.month == month)) {
-              let index = group.findIndex((e) => e.month == month);
-              group[index]["data"].push(item); // = [...acc[index]["data"], cur]
-            } else {
-              group = [...group, { month: month, data: [item] }];
-            }
-            return group;
-          }, []);
-          data = data.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
-          console.log(data);
-          this.data = data;
-          this.msg = "";
-        });
-      },
-    },
-    mounted() {
-      // let this_year=new Date().getFullYear()
-      // this.year_list=this.range(this_year)
-      setInterval(() => {
-        let date = new Date();
-        let sec = (date.getSeconds() % 4) + 1;
-        this.text_point = "...".repeat(sec);
-      }, 1000);
-    },
-    async created() {
-      await this.get_data();
-      console.log(this.data);
-      //this.get_data()
-      //await this.get_data()
-    },
-  }).mount("#app");
-</script>
-
+    }).mount("#app");
+  </script>
 </html>

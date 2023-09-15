@@ -8,13 +8,13 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" /> -->
 
+    <link rel="stylesheet" href="css/sega_all_3.css??ver=2023091501.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
     <!-- Tailwind Elements styles-->
-    <link rel="stylesheet" href="css/sega_all.css??ver=2023091302.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
-    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" /> -->
   </head>
 
-  <body>
+  <body class="overflow-auto">
     <div id="app">
       <template v-for="(item,index) in data">
         <template v-for="(sub_item,sub_index) in item.data">
@@ -48,41 +48,54 @@
           </div>
         </template>
       </template>
+      <div class="relative h-[300px] font-[sans-serif]">
+        <img src="https://i.ibb.co/0yYsrmr/2023091501.webp" alt="Banner Image" class="w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-black opacity-50"></div>
+        <div class="absolute inset-0 flex flex-col justify-center items-center text-white px-6">
+          <div class="text-6xl md:text-8xl font-bold mb-4">佛菩薩介紹</div>
+          <!-- <p class="text-lg text-center mb-6">Embark on unforgettable journeys. Book your dream vacation today!</p> -->
+          <!-- <a href="javascript:void(0)" class="bg-transparent text-white font-semibold py-2 border-2 border-white px-6 rounded hover:bg-white hover:text-black transition duration-300 ease-in-out"> Book Now </a> -->
+        </div>
+      </div>
       <div v-for="(item,index) in data">
         <div class="rounded-lg mx-10 bg-yellow-400 my-5 text-2xl md:text-4xl font-bold text-center" v-text="item.class_name"></div>
         <div class="bg-gradient-to-t from-white via-yellow-100 to-white">
-          <div class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-6 mx-5">
-            <div v-for="(sub_item,sub_index) in item.data">
-              <div
-                class="bg-white p-6 mb-6 border border-gray-800 transition duration-500 group transform hover:-translate-y-2 hover:shadow-2xl rounded-2xl"
-                type="button"
-                class="ring-2 ring-blue-500 inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black active:bg-primary-700 active:text-white transition duration-150 ease-in-out"
-                data-te-toggle="modal"
-                :data-te-target="'#Modal_'+index+'_'+sub_index"
-                data-te-ripple-init
-                data-te-ripple-color="light">
-                <div class="relative mb-4 rounded-lg justify-center flex">
-                  <img class="object-center h-96 rounded-lg w-auto object-cover transition-transform duration-500 transform" :src="sub_item.pic_url" alt="" />
-                </div>
-                <div class="flex justify-between items-center w-full pb-4 mb-auto">
-                  <div class="flex items-center">
-                    <div class="flex flex-1">
-                      <div class="font-semibold" v-html="name_html(sub_item.name)"></div>
-                    </div>
-                  </div>
-                  <div class="flex justify-end">
-                    <div class="text-sm flex items-center text-gray-500" v-text="format_date(sub_item.date)"></div>
-                    <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                      <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" begin="0s" dur="1s" repeatCount="indefinite" />
-                    </svg>
+          <div class="snap-proximity snap-x flex flex-row overflow-auto gap-6 mx-5">
+            <!--  -->
+            <div
+              v-for="(sub_item,sub_index) in item.data"
+              class="snap-center flex flex-col w-32 h-96 bg-white p-6 mb-6 border border-gray-800 group transform rounded-2xl min-w-[100%] md:min-w-[50%] lg:min-w-[25%] first-line:ring-2 ring-blue-500 bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black transition duration-150 ease-in-out"
+              type="button"
+              class=""
+              data-te-toggle="modal"
+              :data-te-target="'#Modal_'+index+'_'+sub_index"
+              data-te-ripple-init
+              data-te-ripple-color="light">
+              <!-- <div class="relative mb-4 rounded-lg justify-center flex grow container h-auto"> -->
+              <!-- w-1/4 md:w-1/3 lg:w-1/2 -->
+              <img class="w-full object-contain min-h-0" :src="sub_item.pic_url" alt="" />
+              <div class="grow"></div>
+              <!-- </div> -->
+
+              <div class="flex justify-between items-center w-full pb-4 mb-auto">
+                <div class="flex items-center">
+                  <div class="flex flex-1">
+                    <div class="font-semibold" v-html="name_html(sub_item.name)"></div>
                   </div>
                 </div>
-                <h3 class="font-sm text-sm leading-8">
-                  <a class="block relative group-hover:text-blue-500 transition-colors duration-200" v-text="sub_item.context"></a>
-                </h3>
+                <div class="flex justify-end">
+                  <div class="text-sm flex items-center text-gray-500" v-text="format_date(sub_item.date)"></div>
+                  <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" begin="0s" dur="1s" repeatCount="indefinite" />
+                  </svg>
+                </div>
               </div>
+              <h3 class="font-sm text-sm leading-8">
+                <a class="block relative group-hover:text-blue-500 transition-colors duration-200" v-text="sub_item.context.substr(0, 50)+'...'"></a>
+              </h3>
             </div>
+            <!-- </div> -->
           </div>
         </div>
       </div>

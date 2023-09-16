@@ -546,7 +546,7 @@ video {
 
 @media (min-width: 1024px) {
   .container {
-    max-width: 1024px !important;
+    max-width: 1024px;
   }
 }
 
@@ -793,6 +793,10 @@ video {
   flex-wrap: wrap;
 }
 
+.place-content-center {
+  place-content: center;
+}
+
 .items-center {
   align-items: center;
 }
@@ -831,10 +835,6 @@ video {
 
 .rounded {
   border-radius: 0.25rem;
-}
-
-.rounded-2xl {
-  border-radius: 1rem;
 }
 
 .rounded-lg {

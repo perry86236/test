@@ -8,7 +8,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" /> -->
 
-    <link rel="stylesheet" href="css/sega_all_3.css??ver=2023091601.css" />
+    <link rel="stylesheet" href="css/sega_all_3.css??ver=2023091602.css" />
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
@@ -36,13 +36,28 @@
 
               <!-- Modal body -->
               <div class="relative p-4 min-[0px]:overflow-y-auto flex flex-col gap-2 sm:flex-row sm:w-full">
-                <img class="px-10 object-center h-96 rounded-lg w-auto object-cover transition-transform duration-500 transform" :src="item.data[current_modal[index]].pic_url" alt="" />
+                <img class="px-10 object-contain max-h-96 rounded-lg w-auto transition-transform duration-500 transform" :src="item.data[current_modal[index]].pic_url" alt="" />
                 <p class="px-10 text-left leading-[3rem]" v-text="item.data[current_modal[index]].context_all"></p>
               </div>
 
               <!-- Modal footer -->
               <div class="mt-auto flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 border-opacity-100 p-4 min-[0px]:rounded-none">
-                <div class="flex w-64">
+                <div class="flex cursor-pointer" @click="previous_modal(index)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="h-8 w-8 bi bi-arrow-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                  </svg>
+                  <div class="mt-1">上一個</div>
+                </div>
+                <div class="grow"></div>
+                <button type="button" class="inline-block rounded bg-primary-100 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200" data-te-modal-dismiss>Close</button>
+                <div class="grow"></div>
+                <div class="flex cursor-pointer" @click="next_modal(index)">
+                  <div class="mt-1">下一個</div>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="h-8 w-8 bi bi-arrow-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                  </svg>
+                </div>
+                <!-- <div class="flex w-64">
                   <div class="flex cursor-pointer" @click="previous_modal(index)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="h-8 w-8 bi bi-arrow-left" viewBox="0 0 16 16">
                       <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
@@ -57,8 +72,8 @@
                     </svg>
                   </div>
                 </div>
-                <div class="grow"></div>
-                <button type="button" class="inline-block rounded bg-primary-100 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200" data-te-modal-dismiss>Close</button>
+                <div class="grow"></div> -->
+                <!-- <button type="button" class="inline-block rounded bg-primary-100 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200" data-te-modal-dismiss>Close</button> -->
               </div>
             </div>
           </div>

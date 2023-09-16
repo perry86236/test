@@ -8,7 +8,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" /> -->
 
-    <link rel="stylesheet" href="css/sega_all_3.css??ver=2023091603.css" />
+    <link rel="stylesheet" href="css/sega_all_3.css??ver=2023091701.css" />
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
@@ -96,34 +96,30 @@
       </div>
       <div v-for="(item,index) in data">
         <div class="rounded-lg mx-10 bg-yellow-400 my-5 text-2xl md:text-4xl font-bold text-center" v-text="item.class_name"></div>
-        <div class="bg-gradient-to-t from-white via-yellow-100 to-white">
-          <div class="snap-proximity snap-x flex flex-row overflow-auto gap-6 mx-5">
+        <div class="bg-gradient-to-t from-white via-yellow-100 to-white relative">
+          <div class="cursor-pointer absolute top-[35%] m-5 text-4xl text-grey-300 drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)] z-30" @click="scroll_left(index)">&lt;</div>
+          <div class="cursor-pointer absolute top-[35%] right-0 m-5 text-4xl text-grey-300 drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)] z-30" @click="scroll_right(index)">&gt;</div>
+
+          <div :id="'container_'+index" class="cursor-pointer snap-proximity snap-x flex flex-row overflow-auto gap-6 mx-5">
             <!--  -->
             <!-- <div class="z-10 flex-col" v-text="left_text"></div> -->
-            <div
-              v-for="(sub_item,sub_index) in item.data"
-              class="snap-center flex flex-col w-32 h-96 bg-white p-6 mb-6 border border-gray-800 group transform rounded-lg min-w-[100%] md:min-w-[50%] lg:min-w-[25%] first-line:ring-2 ring-blue-500 bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black transition duration-150 ease-in-out"
-              
-              class=""
-              data-te-toggle="modal"
-              :data-te-target="'#Modal_'+index"
-              data-te-ripple-init
-              data-te-ripple-color="light"
-              @click="click_modal(index,sub_index)">
+
+            <div v-for="(sub_item,sub_index) in item.data" class="z-20 snap-center flex flex-col w-32 h-96 bg-white p-6 mb-6 border border-gray-800 group transform rounded-lg min-w-[100%] md:min-w-[50%] lg:min-w-[25%] first-line:ring-2 ring-blue-500 bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black transition duration-150 ease-in-out">
               <!-- <div class="relative mb-4 rounded-lg justify-center flex grow container h-auto"> -->
               <!-- w-1/4 md:w-1/3 lg:w-1/2 -->
               <div class="grow"></div>
-              <img class="w-full object-contain min-h-0 max-h-[66%]" :src="sub_item.pic_url" alt="" />
+              <img class="w-full object-contain min-h-0 max-h-[66%]" data-te-toggle="modal" :data-te-target="'#Modal_'+index" data-te-ripple-init data-te-ripple-color="light" @click="click_modal(index,sub_index)" :src="sub_item.pic_url" alt="" />
               <div class="grow"></div>
               <!-- </div> -->
 
               <div class="flex justify-between items-center w-full pb-2 mb-auto">
-                <div class="flex items-center">
+                <div class="flex-grow" data-te-toggle="modal" :data-te-target="'#Modal_'+index" data-te-ripple-init data-te-ripple-color="light" @click="click_modal(index,sub_index)">
                   <div class="flex flex-1">
                     <div class="font-semibold" v-html="name_html(sub_item.name)"></div>
                   </div>
                 </div>
                 <div class="flex justify-end">
+                  <!-- <button type="button" class="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out" data-te-toggle="popover" data-te-placement="top" data-te-content="Top popover" data-te-ripple-init data-te-ripple-color="light" :v-text="format_date(sub_item.date)"></button> -->
                   <div class="text-sm flex items-center text-gray-500" v-text="format_date(sub_item.date)"></div>
                   <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -132,7 +128,7 @@
                 </div>
               </div>
               <!-- <h3 class=""> -->
-              <p class="mb-3 text-sm line-clamp-3" v-text="sub_item.context"></p>
+              <p class="mb-3 text-sm line-clamp-3" data-te-toggle="modal" :data-te-target="'#Modal_'+index" data-te-ripple-init data-te-ripple-color="light" @click="click_modal(index,sub_index)" v-text="sub_item.context"></p>
               <!-- </h3> -->
             </div>
             <!-- <div class="z-10 flex-col" v-text="right_text"></div> -->
@@ -165,6 +161,22 @@
       computed: {},
 
       methods: {
+        scroll_left(index) {
+          let container = document.getElementById("container_" + index);
+          let width = container.clientWidth;
+
+          container.scrollLeft -= width;
+          // translate += width;
+          // container.style.transform = "translateX(" + translate + "px" + ")";
+        },
+        scroll_right(index) {
+          let container = document.getElementById("container_" + index);
+          let width = container.clientWidth;
+
+          container.scrollLeft += width;
+          // translate -= width;
+          // container.style.transform = "translateX(" + translate + "px" + ")";
+        },
         previous_modal(index) {
           let current = this.current_modal[index];
           current = --current >= 0 ? current : 0;

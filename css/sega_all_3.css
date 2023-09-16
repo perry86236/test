@@ -801,8 +801,8 @@ video {
   --tw-scroll-snap-strictness: proximity;
 }
 
-.snap-center {
-  scroll-snap-align: center;
+.snap-start {
+  scroll-snap-align: start;
 }
 
 .flex-row {

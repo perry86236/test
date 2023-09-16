@@ -8,7 +8,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" /> -->
 
-    <link rel="stylesheet" href="css/sega_all_3.css??ver=2023091502.css" />
+    <link rel="stylesheet" href="css/sega_all_3.css??ver=2023091601.css" />
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
@@ -79,6 +79,7 @@
         <div class="bg-gradient-to-t from-white via-yellow-100 to-white">
           <div class="snap-proximity snap-x flex flex-row overflow-auto gap-6 mx-5">
             <!--  -->
+            <!-- <div class="z-10 flex-col" v-text="left_text"></div> -->
             <div
               v-for="(sub_item,sub_index) in item.data"
               class="snap-center flex flex-col w-32 h-96 bg-white p-6 mb-6 border border-gray-800 group transform rounded-2xl min-w-[100%] md:min-w-[50%] lg:min-w-[25%] first-line:ring-2 ring-blue-500 bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black transition duration-150 ease-in-out"
@@ -91,11 +92,12 @@
               @click="click_modal(index,sub_index)">
               <!-- <div class="relative mb-4 rounded-lg justify-center flex grow container h-auto"> -->
               <!-- w-1/4 md:w-1/3 lg:w-1/2 -->
-              <img class="w-full object-contain min-h-0" :src="sub_item.pic_url" alt="" />
+              <div class="grow"></div>
+              <img class="w-full object-contain min-h-0 max-h-[66%]" :src="sub_item.pic_url" alt="" />
               <div class="grow"></div>
               <!-- </div> -->
 
-              <div class="flex justify-between items-center w-full pb-4 mb-auto">
+              <div class="flex justify-between items-center w-full pb-2 mb-auto">
                 <div class="flex items-center">
                   <div class="flex flex-1">
                     <div class="font-semibold" v-html="name_html(sub_item.name)"></div>
@@ -109,10 +111,11 @@
                   </svg>
                 </div>
               </div>
-              <h3 class="font-sm text-sm leading-8">
-                <a class="block relative group-hover:text-blue-500 transition-colors duration-200" v-text="sub_item.context.substr(0, 50)+'...'"></a>
-              </h3>
+              <!-- <h3 class=""> -->
+              <p class="mb-3 text-sm line-clamp-3" v-text="sub_item.context"></p>
+              <!-- </h3> -->
             </div>
+            <!-- <div class="z-10 flex-col" v-text="right_text"></div> -->
             <!-- </div> -->
           </div>
         </div>
@@ -127,6 +130,8 @@
     createApp({
       data() {
         return {
+          right_text: ">",
+          left_text: "<",
           maxNum_modal: [],
           current_modal: [],
           data: [],

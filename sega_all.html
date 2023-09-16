@@ -37,7 +37,7 @@
               <!-- Modal body -->
               <div class="relative p-4 min-[0px]:overflow-y-auto flex flex-col gap-2 sm:flex-row sm:w-full">
                 <img class="px-10 object-contain max-h-96 rounded-lg w-auto transition-transform duration-500 transform" :src="item.data[current_modal[index]].pic_url" alt="" />
-                <p class="px-10 text-left leading-[3rem]" v-text="item.data[current_modal[index]].context_all"></p>
+                <p class="px-10 text-left leading-[3rem]" v-html="item.data[current_modal[index]].context_all.replace(/\n/g,'<br>')"></p>
               </div>
 
               <!-- Modal footer -->

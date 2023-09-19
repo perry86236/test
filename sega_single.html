@@ -8,7 +8,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" /> -->
 
-    <link rel="stylesheet" href="css/sega_single.css??ver=2023091803.css" />
+    <link rel="stylesheet" href="css/sega_single.css??ver=2023091901.css" />
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
@@ -17,6 +17,18 @@
 
   <body class="overflow-auto">
     <div id="app">
+      <div class="relative h-[300px] font-[sans-serif]">
+        <img src="https://i.ibb.co/0yYsrmr/2023091501.webp" alt="Banner Image" class="w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-black opacity-50"></div>
+        <div class="absolute inset-0 flex flex-col justify-center items-center text-white px-6">
+          <div v-if="data.length>0" class="place-content-center flex flex-wrap text-6xl md:text-8xl font-bold mb-4">
+            <div v-text="data[0].class_name"></div>
+            <div>介紹</div>
+          </div>
+          <!-- <p class="text-lg text-center mb-6">Embark on unforgettable journeys. Book your dream vacation today!</p> -->
+          <!-- <a href="javascript:void(0)" class="bg-transparent text-white font-semibold py-2 border-2 border-white px-6 rounded hover:bg-white hover:text-black transition duration-300 ease-in-out"> Book Now </a> -->
+        </div>
+      </div>
       <template v-for="(item,index) in data">
         <!-- <template v-for="(sub_item,sub_index) in item.data"> -->
         <!-- Modal -->
@@ -80,32 +92,21 @@
         </div>
         <!-- </template> -->
       </template>
-      <div class="relative h-[300px] font-[sans-serif]">
-        <img src="https://i.ibb.co/0yYsrmr/2023091501.webp" alt="Banner Image" class="w-full h-full object-cover" />
-        <div class="absolute inset-0 bg-black opacity-50"></div>
-        <div class="absolute inset-0 flex flex-col justify-center items-center text-white px-6">
-          <div class="place-content-center flex flex-wrap text-6xl md:text-8xl font-bold mb-4">
-            <div v-if="data.length" v-text="data[0].class_name"></div>
-            <div>介紹</div>
-          </div>
-          <!-- <p class="text-lg text-center mb-6">Embark on unforgettable journeys. Book your dream vacation today!</p> -->
-          <!-- <a href="javascript:void(0)" class="bg-transparent text-white font-semibold py-2 border-2 border-white px-6 rounded hover:bg-white hover:text-black transition duration-300 ease-in-out"> Book Now </a> -->
-        </div>
-      </div>
+
       <div v-for="(item,index) in data[0].data">
-        <hr v-if="index!=0" style="border-top: 1px dashed; width: 85%; margin: auto" />
-        <div class="md:mx-20 mx-3 mt-5 flex flex-row p-5 active:bg-yellow-100" data-te-toggle="modal" data-te-target="#Modal_0" data-te-ripple-init data-te-ripple-color="light" @click="click_modal(0,index)">
-          <div class="basis-1/4 md:basis-1/5 p-1 justify-end">
+        <div class="md:mx-20 mx-3 flex flex-row p-5 active:bg-yellow-100" data-te-toggle="modal" data-te-target="#Modal_0" data-te-ripple-init data-te-ripple-color="light" @click="click_modal(0,index)">
+          <div class="basis-1/4 md:basis-1/5 p-1 justify-end flex-col">
             <!-- <div class="flex-col justify-end items-end"> -->
             <!-- <div class="flex justify-center"> -->
+
             <div class="grow"></div>
-            <img class="max-h-full max-w-64" :src="item.pic_url" alt="" />
+            <img class="max-h-full max-w-64 flex-none" :src="item.pic_url" alt="" />
             <!-- </div> -->
 
             <div class="max-w-64 flex justify-center self-center">
               <!-- <div class="grow"></div> -->
-              <div class="text-sm" v-text="format_date(item.date)"></div>
-              <svg class="ml-1 mt-0.5 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <div class="text-[12px] md:text-base" v-text="format_date(item.date)"></div>
+              <svg class="ml-1 mt-0.5 h-3 w-3 md:h-4 md:w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" begin="0s" dur="1s" repeatCount="indefinite" />
               </svg>
@@ -116,8 +117,14 @@
           <div class="basis-1/4 md:basis-4/5 grow flex flex-col p-3">
             <div class="text-2xl font-bold" v-text="item.name"></div>
             <div class="mt-2 break-all indent-8 line-clamp-5" v-text="item.context"></div>
+            <div class="grow"></div>
+            <div class="jusitfy-end flex">
+              <div class="grow"></div>
+              <div class="flex-none self-end text-blue-500 underline">詳看更多</div>
+            </div>
           </div>
         </div>
+        <hr style="border-top: 1px dashed; width: 85%; margin: auto" />
       </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
@@ -204,12 +211,15 @@
           window.open(url);
         },
         async get_data() {
+          let uri = window.location.search.substring(1);
+          let params = new URLSearchParams(uri);
+          let p = params.get("p");
           this.msg = this.loading_text;
-          let url = `https://script.google.com/macros/s/AKfycbxrm-kN1fjcHFB5lmwbeeAnSzT7L29WS1ihxL0-XnyQkWr6Rqea5zrYnsaiOZWr4mY_Jw/exec?p=${this.p}`;
-          console.log(url);
+          let url = `https://script.google.com/macros/s/AKfycbxrm-kN1fjcHFB5lmwbeeAnSzT7L29WS1ihxL0-XnyQkWr6Rqea5zrYnsaiOZWr4mY_Jw/exec?p=${p}`;
+          // console.log(url);
           await axios.get(url).then((response) => {
             let res = response.data;
-            console.log(res);
+            // console.log(res);
             let data = res.reduce((group, item) => {
               // const { month } = item;
               // delete item["month"];
@@ -240,33 +250,28 @@
                   return !!!aa - !!!bb || +(aa > bb) || -(aa < bb);
                 }))
             );
-            console.log(data);
+            // console.log(data);
             this.data = data;
             this.msg = "";
+            let classNum = this.data.length;
+            this.current_modal = Array.from({ length: 100 }, (_1, _2) => 0);
+            this.maxNum_modal = this.data.map((e) => e.data.length - 1);
           });
         },
       },
       mounted() {
         // let this_year=new Date().getFullYear()
         // this.year_list=this.range(this_year)
+        this.get_data();
+
         setInterval(() => {
           let date = new Date();
           let sec = (date.getSeconds() % 4) + 1;
           this.text_point = "...".repeat(sec);
         }, 1000);
       },
-      async created() {
-        let uri = window.location.search.substring(1);
-        let params = new URLSearchParams(uri);
-        this.p = params.get("p");
-        await this.get_data();
-        // console.log(this.data);
-        let classNum = this.data.length;
-        // console.log(classNum);
-        this.current_modal = Array.from({ length: 100 }, (_1, _2) => 0);
-
-        this.maxNum_modal = this.data.map((e) => e.data.length - 1);
-        // console.log(this.maxNum_modal);
+      created() {
+        // this.get_data();
       },
     }).mount("#app");
   </script>

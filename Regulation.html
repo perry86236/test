@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="google" content="notranslate" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>精舍規範</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" /> -->
+
+    <!-- <link rel="stylesheet" href="css/sega_single.css??ver=2023091902.css" /> -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" /> -->
+    <!-- Tailwind Elements styles-->
+  </head>
+  <body class="overflow-auto">
+    <div id="app" class="">
+      <div class="bg-gradient-to-t from-black via-yellow-100 to-black relative justify-center">
+        <div class="p-3 cursor-pointer absolute top-[35%] m-5 text-4xl text-grey-300 drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)] z-30" @click="scroll_left(index)">&lt;</div>
+        <div class="p-3 cursor-pointer absolute top-[35%] right-0 m-5 text-4xl text-grey-300 drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)] z-30" @click="scroll_right(index)">&gt;</div>
+
+        <div id="container_0" class="cursor-pointer snap-proximity snap-x flex flex-row overflow-auto gap-6 mx-5 z-20">
+          <!--  -->
+          <!-- <div class="z-10 flex-col" v-text="left_text"></div> -->
+
+          <div v-for="(sub_item,sub_index) in data" class="snap-start flex items-center flex-col w-32 h-96 bg-white pb-3 border border-gray-800 group transform rounded-2xl min-w-[100%] px-6 pt-2.5 font-medium uppercase leading-normal text-black transition duration-150 ease-in-out">
+            <!-- <div class="relative mb-4 rounded-lg justify-center flex grow container h-auto"> -->
+            <!-- w-1/4 md:w-1/3 lg:w-1/2 -->
+            <!-- <div class="grow"></div> -->
+
+            <p class="my-10 mx-10 text-4xl" v-text="sub_item"></p>
+            <!-- <div class="grow"></div> -->
+            <!-- </h3> -->
+          </div>
+          <!-- <div class="z-10 flex-col" v-text="right_text"></div> -->
+          <!-- </div> -->
+        </div>
+      </div>
+    </div>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script> -->
+  </body>
+  <script type="module">
+    // axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+    import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js";
+
+    createApp({
+      data() {
+        return {
+          data: [],
+        };
+      },
+      computed: {},
+
+      methods: {
+        scroll_left(index) {
+          let container = document.getElementById("container_0");
+          let width = container.clientWidth;
+
+          container.scrollLeft -= width;
+          // translate += width;
+          // container.style.transform = "translateX(" + translate + "px" + ")";
+        },
+        scroll_right(index) {
+          let container = document.getElementById("container_0");
+          let width = container.clientWidth;
+
+          container.scrollLeft += width;
+          // translate -= width;
+          // container.style.transform = "translateX(" + translate + "px" + ")";
+        },
+        async get_data() {
+          //   let uri = window.location.search.substring(1);
+          //   let params = new URLSearchParams(uri);
+          //   let p = params.get("p");
+          //   this.msg = this.loading_text;
+          let url = `https://script.google.com/macros/s/AKfycbyF2Uasbf7jLG8yngw6DA_nomOuvZ6vGkGNBiiUhLqNBSfRH1u0HPg2EPFiytsReSdg/exec`;
+          // console.log(url);
+          await axios.get(url).then((response) => {
+            let res = response.data;
+            let data = res;
+
+            this.data = data;
+          });
+        },
+      },
+      mounted() {
+        // let this_year=new Date().getFullYear()
+        // this.year_list=this.range(this_year)
+        this.get_data();
+
+        setInterval(() => {
+          let date = new Date();
+          let sec = (date.getSeconds() % 4) + 1;
+          this.text_point = "...".repeat(sec);
+        }, 1000);
+      },
+      created() {
+        // this.get_data();
+      },
+    }).mount("#app");
+  </script>
+</html>

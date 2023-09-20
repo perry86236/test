@@ -8,7 +8,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" /> -->
 
-    <link rel="stylesheet" href="css/sega_all_3.css??ver=2023091704.css" />
+    <link rel="stylesheet" href="css/sega_all_3.css??ver=2023092101.css" />
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
@@ -104,7 +104,7 @@
             <!--  -->
             <!-- <div class="z-10 flex-col" v-text="left_text"></div> -->
 
-            <div v-for="(sub_item,sub_index) in item.data" class="snap-start flex flex-col w-32 h-96 bg-white pb-3 border border-gray-800 group transform rounded-2xl min-w-[100%] md:min-w-[50%] lg:min-w-[25%] max-w-[100%] md:max-w-[384px-1.5rem] lg:max-w-[256px-4.5rem] px-6 pt-2.5 text-xs font-medium uppercase leading-normal text-black transition duration-150 ease-in-out">
+            <div v-for="(sub_item,sub_index) in item.data" class="snap-start flex flex-col w-32 h-96 bg-white pb-3 border border-gray-800 group transform rounded-2xl min-w-[100%] md:min-w-[50%] lg:min-w-[25%] max-w-[100%] md:max-w-[384px-1.5rem] lg:max-w-[256px-4.5rem] bg-primary px-6 pt-2.5 text-xs font-medium uppercase leading-normal text-black transition duration-150 ease-in-out">
               <!-- <div class="relative mb-4 rounded-lg justify-center flex grow container h-auto"> -->
               <!-- w-1/4 md:w-1/3 lg:w-1/2 -->
               <div class="grow"></div>
@@ -118,13 +118,13 @@
                     <div class="font-semibold" v-html="name_html(sub_item.name)"></div>
                   </div>
                 </div>
-                <div class="flex justify-end">
+                <div class="flex justify-end items-center">
                   <!-- <button type="button" class="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out" data-te-toggle="popover" data-te-placement="top" data-te-content="Top popover" data-te-ripple-init data-te-ripple-color="light" :v-text="format_date(sub_item.date)"></button> -->
-                  <div class="text-sm flex items-center text-gray-500" v-text="format_date(sub_item.date)"></div>
-                  <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <!-- <svg class="ml-1 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" begin="0s" dur="1s" repeatCount="indefinite" />
-                  </svg>
+                  </svg> -->
+                  <div class="text-sm flex flex-col items-end text-gray-500" v-html="split2div(format_date(sub_item.date))"></div>
                 </div>
               </div>
               <!-- <h3 class=""> -->
@@ -139,7 +139,9 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
   </body>
+  <script src="dateTrans.js"></script>
   <script type="module">
+    console.log(calendar);
     // axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
     import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js";
 
@@ -161,6 +163,13 @@
       computed: {},
 
       methods: {
+        split2div(input) {
+          let split = input.split("|");
+          // console.log(split);
+          let map = split.map((e) => "<div>" + e + "</div>").join("");
+
+          return map;
+        },
         scroll_left(index) {
           let container = document.getElementById("container_" + index);
           let width = container.clientWidth;
@@ -194,12 +203,19 @@
           let arr = ["", "農曆一月份", "農曆二月份", "農曆三月份", "農曆四月份", "農曆五月份", "農曆六月份", "農曆七月份", "農曆八月份", "農曆九月份", "農曆十月份", "農曆十一月份", "農曆十一月份"];
           return arr[month];
         },
-        format_date(date) {
+        format_date(date_string) {
           // console.log(date);
           // let date_1 = date.split("T")[0];
-          let reg = /^[0-9]+\/[0-9]+$/;
-          if (reg.test(date)) return "農曆 " + date;
-          else return date;
+          // let ymd = (y, m, d) => [y, (m > 9 ? "" : "0") + m, (d > 9 ? "" : "0") + d].join("/");
+          let reg = /^([0-9]+)\/([0-9]+)$/;
+          let reg_2 = /^(小寒|大寒|立春|雨水|驚蟄|春分|清明|穀雨|立夏|小滿|芒種|夏至|小暑|大暑|立秋|處暑|白露|秋分|寒露|霜降|立冬|小雪|大雪|冬至)日$/;
+
+          if (reg.test(date_string)) {
+            return `農曆 ${date_string}|(${lunar2time(date_string)})`;
+          }
+          if (reg_2.test(date_string)) {
+            return `${date_string}|(${term2time(date_string)})`;
+          } else return date_string;
         },
         name_html(text) {
           let arr = text.split("、");
@@ -275,7 +291,7 @@
         // console.log(this.data);
         let classNum = this.data.length;
         // console.log(classNum);
-        this.current_modal = Array.from({ length: 100 }, (_1, _2) => 0);
+        this.current_modal = Array.from({ length: classNum }, (_1, _2) => 0);
 
         this.maxNum_modal = this.data.map((e) => e.data.length - 1);
         // console.log(this.maxNum_modal);

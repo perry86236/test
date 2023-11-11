@@ -976,8 +976,8 @@ function decrypt(encrypted,key) {
 
       // this.get_data()
     },
-    created() {
-	this.name=decrypt(getUrlParameter("name"),"buddha")
+    async created() {
+	this.name=await decrypt(getUrlParameter("name"),"buddha")
       this.random_pic_index()
       let text = (this.buddha_list[this.random_index].data)
       // console.log(text)

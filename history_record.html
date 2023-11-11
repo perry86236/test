@@ -450,7 +450,7 @@ async function decryptData(data, key) {
 function decrypt(encrypted,key) {
 	//const encrypted = document.querySelector("#encrypted").value;
 	//const key = document.querySelector("#key").value;
-	decryptData(encrypted, key).then((result) => {
+	return decryptData(encrypted, key).then((result) => {
 		//document.querySelector("#decText").textContent = result;
 		console.log(result)
 		return result

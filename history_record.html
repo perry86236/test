@@ -453,6 +453,7 @@ function decrypt(encrypted,key) {
 	decryptData(encrypted, key).then((result) => {
 		//document.querySelector("#decText").textContent = result;
 		console.log(result)
+		return result
 	}).catch((err) => {
 		alert(err.message);
 	});
@@ -539,7 +540,7 @@ function decrypt(encrypted,key) {
       return {
         random_index: -1,
         random_text_index: -1,
-
+	f_name:"",
         card_show: true,
         buddha_list: [
           { index: 1, name: '一、楊柳觀音', data: '1楊柳觀音是以手執楊柳枝為其特徵的觀音像。民間流行的楊枝觀音像，一般作手持淨瓶、楊枝。楊柳觀音又稱聖觀音，又稱楊枝觀音，因手執楊枝替人消除病災而得名，故又稱藥王觀音。||2據唐義淨《南海寄歸內法傳》講，西域習俗，每日以楊枝細條剔齒，熟嚼枝頭以淨牙，稱齒木。當地有這樣的禮節，向貴客贈齒木及淨水，以表示祝人健康及懇請之意。另外，古代印度，人們認為楊枝可以消災袪病。身患種種疾病者，應手執楊柳枝誦念真言。||2古人心目中的柳枝是可以除邪驅惡，佛教傳入後，楊柳就成為聖物。觀音菩薩一手持楊柳枝，一手托甘露淨瓶，「楊枝淨水，遍灑三千」，一掃人間煩惱垢濁，普渡眾生，所以，楊枝觀音的出現應當與此有關。此外楊柳枝是非常具有旺盛的生命力，這也是以楊柳喻佛法的興旺發展，右手持楊柳枝，以楊柳枝替人消弭病災，誓言拔濟眾生病苦，是三十三觀音菩薩的首尊，佛身。' },
@@ -588,7 +589,7 @@ function decrypt(encrypted,key) {
         red_bold: "font-weight-bold text-danger",
         tab_arr: ["", "儲值", "護持三寶", "護持精舍", "共修", "聖賢祝壽", "煙供粉", "神明衣"],
         class_arr: ["table-success", "table-danger", "table-info", "table-warning", "table-active", ""],
-        name: decrypt(getUrlParameter("name"),"buddha"),
+        name: "",
         // message: 'Hello Vue!',
         // msg: "",
         card_loading_text: "資料處理中，感謝耐心等候，<br>請於等待時間，<br>誦念南無觀世音菩薩",
@@ -976,6 +977,7 @@ function decrypt(encrypted,key) {
       // this.get_data()
     },
     created() {
+	this.name=decrypt(getUrlParameter("name"),"buddha")
       this.random_pic_index()
       let text = (this.buddha_list[this.random_index].data)
       // console.log(text)

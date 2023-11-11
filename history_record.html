@@ -407,6 +407,57 @@
 
 
 <script type="module">
+  async function createCryptoKey(key, keyUsage ) {
+	const hashBuffer = await window.crypto.subtle.digest("SHA-256",  new TextEncoder().encode(key));
+	// split the sha256 hash byte array into key and iv
+	let keyPart = new Uint8Array(hashBuffer.slice(0, 16));
+	let ivPart = new Uint8Array(hashBuffer.slice(16));
+	// create a CryptoKey object from the key byte array
+	const cryptoKey = await window.crypto.subtle.importKey(
+		"raw", // format
+		keyPart, // key data (as a Uint8Array)
+		{ name: "AES-CBC" }, // algorithm
+		false, // not extractable
+		[keyUsage] 
+	);
+	// return CryptoKey and IV
+	return { cryptoKey, ivPart };
+}
+async function encryptData(enc, key) {
+	const { cryptoKey, ivPart } = await createCryptoKey(key, "encrypt");
+	const data = new TextEncoder().encode(enc);
+	const encryptedBytes = await window.crypto.subtle.encrypt(
+		{ name: "AES-CBC", iv: ivPart },
+		cryptoKey,
+		data
+	);
+	const encrypted = btoa(String.fromCharCode(...new Uint8Array(encryptedBytes)));
+	return encrypted;
+}
+async function decryptData(data, key) {
+	const { cryptoKey, ivPart } = await createCryptoKey(key, "decrypt");
+	// Convert the base64-encoded data to a Uint8Array
+	const dataBytes = new Uint8Array(atob(data).split("").map(c => c.charCodeAt(0)));
+	// Decrypt the data using the CryptoKey object
+	const decryptedBytes = await window.crypto.subtle.decrypt(
+		{ name: "AES-CBC", iv: ivPart },
+		cryptoKey,
+		dataBytes
+	);
+	return new TextDecoder().decode(decryptedBytes);
+}
+
+function decrypt(encrypted,key) {
+	//const encrypted = document.querySelector("#encrypted").value;
+	//const key = document.querySelector("#key").value;
+	decryptData(encrypted, key).then((result) => {
+		//document.querySelector("#decText").textContent = result;
+		console.log(result)
+	}).catch((err) => {
+		alert(err.message);
+	});
+}
+///////////////////////////////////////////////
   let f1 = (timeString) => {
     let date = timeString?.split('/') || ['', '']
     let year = date[0]
@@ -537,7 +588,7 @@
         red_bold: "font-weight-bold text-danger",
         tab_arr: ["", "儲值", "護持三寶", "護持精舍", "共修", "聖賢祝壽", "煙供粉", "神明衣"],
         class_arr: ["table-success", "table-danger", "table-info", "table-warning", "table-active", ""],
-        name: getUrlParameter("name"),
+        name: decrypt(getUrlParameter("name"),"buddha"),
         // message: 'Hello Vue!',
         // msg: "",
         card_loading_text: "資料處理中，感謝耐心等候，<br>請於等待時間，<br>誦念南無觀世音菩薩",

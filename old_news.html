@@ -183,7 +183,8 @@
             let data = res.events
 
             
-            let output = data.filter(e => e.description.includes('死')).map(e => { return { id: e.date, name: e.title, content: e.description } }).sort((a, b) => a.id - b.id)
+            let output = data.filter(e => e.description.includes('死')).map(e => { return { 
+name: e.title, content: e.description } })//.sort((a, b) => a.id - b.id)
             this.msg = ""
             this.data = output
             let dataNum = output.length

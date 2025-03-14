@@ -181,11 +181,9 @@
             let res = response.data
              console.log(res)
             let data = res.events
-            /*
-            date":"2024-12-23","countryCode":"波士尼亞與赫塞哥維納","category":"極端溫度","url":"/1330/1334/1336/13209/24554/","title":"巴爾幹半島遭遇暴風雪襲(12月)","reportData":null,"description":"巴爾幹半島遭遇暴風雪襲擊，導致多國出現嚴重的交通混亂和大規模停電。波士尼亞與赫塞哥維納(Bosnia and Herzegovina)，超過20萬戶家庭連續兩天無電可用，主要影響該國的西北部和中部地區。鐵路交通在受影響地區完全停滯，許多城鎮面臨停水和學校停課的情況。對該地區發布旅行警告，並禁止重型車輛通行，呼籲居民避免不必要的出行。克羅埃西亞的利卡地區，緊急救援隊伍救出了48名被大雪困住的人員。斯洛維尼亞的阿爾卑斯山區，強風和降雪阻礙了對一名自週日以來受困的匈牙利登山者的救援行動。塞爾維亞西部有多達1萬戶家庭在週三大部分時間內無電可用，而大多數地區的電力供應已於當天修復。\n
-            */
+
             
-            let output = data.filter(e => e.description.includes('死')).map(e => { return { id: e.id, name: e.title, content: e.description } }).sort((a, b) => a.id - b.id)
+            let output = data.filter(e => e.description.includes('死')).map(e => { return { id: e.date, name: e.title, content: e.description } }).sort((a, b) => a.id - b.id)
             this.msg = ""
             this.data = output
             let dataNum = output.length

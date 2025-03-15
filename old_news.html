@@ -7,7 +7,8 @@
   <meta http-equiv="Permissions-Policy" content="interest-cohort=(), user-id=()" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>世界災難回顧</title>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<!--   <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.8/axios.min.js"></script>
   <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
   <!-- <link href="css/style.css" rel="stylesheet"> -->
   <!-- Roboto font -->
@@ -109,8 +110,8 @@
 <script type="module">
 
   // axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-  import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js'
-
+  // import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js'
+  import { createApp } from 'https://cdnjs.cloudflare.com/ajax/libs/vue/3.5.13/vue.esm-browser.min.js'
   createApp({
     data() {
       return {
